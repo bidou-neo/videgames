@@ -50,18 +50,36 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
 .form-panel.open { display: block; animation: fadeIn 0.2s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Cover URL section */
+/* Cover */
 .cover-section { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
 .cover-row { display: flex; gap: 1rem; align-items: flex-start; }
 .cover-preview-box { width: 60px; flex-shrink: 0; }
-.cover-preview { width: 60px; height: 82px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border); display: block; background: var(--bg3); }
-.cover-preview.empty { display: flex; align-items: center; justify-content: center; }
+.cover-preview { width: 60px; height: 82px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border); display: block; background: var(--bg3); opacity: 0.3; }
 .cover-fields { flex: 1; min-width: 0; }
 .cover-hint { font-size: 0.76rem; color: var(--text-dim); font-style: italic; margin-top: 5px; line-height: 1.4; }
 .cover-hint a { color: var(--gold); text-decoration: none; }
 .cover-hint a:hover { text-decoration: underline; }
 .clear-cover-btn { font-size: 0.76rem; color: var(--text-dim); cursor: pointer; background: none; border: none; text-decoration: underline; margin-top: 4px; display: block; }
 .clear-cover-btn:hover { color: var(--red); }
+
+/* Console checkboxes */
+.console-checks { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 2px; }
+.console-check { display: none; }
+.console-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  padding: 5px 12px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.15s;
+  user-select: none;
+}
+.console-label:hover { border-color: var(--border-hover); color: var(--text); }
+.console-check[value="Switch"]:checked + .console-label { color: #ff6b6b; border-color: rgba(228,0,15,0.6); background: rgba(228,0,15,0.12); }
+.console-check[value="PS5"]:checked + .console-label { color: #6b9fff; border-color: rgba(0,48,135,0.7); background: rgba(0,48,135,0.18); }
+.console-check[value="Xbox Series X"]:checked + .console-label { color: #6bdf6b; border-color: rgba(16,124,16,0.6); background: rgba(16,124,16,0.12); }
 
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 .form-grid .full { grid-column: 1 / -1; }
@@ -98,7 +116,6 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
 .badge-switch { color: #ff6b6b; border-color: rgba(228,0,15,0.4); background: rgba(228,0,15,0.1); }
 .badge-ps5 { color: #6b9fff; border-color: rgba(0,48,135,0.5); background: rgba(0,48,135,0.15); }
 .badge-xbox { color: #6bdf6b; border-color: rgba(16,124,16,0.4); background: rgba(16,124,16,0.1); }
-.badge-multi { color: #c09fff; border-color: rgba(107,76,154,0.4); background: rgba(107,76,154,0.1); }
 .badge-price { color: var(--gold); border-color: rgba(201,168,76,0.35); background: var(--gold-dim); }
 .badge-found-price { color: var(--green-light); border-color: rgba(46,125,82,0.4); background: rgba(46,125,82,0.12); }
 .badge-prio-haute { color: #e8945a; border-color: rgba(232,148,90,0.35); background: rgba(232,148,90,0.1); }
@@ -157,7 +174,7 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
     <div class="cover-section">
       <div class="cover-row">
         <div class="cover-preview-box">
-          <img id="cover-preview" class="cover-preview" src="" alt="Jaquette" onerror="this.src=''" />
+          <img id="cover-preview" class="cover-preview" src="" alt="Jaquette" onerror="this.style.opacity='0.2'" />
         </div>
         <div class="cover-fields">
           <div class="field">
@@ -165,8 +182,7 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
             <input id="f-cover" type="url" placeholder="https://..." autocomplete="off" />
           </div>
           <div class="cover-hint">
-            Google Images → clic droit sur une image → <em>"Copier l'adresse de l'image"</em> → coller ici.<br>
-            Ou cherche sur <a href="https://www.jeuxvideo.com" target="_blank">jeuxvideo.com</a> / <a href="https://www.igdb.com" target="_blank">igdb.com</a>.
+            Google Images → clic droit sur l'image → <em>"Copier l'adresse de l'image"</em> → coller ici.
           </div>
           <button class="clear-cover-btn" id="clear-cover-btn">Retirer la jaquette</button>
         </div>
@@ -178,15 +194,19 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
         <label>Titre du jeu</label>
         <input id="f-title" type="text" placeholder="ex: Dragon Quest XI S" autocomplete="off" />
       </div>
-      <div class="field">
-        <label>Console</label>
-        <select id="f-console">
-          <option>Switch</option>
-          <option>PS5</option>
-          <option>Xbox Series X</option>
-          <option>Multi</option>
-        </select>
+
+      <div class="field full">
+        <label>Consoles disponibles</label>
+        <div class="console-checks">
+          <input class="console-check" type="checkbox" id="c-switch" value="Switch" />
+          <label class="console-label" for="c-switch">Switch</label>
+          <input class="console-check" type="checkbox" id="c-ps5" value="PS5" />
+          <label class="console-label" for="c-ps5">PS5</label>
+          <input class="console-check" type="checkbox" id="c-xbox" value="Xbox Series X" />
+          <label class="console-label" for="c-xbox">Xbox Series X</label>
+        </div>
       </div>
+
       <div class="field">
         <label>Prix max (€)</label>
         <input id="f-price" type="number" placeholder="30" min="0" />
@@ -218,7 +238,8 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
 </main>
 
 <script>
-const STORAGE_KEY = 'jrpg-chasse-v4';
+const STORAGE_KEY = 'jrpg-chasse-v5';
+const CONSOLES = ['Switch', 'PS5', 'Xbox Series X'];
 let games = [];
 let currentFilter = 'tous';
 let editId = null;
@@ -236,14 +257,41 @@ function saveGames() {
 
 function defaultGames() {
   return [
-    { id: 1, title: 'Dragon Quest XI S', console: 'Switch', price: 30, priority: 'haute', genre: 'Tour par tour', note: 'Histoire solide, persos attachants — priorité n°1', found: false, foundPrice: null, cover: null },
-    { id: 2, title: 'Metaphor: ReFantazio', console: 'PS5', price: 40, priority: 'haute', genre: 'Tour par tour / action', note: 'JRPG narratif très ambitieux, émotionnel', found: false, foundPrice: null, cover: null },
-    { id: 3, title: 'Tales of Arise', console: 'Multi', price: 20, priority: 'moyenne', genre: 'Action RPG', note: 'Duo de persos attachants, beau visuellement', found: false, foundPrice: null, cover: null },
-    { id: 4, title: 'Eiyuden Chronicle: Hundred Heroes', console: 'Switch', price: 25, priority: 'moyenne', genre: 'Tour par tour', note: 'Successeur spirituel de Suikoden, 100 persos', found: false, foundPrice: null, cover: null },
+    { id: 1, title: 'Dragon Quest XI S', consoles: ['Switch'], price: 30, priority: 'haute', genre: 'Tour par tour', note: 'Histoire solide, persos attachants — priorité n°1', found: false, foundPrice: null, cover: null },
+    { id: 2, title: 'Metaphor: ReFantazio', consoles: ['PS5', 'Xbox Series X'], price: 40, priority: 'haute', genre: 'Tour par tour / action', note: 'JRPG narratif très ambitieux, émotionnel', found: false, foundPrice: null, cover: null },
+    { id: 3, title: 'Tales of Arise', consoles: ['Switch', 'PS5', 'Xbox Series X'], price: 20, priority: 'moyenne', genre: 'Action RPG', note: 'Duo de persos attachants, beau visuellement', found: false, foundPrice: null, cover: null },
+    { id: 4, title: 'Eiyuden Chronicle: Hundred Heroes', consoles: ['Switch', 'PS5', 'Xbox Series X'], price: 25, priority: 'moyenne', genre: 'Tour par tour', note: 'Successeur spirituel de Suikoden, 100 persos', found: false, foundPrice: null, cover: null },
   ];
 }
 
-/* ---- Live cover preview ---- */
+/* ---- Helpers ---- */
+function getConsoles() {
+  return CONSOLES.filter(c => document.getElementById('c-' + c.toLowerCase().replace(' series x','').replace(' ','')+'').checked
+    || document.querySelector(`.console-check[value="${c}"]`)?.checked);
+}
+
+function getSelectedConsoles() {
+  return CONSOLES.filter(c => {
+    const el = document.querySelector(`.console-check[value="${CSS.escape(c)}"]`);
+    return el && el.checked;
+  });
+}
+
+function setConsoles(consoles) {
+  CONSOLES.forEach(c => {
+    const el = document.querySelector(`.console-check[value="${CSS.escape(c)}"]`);
+    if (el) el.checked = consoles.includes(c);
+  });
+}
+
+function resetConsoles() {
+  CONSOLES.forEach(c => {
+    const el = document.querySelector(`.console-check[value="${CSS.escape(c)}"]`);
+    if (el) el.checked = false;
+  });
+}
+
+/* ---- Cover preview ---- */
 function initCoverPreview() {
   const input = document.getElementById('f-cover');
   const preview = document.getElementById('cover-preview');
@@ -252,13 +300,8 @@ function initCoverPreview() {
     clearTimeout(debounce);
     debounce = setTimeout(() => {
       const url = input.value.trim();
-      if (url) {
-        preview.src = url;
-        preview.style.opacity = '1';
-      } else {
-        preview.src = '';
-        preview.style.opacity = '0.2';
-      }
+      preview.src = url || '';
+      preview.style.opacity = url ? '1' : '0.2';
     }, 400);
   });
 }
@@ -276,7 +319,7 @@ function render() {
   const f = currentFilter;
   if (f === 'trouver') list = list.filter(g => !g.found);
   else if (f === 'trouvés') list = list.filter(g => g.found);
-  else if (['Switch','PS5','Xbox Series X'].includes(f)) list = list.filter(g => g.console === f || g.console === 'Multi');
+  else if (CONSOLES.includes(f)) list = list.filter(g => (g.consoles||[]).includes(f));
 
   list.sort((a, b) => {
     if (a.found !== b.found) return a.found ? 1 : -1;
@@ -312,8 +355,15 @@ function render() {
   el.querySelectorAll('.found-price-input').forEach(inp => inp.addEventListener('change', () => setFoundPrice(+inp.dataset.id, inp.value)));
 }
 
+const CONSOLE_BADGE = {
+  'Switch': 'badge-switch',
+  'PS5': 'badge-ps5',
+  'Xbox Series X': 'badge-xbox'
+};
+
 function cardHTML(g) {
-  const cClass = { 'Switch':'badge-switch','PS5':'badge-ps5','Xbox Series X':'badge-xbox','Multi':'badge-multi' }[g.console]||'badge-multi';
+  const consoles = g.consoles || [];
+  const consoleBadges = consoles.map(c => `<span class="badge ${CONSOLE_BADGE[c]||''}">${c}</span>`).join('');
   const coverSection = g.cover
     ? `<img src="${esc(g.cover)}" alt="${esc(g.title)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none'" />`
     : `<svg class="placeholder-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`;
@@ -336,7 +386,7 @@ function cardHTML(g) {
     <div class="card-content">
       <div class="game-title">${escHtml(g.title)}</div>
       <div class="meta">
-        <span class="badge ${cClass}">${g.console}</span>
+        ${consoleBadges}
         ${priceTag}${prioTag}${genreTag}
       </div>
       ${g.note ? `<div class="game-note">${escHtml(g.note)}</div>` : ''}
@@ -367,14 +417,13 @@ function startEdit(id) {
   const g = games.find(x => x.id===id); if (!g) return;
   editId = id;
   document.getElementById('f-title').value = g.title;
-  document.getElementById('f-console').value = g.console;
   document.getElementById('f-price').value = g.price||'';
   document.getElementById('f-priority').value = g.priority;
   document.getElementById('f-genre').value = g.genre||'';
   document.getElementById('f-note').value = g.note||'';
-  const coverInput = document.getElementById('f-cover');
+  setConsoles(g.consoles||[]);
   const preview = document.getElementById('cover-preview');
-  coverInput.value = g.cover||'';
+  document.getElementById('f-cover').value = g.cover||'';
   preview.src = g.cover||'';
   preview.style.opacity = g.cover ? '1' : '0.2';
   openForm();
@@ -387,18 +436,19 @@ function closeForm() {
   document.getElementById('form-panel').classList.remove('open');
   editId = null;
   ['f-title','f-price','f-genre','f-note','f-cover'].forEach(id => document.getElementById(id).value='');
-  document.getElementById('f-console').value = 'Switch';
   document.getElementById('f-priority').value = 'moyenne';
-  const preview = document.getElementById('cover-preview');
-  preview.src = ''; preview.style.opacity = '0.2';
+  resetConsoles();
+  clearCover();
 }
 function saveGame() {
   const title = document.getElementById('f-title').value.trim();
   if (!title) { document.getElementById('f-title').focus(); return; }
+  const consoles = getSelectedConsoles();
+  if (!consoles.length) { alert('Sélectionne au moins une console.'); return; }
   const g = {
     id: editId||Date.now(),
     title,
-    console: document.getElementById('f-console').value,
+    consoles,
     price: parseFloat(document.getElementById('f-price').value)||null,
     priority: document.getElementById('f-priority').value,
     genre: document.getElementById('f-genre').value.trim(),
@@ -419,7 +469,7 @@ function esc(s) { return String(s||'').replace(/"/g,'&quot;').replace(/'/g,'&#39
 /* ---- Listeners ---- */
 document.getElementById('add-btn').addEventListener('click', () => {
   if (document.getElementById('form-panel').classList.contains('open') && !editId) closeForm();
-  else { editId=null; clearCover(); openForm(); }
+  else { editId=null; clearCover(); resetConsoles(); openForm(); }
 });
 document.getElementById('cancel-btn').addEventListener('click', closeForm);
 document.getElementById('save-btn').addEventListener('click', saveGame);
