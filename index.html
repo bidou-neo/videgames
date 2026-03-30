@@ -323,10 +323,7 @@ async function fetchGenres() {
   status.style.display = 'block'; status.textContent = 'Recherche en cours...';
   try {
     const rawgUrl = 'https://api.rawg.io/api/games?search=' + encodeURIComponent(title) + '&page_size=3&key=4a60bffdd8f849bb96cb4c483d12d470';
-    console.log('Fetching:', rawgUrl);
-    const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(rawgUrl);
-    console.log('Via proxy:', proxyUrl);
-    const res = await fetch(proxyUrl);
+    const res = await fetch('https://corsproxy.io/?' + rawgUrl);
     const data = await res.json();
     const game = (data.results||[])[0];
     if (!game || !game.genres || !game.genres.length) {
