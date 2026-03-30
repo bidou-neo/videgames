@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liste de Chasse — JRPG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0c0a;
+  --bg2: #161310;
+  --bg3: #1e1a16;
+  --border: rgba(255,220,140,0.12);
+  --border-hover: rgba(255,220,140,0.28);
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --gold-dim: rgba(201,168,76,0.15);
+  --text: #f0e8d8;
+  --text-muted: #8a7d6a;
+  --text-dim: #5a5048;
+  --red: #c0392b;
+  --green: #2e7d52;
+  --green-light: #3da668;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 17px; }
+
+.site-header { border-bottom: 1px solid var(--border); padding: 2rem 1.5rem 1.5rem; text-align: center; position: relative; }
+.site-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.site-title { font-family: 'Cinzel', serif; font-size: clamp(1.4rem, 5vw, 2rem); font-weight: 600; color: var(--gold-light); letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+.site-subtitle { font-size: 0.9rem; color: var(--text-muted); font-style: italic; }
+
+.stats-bar { display: flex; justify-content: center; gap: 2rem; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.stat { text-align: center; }
+.stat-val { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 600; color: var(--gold-light); display: block; }
+.stat-lbl { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+.main { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+
+.toolbar { display: flex; gap: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap; align-items: center; }
+.filters { display: flex; gap: 0.5rem; flex-wrap: wrap; flex: 1; }
+.filter-btn { font-family: 'Crimson Pro', serif; font-size: 0.85rem; padding: 5px 14px; border: 1px solid var(--border); border-radius: 99px; background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
+.filter-btn:hover { border-color: var(--border-hover); color: var(--text); }
+.filter-btn.active { border-color: var(--gold); color: var(--gold-light); background: var(--gold-dim); }
+.add-btn { font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; padding: 7px 18px; border: 1px solid var(--gold); border-radius: 4px; background: var(--gold-dim); color: var(--gold-light); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.add-btn:hover { background: rgba(201,168,76,0.28); }
+
+.form-panel { background: var(--bg2); border: 1px solid var(--border-hover); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem; display: none; }
+.form-panel.open { display: block; animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+.cover-section { margin-bottom: 1rem; }
+.cover-search-row { display: flex; gap: 8px; align-items: flex-end; margin-bottom: 0.6rem; }
+.cover-search-row .field { flex: 1; }
+.search-cover-btn { font-family: 'Cinzel', serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em; padding: 8px 14px; border: 1px solid var(--border-hover); border-radius: 4px; background: transparent; color: var(--text-muted); cursor: pointer; white-space: nowrap; height: 38px; transition: all 0.15s; }
+.search-cover-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--gold-light); }
+.search-cover-btn:disabled { opacity: 0.5; cursor: default; }
+
+.cover-results { display: flex; gap: 8px; flex-wrap: wrap; min-height: 20px; }
+.cover-thumb { width: 56px; height: 78px; object-fit: cover; border-radius: 4px; border: 2px solid transparent; cursor: pointer; opacity: 0.65; transition: all 0.15s; }
+.cover-thumb:hover { opacity: 1; border-color: var(--text-muted); }
+.cover-thumb.selected { opacity: 1; border-color: var(--gold); }
+.cover-status { font-size: 0.82rem; color: var(--text-dim); font-style: italic; padding: 4px 0; }
+
+.selected-cover-row { display: flex; align-items: center; gap: 12px; margin-top: 0.6rem; }
+.cover-preview { width: 56px; height: 78px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border); }
+.clear-cover-btn { font-size: 0.8rem; color: var(--text-dim); cursor: pointer; background: none; border: none; text-decoration: underline; }
+.clear-cover-btn:hover { color: var(--red); }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.form-grid .full { grid-column: 1 / -1; }
+.field label { display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 5px; }
+.field input, .field select { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-family: 'Crimson Pro', serif; font-size: 1rem; padding: 8px 12px; outline: none; transition: border-color 0.15s; }
+.field input:focus, .field select:focus { border-color: var(--gold); }
+.field select option { background: var(--bg3); }
+.form-actions { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1rem; }
+.btn-save { font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; padding: 8px 22px; border: none; border-radius: 4px; background: var(--gold); color: var(--bg); cursor: pointer; transition: background 0.15s; }
+.btn-save:hover { background: var(--gold-light); }
+.btn-cancel { font-family: 'Crimson Pro', serif; font-size: 1rem; padding: 8px 16px; border: 1px solid var(--border); border-radius: 4px; background: transparent; color: var(--text-muted); cursor: pointer; }
+
+.game-list { display: flex; flex-direction: column; gap: 0.6rem; }
+.game-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; align-items: stretch; transition: border-color 0.15s, opacity 0.2s; animation: fadeIn 0.25s ease; }
+.game-card:hover { border-color: var(--border-hover); }
+.game-card.found { opacity: 0.4; }
+.game-card.found:hover { opacity: 0.65; }
+
+.card-cover { width: 64px; min-height: 90px; flex-shrink: 0; background: var(--bg3); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.card-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.placeholder-icon { opacity: 0.2; }
+
+.check-col { display: flex; align-items: flex-start; padding: 0.85rem 0 0.85rem 0.85rem; flex-shrink: 0; }
+.check-btn { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--text-dim); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; color: transparent; font-size: 12px; flex-shrink: 0; }
+.check-btn:hover { border-color: var(--green-light); }
+.game-card.found .check-btn { background: var(--green); border-color: var(--green); color: #fff; }
+
+.card-content { flex: 1; min-width: 0; padding: 0.85rem 0.75rem; display: flex; flex-direction: column; gap: 4px; }
+.game-title { font-family: 'Cinzel', serif; font-size: 0.88rem; font-weight: 600; color: var(--gold-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.game-card.found .game-title { text-decoration: line-through; color: var(--text-dim); }
+.meta { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+.badge { font-size: 0.68rem; padding: 2px 8px; border-radius: 99px; border: 1px solid; letter-spacing: 0.03em; font-family: 'Cinzel', serif; }
+.badge-switch { color: #ff6b6b; border-color: rgba(228,0,15,0.4); background: rgba(228,0,15,0.1); }
+.badge-ps5 { color: #6b9fff; border-color: rgba(0,48,135,0.5); background: rgba(0,48,135,0.15); }
+.badge-xbox { color: #6bdf6b; border-color: rgba(16,124,16,0.4); background: rgba(16,124,16,0.1); }
+.badge-multi { color: #c09fff; border-color: rgba(107,76,154,0.4); background: rgba(107,76,154,0.1); }
+.badge-price { color: var(--gold); border-color: rgba(201,168,76,0.35); background: var(--gold-dim); }
+.badge-found-price { color: var(--green-light); border-color: rgba(46,125,82,0.4); background: rgba(46,125,82,0.12); }
+.badge-prio-haute { color: #e8945a; border-color: rgba(232,148,90,0.35); background: rgba(232,148,90,0.1); }
+.game-note { font-size: 0.82rem; color: var(--text-muted); font-style: italic; }
+.found-price-row { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
+.found-price-row label { font-size: 0.78rem; color: var(--text-muted); }
+.found-price-input { width: 72px; background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; color: var(--green-light); font-family: 'Crimson Pro', serif; font-size: 0.9rem; padding: 3px 8px; outline: none; }
+.found-price-input:focus { border-color: var(--green-light); }
+
+.card-actions { display: flex; flex-direction: column; gap: 4px; padding: 0.6rem 0.7rem 0.6rem 0; justify-content: flex-start; flex-shrink: 0; }
+.icon-btn { width: 28px; height: 28px; border: 1px solid var(--border); border-radius: 4px; background: transparent; cursor: pointer; color: var(--text-dim); font-size: 13px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.icon-btn:hover { border-color: var(--border-hover); color: var(--text-muted); }
+.icon-btn.del:hover { border-color: rgba(192,57,43,0.5); color: var(--red); }
+
+.empty { text-align: center; padding: 3rem 1rem; color: var(--text-dim); font-style: italic; }
+.divider { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-dim); text-align: center; margin: 1rem 0 0.75rem; display: flex; align-items: center; gap: 1rem; }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+@media (max-width: 480px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .form-grid .full { grid-column: 1; }
+  .cover-search-row { flex-direction: column; align-items: stretch; }
+  .search-cover-btn { width: 100%; }
+  .stats-bar { gap: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-title">Liste de Chasse JRPG</div>
+  <div class="site-subtitle" id="site-sub">bureau de jardin en préparation...</div>
+</header>
+
+<div class="stats-bar">
+  <div class="stat"><span class="stat-val" id="s-cherche">0</span><span class="stat-lbl">À trouver</span></div>
+  <div class="stat"><span class="stat-val" id="s-found">0</span><span class="stat-lbl">Trouvés</span></div>
+  <div class="stat"><span class="stat-val" id="s-budget">0€</span><span class="stat-lbl">Budget max</span></div>
+  <div class="stat"><span class="stat-val" id="s-spent">0€</span><span class="stat-lbl">Dépensé</span></div>
+</div>
+
+<main class="main">
+  <div class="toolbar">
+    <div class="filters">
+      <button class="filter-btn active" data-filter="tous">Tous</button>
+      <button class="filter-btn" data-filter="trouver">À trouver</button>
+      <button class="filter-btn" data-filter="trouvés">Trouvés</button>
+      <button class="filter-btn" data-filter="Switch">Switch</button>
+      <button class="filter-btn" data-filter="PS5">PS5</button>
+      <button class="filter-btn" data-filter="Xbox Series X">Xbox</button>
+    </div>
+    <button class="add-btn" id="add-btn">+ Ajouter</button>
+  </div>
+
+  <div class="form-panel" id="form-panel">
+    <div class="cover-section">
+      <div class="cover-search-row">
+        <div class="field">
+          <label>Recherche jaquette automatique</label>
+          <input id="f-cover-search" type="text" placeholder="Titre en anglais pour meilleur résultat" />
+        </div>
+        <button class="search-cover-btn" id="search-cover-btn">Chercher</button>
+      </div>
+      <div id="cover-status" class="cover-status" style="display:none"></div>
+      <div id="cover-results" class="cover-results" style="display:none"></div>
+      <div id="selected-cover-row" class="selected-cover-row" style="display:none">
+        <img id="cover-preview" class="cover-preview" src="" alt="" />
+        <button class="clear-cover-btn" id="clear-cover-btn">Retirer la jaquette</button>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="field full">
+        <label>Titre du jeu</label>
+        <input id="f-title" type="text" placeholder="ex: Dragon Quest XI S" autocomplete="off" />
+      </div>
+      <div class="field">
+        <label>Console</label>
+        <select id="f-console">
+          <option>Switch</option>
+          <option>PS5</option>
+          <option>Xbox Series X</option>
+          <option>Multi</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Prix max (€)</label>
+        <input id="f-price" type="number" placeholder="30" min="0" />
+      </div>
+      <div class="field">
+        <label>Priorité</label>
+        <select id="f-priority">
+          <option value="haute">Haute</option>
+          <option value="moyenne" selected>Moyenne</option>
+          <option value="basse">Basse</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Genre</label>
+        <input id="f-genre" type="text" placeholder="ex: Tour par tour" />
+      </div>
+      <div class="field full">
+        <label>Note</label>
+        <input id="f-note" type="text" placeholder="ex: Successeur de Suikoden, recommandé..." />
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-cancel" id="cancel-btn">Annuler</button>
+      <button class="btn-save" id="save-btn">Enregistrer</button>
+    </div>
+  </div>
+
+  <div class="game-list" id="list"></div>
+</main>
+
+<script>
+const STORAGE_KEY = 'jrpg-chasse-v3';
+let games = [];
+let currentFilter = 'tous';
+let editId = null;
+let selectedCoverUrl = null;
+
+function loadGames() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    games = raw ? JSON.parse(raw) : defaultGames();
+  } catch(e) { games = defaultGames(); }
+}
+
+function saveGames() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(games));
+}
+
+function defaultGames() {
+  return [
+    { id: 1, title: 'Dragon Quest XI S', console: 'Switch', price: 30, priority: 'haute', genre: 'Tour par tour', note: 'Histoire solide, persos attachants — priorité n°1', found: false, foundPrice: null, cover: null },
+    { id: 2, title: 'Metaphor: ReFantazio', console: 'PS5', price: 40, priority: 'haute', genre: 'Tour par tour / action', note: 'JRPG narratif très ambitieux, émotionnel', found: false, foundPrice: null, cover: null },
+    { id: 3, title: 'Tales of Arise', console: 'Multi', price: 20, priority: 'moyenne', genre: 'Action RPG', note: 'Duo de persos attachants, beau visuellement', found: false, foundPrice: null, cover: null },
+    { id: 4, title: 'Eiyuden Chronicle: Hundred Heroes', console: 'Switch', price: 25, priority: 'moyenne', genre: 'Tour par tour', note: 'Successeur spirituel de Suikoden, 100 persos', found: false, foundPrice: null, cover: null },
+  ];
+}
+
+/* ---- Cover search via RAWG ---- */
+async function searchCovers() {
+  const query = document.getElementById('f-cover-search').value.trim()
+              || document.getElementById('f-title').value.trim();
+  if (!query) return;
+
+  const btn = document.getElementById('search-cover-btn');
+  const statusEl = document.getElementById('cover-status');
+  const resultsEl = document.getElementById('cover-results');
+
+  btn.disabled = true;
+  btn.textContent = '...';
+  statusEl.style.display = 'block';
+  statusEl.textContent = 'Recherche en cours...';
+  resultsEl.style.display = 'none';
+  resultsEl.innerHTML = '';
+
+  try {
+    const res = await fetch(`https://api.rawg.io/api/games?search=${encodeURIComponent(query)}&page_size=8`);
+    const data = await res.json();
+    const results = (data.results || []).filter(g => g.background_image);
+
+    if (!results.length) {
+      statusEl.textContent = 'Aucune image trouvée. Essaie le titre en anglais.';
+    } else {
+      statusEl.style.display = 'none';
+      resultsEl.style.display = 'flex';
+      resultsEl.innerHTML = results.map((g, i) =>
+        `<img class="cover-thumb" src="${esc(g.background_image)}" data-url="${esc(g.background_image)}" title="${esc(g.name)}" alt="${esc(g.name)}" loading="lazy" />`
+      ).join('');
+      resultsEl.querySelectorAll('.cover-thumb').forEach(img => {
+        img.addEventListener('click', () => pickCover(img.dataset.url, img));
+      });
+    }
+  } catch(e) {
+    statusEl.textContent = 'Erreur réseau. Vérifie ta connexion.';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Chercher';
+}
+
+function pickCover(url, imgEl) {
+  document.querySelectorAll('.cover-thumb').forEach(i => i.classList.remove('selected'));
+  if (imgEl) imgEl.classList.add('selected');
+  selectedCoverUrl = url;
+  document.getElementById('cover-preview').src = url;
+  document.getElementById('selected-cover-row').style.display = 'flex';
+}
+
+function clearCover() {
+  selectedCoverUrl = null;
+  document.getElementById('cover-preview').src = '';
+  document.getElementById('selected-cover-row').style.display = 'none';
+  document.getElementById('cover-results').style.display = 'none';
+  document.getElementById('cover-results').innerHTML = '';
+  document.getElementById('cover-status').style.display = 'none';
+  document.getElementById('f-cover-search').value = '';
+}
+
+/* ---- Render ---- */
+function render() {
+  let list = [...games];
+  const f = currentFilter;
+  if (f === 'trouver') list = list.filter(g => !g.found);
+  else if (f === 'trouvés') list = list.filter(g => g.found);
+  else if (['Switch','PS5','Xbox Series X'].includes(f)) list = list.filter(g => g.console === f || g.console === 'Multi');
+
+  list.sort((a, b) => {
+    if (a.found !== b.found) return a.found ? 1 : -1;
+    return ({ haute:0, moyenne:1, basse:2 }[a.priority]||1) - ({ haute:0, moyenne:1, basse:2 }[b.priority]||1);
+  });
+
+  const total = games.filter(g => !g.found).length;
+  const found = games.filter(g => g.found).length;
+  const budget = games.filter(g => !g.found && g.price).reduce((s,g) => s+g.price, 0);
+  const spent = games.filter(g => g.found && g.foundPrice).reduce((s,g) => s+g.foundPrice, 0);
+
+  document.getElementById('s-cherche').textContent = total;
+  document.getElementById('s-found').textContent = found;
+  document.getElementById('s-budget').textContent = Math.round(budget) + '€';
+  document.getElementById('s-spent').textContent = Math.round(spent) + '€';
+  document.getElementById('site-sub').textContent = found > 0
+    ? `${found} jeu${found>1?'x':''} trouvé${found>1?'s':''} · ${total} restant${total>1?'s':''}`
+    : 'bureau de jardin en préparation...';
+
+  const el = document.getElementById('list');
+  if (!list.length) { el.innerHTML = '<div class="empty">Aucun jeu dans cette catégorie</div>'; return; }
+
+  const toFind = list.filter(g => !g.found);
+  const foundList = list.filter(g => g.found);
+  let html = toFind.map(cardHTML).join('');
+  if (foundList.length && toFind.length) html += '<div class="divider">Trouvés</div>';
+  html += foundList.map(cardHTML).join('');
+  el.innerHTML = html;
+
+  el.querySelectorAll('.check-btn').forEach(b => b.addEventListener('click', () => toggleFound(+b.dataset.id)));
+  el.querySelectorAll('.edit-btn').forEach(b => b.addEventListener('click', () => startEdit(+b.dataset.id)));
+  el.querySelectorAll('.del-btn').forEach(b => b.addEventListener('click', () => deleteGame(+b.dataset.id)));
+  el.querySelectorAll('.found-price-input').forEach(inp => inp.addEventListener('change', () => setFoundPrice(+inp.dataset.id, inp.value)));
+}
+
+function cardHTML(g) {
+  const cClass = { 'Switch':'badge-switch','PS5':'badge-ps5','Xbox Series X':'badge-xbox','Multi':'badge-multi' }[g.console]||'badge-multi';
+  const coverSection = g.cover
+    ? `<img src="${esc(g.cover)}" alt="${esc(g.title)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none'" />`
+    : `<svg class="placeholder-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`;
+  const prioTag = g.priority==='haute' ? '<span class="badge badge-prio-haute">Priorité</span>' : '';
+  const priceTag = g.price ? `<span class="badge badge-price">max ${g.price}€</span>` : '';
+  const genreTag = g.genre ? `<span style="font-size:0.75rem;color:var(--text-dim);font-style:italic">${escHtml(g.genre)}</span>` : '';
+  const foundPriceSection = g.found ? `
+    <div class="found-price-row">
+      <label>Payé :</label>
+      <input class="found-price-input" data-id="${g.id}" type="number" placeholder="€" value="${g.foundPrice||''}" />
+      ${g.foundPrice ? `<span class="badge badge-found-price">${g.foundPrice}€</span>` : ''}
+    </div>` : '';
+
+  return `
+  <div class="game-card ${g.found?'found':''}">
+    <div class="card-cover">${coverSection}</div>
+    <div class="check-col">
+      <button class="check-btn" data-id="${g.id}">${g.found?'✓':''}</button>
+    </div>
+    <div class="card-content">
+      <div class="game-title">${escHtml(g.title)}</div>
+      <div class="meta">
+        <span class="badge ${cClass}">${g.console}</span>
+        ${priceTag}${prioTag}${genreTag}
+      </div>
+      ${g.note ? `<div class="game-note">${escHtml(g.note)}</div>` : ''}
+      ${foundPriceSection}
+    </div>
+    <div class="card-actions">
+      <button class="icon-btn edit-btn" data-id="${g.id}" title="Modifier">✎</button>
+      <button class="icon-btn del del-btn" data-id="${g.id}" title="Supprimer">✕</button>
+    </div>
+  </div>`;
+}
+
+/* ---- Actions ---- */
+function toggleFound(id) {
+  const g = games.find(x => x.id===id); if (!g) return;
+  g.found = !g.found; if (!g.found) g.foundPrice = null;
+  saveGames(); render();
+}
+function setFoundPrice(id, val) {
+  const g = games.find(x => x.id===id);
+  if (g) { g.foundPrice = parseFloat(val)||null; saveGames(); render(); }
+}
+function deleteGame(id) {
+  if (!confirm('Supprimer ce jeu de la liste ?')) return;
+  games = games.filter(x => x.id!==id); saveGames(); render();
+}
+function startEdit(id) {
+  const g = games.find(x => x.id===id); if (!g) return;
+  editId = id;
+  document.getElementById('f-title').value = g.title;
+  document.getElementById('f-console').value = g.console;
+  document.getElementById('f-price').value = g.price||'';
+  document.getElementById('f-priority').value = g.priority;
+  document.getElementById('f-genre').value = g.genre||'';
+  document.getElementById('f-note').value = g.note||'';
+  document.getElementById('f-cover-search').value = g.title;
+  clearCover();
+  if (g.cover) {
+    selectedCoverUrl = g.cover;
+    document.getElementById('cover-preview').src = g.cover;
+    document.getElementById('selected-cover-row').style.display = 'flex';
+  }
+  openForm();
+}
+function openForm() {
+  document.getElementById('form-panel').classList.add('open');
+  setTimeout(() => document.getElementById('f-title').focus(), 60);
+}
+function closeForm() {
+  document.getElementById('form-panel').classList.remove('open');
+  editId = null;
+  ['f-title','f-price','f-genre','f-note'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('f-console').value = 'Switch';
+  document.getElementById('f-priority').value = 'moyenne';
+  clearCover();
+}
+function saveGame() {
+  const title = document.getElementById('f-title').value.trim();
+  if (!title) { document.getElementById('f-title').focus(); return; }
+  const g = {
+    id: editId||Date.now(),
+    title,
+    console: document.getElementById('f-console').value,
+    price: parseFloat(document.getElementById('f-price').value)||null,
+    priority: document.getElementById('f-priority').value,
+    genre: document.getElementById('f-genre').value.trim(),
+    note: document.getElementById('f-note').value.trim(),
+    cover: selectedCoverUrl||null,
+    found: false, foundPrice: null
+  };
+  if (editId) {
+    const idx = games.findIndex(x => x.id===editId);
+    if (idx!==-1) { g.found=games[idx].found; g.foundPrice=games[idx].foundPrice; games[idx]=g; }
+  } else { games.push(g); }
+  saveGames(); closeForm(); render();
+}
+
+/* ---- Helpers ---- */
+function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function esc(s) { return String(s||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+/* ---- Listeners ---- */
+document.getElementById('add-btn').addEventListener('click', () => {
+  if (document.getElementById('form-panel').classList.contains('open') && !editId) closeForm();
+  else { editId=null; clearCover(); openForm(); }
+});
+document.getElementById('cancel-btn').addEventListener('click', closeForm);
+document.getElementById('save-btn').addEventListener('click', saveGame);
+document.getElementById('f-title').addEventListener('keydown', e => { if (e.key==='Enter') saveGame(); });
+document.getElementById('search-cover-btn').addEventListener('click', searchCovers);
+document.getElementById('f-cover-search').addEventListener('keydown', e => { if (e.key==='Enter') searchCovers(); });
+document.getElementById('clear-cover-btn').addEventListener('click', clearCover);
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+loadGames();
+render();
+</script>
+</body>
+</html>
