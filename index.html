@@ -210,7 +210,11 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
     <div class="form-grid">
       <div class="field full">
         <label>Titre du jeu</label>
-        <input id="f-title" type="text" placeholder="ex: Dragon Quest XI S" autocomplete="off" />
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="f-title" type="text" placeholder="ex: Dragon Quest XI S" autocomplete="off" style="flex:1" />
+          <button type="button" id="fetch-genres-btn" style="font-family:Cinzel,serif;font-size:0.72rem;font-weight:600;letter-spacing:0.05em;padding:8px 14px;border:1px solid var(--border-hover);border-radius:4px;background:transparent;color:var(--text-muted);cursor:pointer;white-space:nowrap;height:38px;transition:all 0.15s">Genres auto</button>
+        </div>
+        <div id="genre-status" style="font-size:0.76rem;color:var(--text-dim);font-style:italic;margin-top:4px;display:none"></div>
       </div>
 
       <div class="field full">
@@ -287,6 +291,72 @@ let filterGenre = null;
 let editId = null;
 let searchQuery = "";
 
+const RAWG_GENRE_MAP = {
+  'action': ['Action / Aventure'],
+  'adventure': ['Action / Aventure'],
+  'shooter': ['FPS / TPS'],
+  'racing': ['Sport / Course'],
+  'sports': ['Sport / Course'],
+  'platformer': ['Plateforme'],
+  'puzzle': ['Action / Aventure'],
+  'simulation': ['Simulation'],
+  'strategy': ['Stratégie / Tactique'],
+  'role-playing-games-rpg': ['JRPG','RPG occidental'],
+  'rpg': ['JRPG','RPG occidental'],
+  'indie': [],
+  'arcade': ['Action / Aventure'],
+  'fighting': ['Action / Aventure'],
+  'casual': [],
+  'massively-multiplayer': [],
+  'card': [],
+  'board-games': [],
+  'educational': [],
+  'family': [],
+};
+
+async function fetchGenres() {
+  const title = document.getElementById('f-title').value.trim();
+  if (!title) { alert('Saisis le titre du jeu dabord.'); return; }
+  const btn = document.getElementById('fetch-genres-btn');
+  const status = document.getElementById('genre-status');
+  btn.textContent = '...'; btn.disabled = true;
+  status.style.display = 'block'; status.textContent = 'Recherche en cours...';
+  try {
+    const res = await fetch('https://api.rawg.io/api/games?search=' + encodeURIComponent(title) + '&page_size=3&key=4a60bffdd8f849bb96cb4c483d12d470');
+    const data = await res.json();
+    const game = (data.results||[])[0];
+    if (!game || !game.genres || !game.genres.length) {
+      status.textContent = 'Aucun genre trouvé. Vérifie le titre (en anglais).';
+    } else {
+      const rawgGenres = game.genres.map(g => g.slug);
+      const matched = new Set();
+      rawgGenres.forEach(slug => {
+        const mapped = RAWG_GENRE_MAP[slug] || [];
+        mapped.forEach(g => matched.add(g));
+      });
+      // JRPG vs RPG occidental heuristic: check tags for jrpg
+      const tags = (game.tags||[]).map(t => t.slug);
+      if (matched.has('JRPG') || matched.has('RPG occidental')) {
+        if (tags.includes('jrpg') || tags.includes('japanese-rpg')) {
+          matched.delete('RPG occidental'); matched.add('JRPG');
+        } else if (tags.includes('rpg') && !tags.includes('jrpg')) {
+          matched.delete('JRPG'); matched.add('RPG occidental');
+        }
+      }
+      // Apply to checkboxes
+      resetChips('genre-chips');
+      matched.forEach(genre => {
+        const el = document.querySelector('#genre-chips .chip-check[value= + genre + ]');
+        if (el) el.checked = true;
+      });
+      status.textContent = 'Genres trouvés pour  + game.name +  — ajuste si besoin.';
+    }
+  } catch(e) {
+    status.textContent = 'Erreur réseau.';
+  }
+  btn.textContent = 'Genres auto'; btn.disabled = false;
+}
+
 function loadGames() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -312,6 +382,18 @@ function defaultGames() {
     { id:2, title:'Metaphor: ReFantazio', consoles:['PS5','Xbox Series X'], genres:['JRPG'], price:40, priority:'haute', note:'JRPG narratif très ambitieux, émotionnel', found:false, foundPrice:null, cover:null },
     { id:3, title:'Tales of Arise', consoles:['PS5','Xbox Series X'], genres:['JRPG','Action / Aventure'], price:20, priority:'moyenne', note:'Duo de persos attachants, beau visuellement', found:false, foundPrice:null, cover:null },
     { id:4, title:'Eiyuden Chronicle: Hundred Heroes', consoles:['Switch','PS5','Xbox Series X'], genres:['JRPG'], price:25, priority:'moyenne', note:'Successeur spirituel de Suikoden, 100 persos', found:false, foundPrice:null, cover:null },
+    { id:5, title:'Metroid Dread', consoles:['Switch'], genres:['Action / Aventure'], price:35, priority:'haute', note:'Action/aventure tendu, atmosphérique — pas horrifique', found:false, foundPrice:null, cover:null },
+    { id:6, title:'Xenoblade Chronicles X : Definitive Edition', consoles:['Switch'], genres:['JRPG'], price:50, priority:'moyenne', note:'Monde ouvert immense, tout juste sorti', found:false, foundPrice:null, cover:null },
+    { id:7, title:'Ghost of Tsushima', consoles:['PS5'], genres:['Action / Aventure'], price:35, priority:'haute', note:'RDR2-like en mode samouraï — probablement coup de coeur', found:false, foundPrice:null, cover:null },
+    { id:8, title:'Horizon Forbidden West', consoles:['PS5'], genres:['Action / Aventure'], price:25, priority:'moyenne', note:'Open world AAA très généreux, visuellement superbe', found:false, foundPrice:null, cover:null },
+    { id:9, title:'Spider-Man 2', consoles:['PS5'], genres:['Action / Aventure'], price:40, priority:'moyenne', note:'Fun pur, bien rythmé', found:false, foundPrice:null, cover:null },
+    { id:10, title:'A Plague Tale : Innocence', consoles:['PS5','Xbox Series X'], genres:['Action / Aventure'], price:15, priority:'haute', note:'Narratif/émotion, proche Life is Strange — pas d horreur', found:false, foundPrice:null, cover:null },
+    { id:11, title:'A Plague Tale : Requiem', consoles:['PS5','Xbox Series X'], genres:['Action / Aventure'], price:25, priority:'haute', note:'Suite directe, encore plus ambitieux visuellement', found:false, foundPrice:null, cover:null },
+    { id:12, title:'Hi-Fi Rush', consoles:['Xbox Series X'], genres:['Action / Aventure'], price:20, priority:'haute', note:'Action rythmique, fun et délirant, très original', found:false, foundPrice:null, cover:null },
+    { id:13, title:'Psychonauts 2', consoles:['Xbox Series X'], genres:['Plateforme'], price:20, priority:'moyenne', note:'Plateforme/aventure très écrit, humour et émotion', found:false, foundPrice:null, cover:null },
+    { id:14, title:'Pentiment', consoles:['Xbox Series X'], genres:['Action / Aventure'], price:15, priority:'basse', note:'Narratif pur, ovni absolu — expérience unique', found:false, foundPrice:null, cover:null },
+    { id:15, title:'Cyberpunk 2077', consoles:['PS5','Xbox Series X'], genres:['Action / Aventure','RPG occidental'], price:20, priority:'haute', note:'Immersion totale, narration soignée — bien patché maintenant', found:false, foundPrice:null, cover:null },
+    { id:16, title:'Disco Elysium', consoles:['PS5','Xbox Series X'], genres:['RPG occidental'], price:15, priority:'moyenne', note:'RPG narratif unique, si tu aimes lire — ovni total', found:false, foundPrice:null, cover:null },
   ];
 }
 
@@ -519,6 +601,7 @@ document.getElementById('add-btn').addEventListener('click', () => {
   if (document.getElementById('form-panel').classList.contains('open') && !editId) closeForm();
   else { editId=null; clearCover(); resetChips('console-chips'); resetChips('genre-chips'); openForm(); }
 });
+document.getElementById('fetch-genres-btn').addEventListener('click', fetchGenres);
 document.getElementById('cancel-btn').addEventListener('click', closeForm);
 document.getElementById('save-btn').addEventListener('click', saveGame);
 document.getElementById('clear-cover-btn').addEventListener('click', clearCover);
