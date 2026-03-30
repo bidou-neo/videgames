@@ -210,11 +210,7 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
     <div class="form-grid">
       <div class="field full">
         <label>Titre du jeu</label>
-        <div style="display:flex;gap:8px;align-items:center">
-          <input id="f-title" type="text" placeholder="ex: Dragon Quest XI S" autocomplete="off" style="flex:1" />
-          <button type="button" id="fetch-genres-btn" style="font-family:Cinzel,serif;font-size:0.72rem;font-weight:600;letter-spacing:0.05em;padding:8px 14px;border:1px solid var(--border-hover);border-radius:4px;background:transparent;color:var(--text-muted);cursor:pointer;white-space:nowrap;height:38px;transition:all 0.15s">Genres auto</button>
-        </div>
-        <div id="genre-status" style="font-size:0.76rem;color:var(--text-dim);font-style:italic;margin-top:4px;display:none"></div>
+        <input id="f-title" type="text" placeholder="ex: Dragon Quest XI S" autocomplete="off" />
       </div>
 
       <div class="field full">
@@ -290,75 +286,6 @@ let filterConsole = null;
 let filterGenre = null;
 let editId = null;
 let searchQuery = "";
-
-const RAWG_GENRE_MAP = {
-  'action': ['Action / Aventure'],
-  'adventure': ['Action / Aventure'],
-  'shooter': ['FPS / TPS'],
-  'racing': ['Sport / Course'],
-  'sports': ['Sport / Course'],
-  'platformer': ['Plateforme'],
-  'puzzle': ['Action / Aventure'],
-  'simulation': ['Simulation'],
-  'strategy': ['Stratégie / Tactique'],
-  'role-playing-games-rpg': ['JRPG','RPG occidental'],
-  'rpg': ['JRPG','RPG occidental'],
-  'indie': [],
-  'arcade': ['Action / Aventure'],
-  'fighting': ['Action / Aventure'],
-  'casual': [],
-  'massively-multiplayer': [],
-  'card': [],
-  'board-games': [],
-  'educational': [],
-  'family': [],
-};
-
-async function fetchGenres() {
-  const title = document.getElementById('f-title').value.trim();
-  if (!title) { alert('Saisis le titre du jeu dabord.'); return; }
-  const btn = document.getElementById('fetch-genres-btn');
-  const status = document.getElementById('genre-status');
-  btn.textContent = '...'; btn.disabled = true;
-  status.style.display = 'block'; status.textContent = 'Recherche en cours...';
-  try {
-    const rawgUrl = 'https://api.rawg.io/api/games?search=' + encodeURIComponent(title) + '&page_size=3&key=4a60bffdd8f849bb96cb4c483d12d470';
-    const res = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent(rawgUrl));
-    const wrapper = await res.json();
-    const data2 = JSON.parse(wrapper.contents);
-    const data = data2;
-    const game = (data.results||[])[0];
-    if (!game || !game.genres || !game.genres.length) {
-      status.textContent = 'Aucun genre trouvé. Vérifie le titre (en anglais).';
-    } else {
-      const rawgGenres = game.genres.map(g => g.slug);
-      const matched = new Set();
-      rawgGenres.forEach(slug => {
-        const mapped = RAWG_GENRE_MAP[slug] || [];
-        mapped.forEach(g => matched.add(g));
-      });
-      // JRPG vs RPG occidental heuristic: check tags for jrpg
-      const tags = (game.tags||[]).map(t => t.slug);
-      if (matched.has('JRPG') || matched.has('RPG occidental')) {
-        if (tags.includes('jrpg') || tags.includes('japanese-rpg')) {
-          matched.delete('RPG occidental'); matched.add('JRPG');
-        } else if (tags.includes('rpg') && !tags.includes('jrpg')) {
-          matched.delete('JRPG'); matched.add('RPG occidental');
-        }
-      }
-      // Apply to checkboxes
-      resetChips('genre-chips');
-      matched.forEach(genre => {
-        const el = document.querySelector('#genre-chips .chip-check[value= + genre + ]');
-        if (el) el.checked = true;
-      });
-      status.textContent = 'Genres trouvés pour  + game.name +  — ajuste si besoin.';
-    }
-  } catch(e) {
-    status.textContent = 'Erreur réseau.';
-  }
-  btn.textContent = 'Genres auto'; btn.disabled = false;
-}
 
 function loadGames() {
   try {
@@ -604,7 +531,6 @@ document.getElementById('add-btn').addEventListener('click', () => {
   if (document.getElementById('form-panel').classList.contains('open') && !editId) closeForm();
   else { editId=null; clearCover(); resetChips('console-chips'); resetChips('genre-chips'); openForm(); }
 });
-document.getElementById('fetch-genres-btn').addEventListener('click', fetchGenres);
 document.getElementById('cancel-btn').addEventListener('click', closeForm);
 document.getElementById('save-btn').addEventListener('click', saveGame);
 document.getElementById('clear-cover-btn').addEventListener('click', clearCover);
