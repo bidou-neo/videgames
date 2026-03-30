@@ -274,7 +274,8 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
 </main>
 
 <script>
-const STORAGE_KEY = 'jrpg-chasse-v7';
+const STORAGE_KEY = 'jrpg-chasse';
+const OLD_KEYS = ['jrpg-chasse-v7','jrpg-chasse-v6','jrpg-chasse-v5','jrpg-chasse-v4','jrpg-chasse-v3','jrpg-chasse-v2','jrpg-chasse-v1'];
 const CONSOLES = ['Switch','PS5','Xbox Series X'];
 const GENRES = ['JRPG','RPG occidental','Action / Aventure','FPS / TPS','Plateforme','Sport / Course','Stratégie / Tactique','Simulation'];
 const CONSOLE_BADGE = { 'Switch':'badge-switch','PS5':'badge-ps5','Xbox Series X':'badge-xbox' };
@@ -289,7 +290,18 @@ let searchQuery = "";
 function loadGames() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    games = raw ? JSON.parse(raw) : defaultGames();
+    if (raw) { games = JSON.parse(raw); return; }
+    // Migrate from old key
+    for (const old of OLD_KEYS) {
+      const oldRaw = localStorage.getItem(old);
+      if (oldRaw) {
+        games = JSON.parse(oldRaw);
+        saveGames();
+        localStorage.removeItem(old);
+        return;
+      }
+    }
+    games = defaultGames();
   } catch(e) { games = defaultGames(); }
 }
 function saveGames() { localStorage.setItem(STORAGE_KEY, JSON.stringify(games)); }
