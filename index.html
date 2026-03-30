@@ -39,31 +39,32 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
 .main { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
 
 /* Toolbar */
-.toolbar { margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.6rem; }
-.toolbar-top { display: flex; gap: 0.75rem; align-items: center; }
+.toolbar { margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.toolbar-top { display: flex; gap: 0.75rem; align-items: center; justify-content: space-between; }
+.add-btn { font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; padding: 7px 18px; border: 1px solid var(--gold); border-radius: 4px; background: var(--gold-dim); color: var(--gold-light); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.add-btn:hover { background: rgba(201,168,76,0.28); }
 .search-input {
-  flex: 1;
   background: var(--bg2);
   border: 1px solid var(--border);
   border-radius: 99px;
   color: var(--text);
   font-family: 'Crimson Pro', serif;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   padding: 6px 16px;
   outline: none;
   transition: border-color 0.15s;
+  width: 180px;
 }
 .search-input:focus { border-color: var(--border-hover); }
 .search-input::placeholder { color: var(--text-dim); font-style: italic; }
-.add-btn { font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; padding: 7px 18px; border: 1px solid var(--gold); border-radius: 4px; background: var(--gold-dim); color: var(--gold-light); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
-.add-btn:hover { background: rgba(201,168,76,0.28); }
 
 .filter-row { display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center; }
-.filter-sep { width: 1px; height: 18px; background: var(--border); margin: 0 4px; flex-shrink: 0; }
+.filter-sep { width: 1px; height: 16px; background: var(--border); margin: 0 2px; flex-shrink: 0; }
 .filter-btn { font-family: 'Crimson Pro', serif; font-size: 0.82rem; padding: 4px 12px; border: 1px solid var(--border); border-radius: 99px; background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
 .filter-btn:hover { border-color: var(--border-hover); color: var(--text); }
-.filter-btn.active { border-color: var(--gold); color: var(--gold-light); background: var(--gold-dim); }
 .filter-btn.active-status { border-color: var(--text-muted); color: var(--text); background: rgba(255,255,255,0.05); }
+.filter-btn.active-console { border-color: var(--border-hover); color: var(--text); background: rgba(255,255,255,0.05); }
+.filter-btn.active-genre { border-color: var(--gold); color: var(--gold-light); background: var(--gold-dim); }
 
 /* Form */
 .form-panel { background: var(--bg2); border: 1px solid var(--border-hover); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem; display: none; }
@@ -79,28 +80,14 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
 .clear-cover-btn { font-size: 0.76rem; color: var(--text-dim); cursor: pointer; background: none; border: none; text-decoration: underline; margin-top: 4px; display: block; }
 .clear-cover-btn:hover { color: var(--red); }
 
-/* Toggle chips (consoles + genres) */
+/* Chips */
 .chip-group { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
 .chip-check { display: none; }
-.chip-label {
-  font-family: 'Cinzel', serif;
-  font-size: 0.7rem;
-  padding: 4px 11px;
-  border-radius: 99px;
-  border: 1px solid var(--border);
-  cursor: pointer;
-  color: var(--text-muted);
-  transition: all 0.15s;
-  user-select: none;
-  letter-spacing: 0.03em;
-}
+.chip-label { font-family: 'Cinzel', serif; font-size: 0.7rem; padding: 4px 11px; border-radius: 99px; border: 1px solid var(--border); cursor: pointer; color: var(--text-muted); transition: all 0.15s; user-select: none; letter-spacing: 0.03em; }
 .chip-label:hover { border-color: var(--border-hover); color: var(--text); }
-/* Console colors */
-.chip-check[value="Switch"]:checked ~ label[for="c-switch"],
-.chip-check.console-chip[value="Switch"]:checked + .chip-label { color: #ff6b6b; border-color: rgba(228,0,15,0.6); background: rgba(228,0,15,0.12); }
+.chip-check[value="Switch"]:checked + .chip-label { color: #ff6b6b; border-color: rgba(228,0,15,0.6); background: rgba(228,0,15,0.12); }
 .chip-check[value="PS5"]:checked + .chip-label { color: #6b9fff; border-color: rgba(0,48,135,0.7); background: rgba(0,48,135,0.18); }
 .chip-check[value="Xbox Series X"]:checked + .chip-label { color: #6bdf6b; border-color: rgba(16,124,16,0.6); background: rgba(16,124,16,0.12); }
-/* Genre color — gold tint */
 .chip-check.genre-chip:checked + .chip-label { color: var(--gold-light); border-color: rgba(201,168,76,0.6); background: rgba(201,168,76,0.12); }
 
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
@@ -120,17 +107,14 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
 .game-card:hover { border-color: var(--border-hover); }
 .game-card.found { opacity: 0.4; }
 .game-card.found:hover { opacity: 0.65; }
-
 .card-cover { width: 64px; min-height: 90px; flex-shrink: 0; background: var(--bg3); display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .card-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .placeholder-icon { opacity: 0.2; }
-
 .check-col { display: flex; align-items: flex-start; padding: 0.85rem 0 0.85rem 0.85rem; flex-shrink: 0; }
-.check-btn { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--text-dim); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; color: transparent; font-size: 12px; flex-shrink: 0; }
+.check-btn { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--text-dim); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; color: transparent; font-size: 12px; }
 .check-btn:hover { border-color: var(--green-light); }
 .game-card.found .check-btn { background: var(--green); border-color: var(--green); color: #fff; }
-
-.card-content { flex: 1; min-width: 0; padding: 0.75rem; display: flex; flex-direction: column; gap: 4px; }
+.card-content { flex: 1; min-width: 0; padding: 0.75rem; display: flex; flex-direction: column; gap: 3px; }
 .game-title { font-family: 'Cinzel', serif; font-size: 0.88rem; font-weight: 600; color: var(--gold-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .game-card.found .game-title { text-decoration: line-through; color: var(--text-dim); }
 .meta { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
@@ -141,13 +125,12 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
 .badge-price { color: var(--gold); border-color: rgba(201,168,76,0.35); background: var(--gold-dim); }
 .badge-found-price { color: var(--green-light); border-color: rgba(46,125,82,0.4); background: rgba(46,125,82,0.12); }
 .badge-prio { color: #e8945a; border-color: rgba(232,148,90,0.35); background: rgba(232,148,90,0.1); }
-.badge-genre { color: var(--text-muted); border-color: var(--border); background: transparent; font-style: italic; font-family: 'Crimson Pro', serif; font-size: 0.75rem; border: none; padding: 0; }
+.badge-genre { font-family: 'Crimson Pro', serif; font-size: 0.75rem; font-style: italic; color: var(--text-dim); border: none; padding: 0; border-radius: 0; background: transparent; letter-spacing: 0; }
 .game-note { font-size: 0.82rem; color: var(--text-muted); font-style: italic; }
 .found-price-row { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
 .found-price-row label { font-size: 0.78rem; color: var(--text-muted); }
 .found-price-input { width: 72px; background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; color: var(--green-light); font-family: 'Crimson Pro', serif; font-size: 0.9rem; padding: 3px 8px; outline: none; }
 .found-price-input:focus { border-color: var(--green-light); }
-
 .card-actions { display: flex; flex-direction: column; gap: 4px; padding: 0.6rem 0.7rem 0.6rem 0; justify-content: flex-start; flex-shrink: 0; }
 .icon-btn { width: 28px; height: 28px; border: 1px solid var(--border); border-radius: 4px; background: transparent; cursor: pointer; color: var(--text-dim); font-size: 13px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
 .icon-btn:hover { border-color: var(--border-hover); color: var(--text-muted); }
@@ -162,7 +145,6 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
   .form-grid .full { grid-column: 1; }
   .stats-bar { gap: 1rem; }
   .cover-row { flex-direction: column; }
-  .toolbar-top { flex-wrap: wrap; }
 }
 </style>
 </head>
@@ -183,14 +165,15 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
 <main class="main">
   <div class="toolbar">
     <div class="toolbar-top">
-      <input class="search-input" id="search-input" type="search" placeholder="Rechercher un jeu..." />
+      <div class="filter-row" id="filter-row-status">
+        <button class="filter-btn active-status" data-type="status" data-val="tous">Tous</button>
+        <button class="filter-btn" data-type="status" data-val="trouver">À trouver</button>
+        <button class="filter-btn" data-type="status" data-val="trouvés">Trouvés</button>
+      </div>
+      <input class="search-input" id="search-input" type="search" placeholder="Rechercher..." />
       <button class="add-btn" id="add-btn">+ Ajouter</button>
     </div>
-    <div class="filter-row" id="filter-row">
-      <button class="filter-btn active-status" data-type="status" data-val="tous">Tous</button>
-      <button class="filter-btn" data-type="status" data-val="trouver">À trouver</button>
-      <button class="filter-btn" data-type="status" data-val="trouvés">Trouvés</button>
-      <div class="filter-sep"></div>
+    <div class="filter-row">
       <button class="filter-btn" data-type="console" data-val="Switch">Switch</button>
       <button class="filter-btn" data-type="console" data-val="PS5">PS5</button>
       <button class="filter-btn" data-type="console" data-val="Xbox Series X">Xbox</button>
@@ -198,10 +181,11 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
       <button class="filter-btn" data-type="genre" data-val="JRPG">JRPG</button>
       <button class="filter-btn" data-type="genre" data-val="RPG occidental">RPG occ.</button>
       <button class="filter-btn" data-type="genre" data-val="Action / Aventure">Action</button>
+      <button class="filter-btn" data-type="genre" data-val="FPS / TPS">FPS/TPS</button>
       <button class="filter-btn" data-type="genre" data-val="Plateforme">Plateforme</button>
+      <button class="filter-btn" data-type="genre" data-val="Sport / Course">Sport</button>
       <button class="filter-btn" data-type="genre" data-val="Stratégie / Tactique">Stratégie</button>
       <button class="filter-btn" data-type="genre" data-val="Simulation">Simulation</button>
-      <button class="filter-btn" data-type="genre" data-val="Indie">Indie</button>
     </div>
   </div>
 
@@ -231,11 +215,11 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
       <div class="field full">
         <label>Consoles</label>
         <div class="chip-group" id="console-chips">
-          <input class="chip-check console-chip" type="checkbox" id="ck-switch" value="Switch" />
+          <input class="chip-check" type="checkbox" id="ck-switch" value="Switch" />
           <label class="chip-label" for="ck-switch">Switch</label>
-          <input class="chip-check console-chip" type="checkbox" id="ck-ps5" value="PS5" />
+          <input class="chip-check" type="checkbox" id="ck-ps5" value="PS5" />
           <label class="chip-label" for="ck-ps5">PS5</label>
-          <input class="chip-check console-chip" type="checkbox" id="ck-xbox" value="Xbox Series X" />
+          <input class="chip-check" type="checkbox" id="ck-xbox" value="Xbox Series X" />
           <label class="chip-label" for="ck-xbox">Xbox Series X</label>
         </div>
       </div>
@@ -249,14 +233,16 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
           <label class="chip-label" for="gk-rpgoc">RPG occidental</label>
           <input class="chip-check genre-chip" type="checkbox" id="gk-action" value="Action / Aventure" />
           <label class="chip-label" for="gk-action">Action / Aventure</label>
+          <input class="chip-check genre-chip" type="checkbox" id="gk-fps" value="FPS / TPS" />
+          <label class="chip-label" for="gk-fps">FPS / TPS</label>
           <input class="chip-check genre-chip" type="checkbox" id="gk-plateforme" value="Plateforme" />
           <label class="chip-label" for="gk-plateforme">Plateforme</label>
+          <input class="chip-check genre-chip" type="checkbox" id="gk-sport" value="Sport / Course" />
+          <label class="chip-label" for="gk-sport">Sport / Course</label>
           <input class="chip-check genre-chip" type="checkbox" id="gk-strat" value="Stratégie / Tactique" />
           <label class="chip-label" for="gk-strat">Stratégie / Tactique</label>
           <input class="chip-check genre-chip" type="checkbox" id="gk-simu" value="Simulation" />
           <label class="chip-label" for="gk-simu">Simulation</label>
-          <input class="chip-check genre-chip" type="checkbox" id="gk-indie" value="Indie" />
-          <label class="chip-label" for="gk-indie">Indie</label>
         </div>
       </div>
 
@@ -287,17 +273,17 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
 </main>
 
 <script>
-const STORAGE_KEY = 'jrpg-chasse-v6';
-const CONSOLES = ['Switch', 'PS5', 'Xbox Series X'];
-const GENRES = ['JRPG','RPG occidental','Action / Aventure','Plateforme','Stratégie / Tactique','Simulation','Indie'];
+const STORAGE_KEY = 'jrpg-chasse-v7';
+const CONSOLES = ['Switch','PS5','Xbox Series X'];
+const GENRES = ['JRPG','RPG occidental','Action / Aventure','FPS / TPS','Plateforme','Sport / Course','Stratégie / Tactique','Simulation'];
 const CONSOLE_BADGE = { 'Switch':'badge-switch','PS5':'badge-ps5','Xbox Series X':'badge-xbox' };
 
 let games = [];
 let filterStatus = 'tous';
 let filterConsole = null;
 let filterGenre = null;
-let searchQuery = '';
 let editId = null;
+let searchQuery = "";
 
 function loadGames() {
   try {
@@ -316,18 +302,16 @@ function defaultGames() {
   ];
 }
 
-/* ---- Chips helpers ---- */
 function getChips(groupId) {
   return [...document.querySelectorAll(`#${groupId} .chip-check`)].filter(c => c.checked).map(c => c.value);
 }
 function setChips(groupId, values) {
-  document.querySelectorAll(`#${groupId} .chip-check`).forEach(c => { c.checked = values.includes(c.value); });
+  document.querySelectorAll(`#${groupId} .chip-check`).forEach(c => { c.checked = (values||[]).includes(c.value); });
 }
 function resetChips(groupId) {
   document.querySelectorAll(`#${groupId} .chip-check`).forEach(c => { c.checked = false; });
 }
 
-/* ---- Cover preview ---- */
 function initCoverPreview() {
   const input = document.getElementById('f-cover');
   const preview = document.getElementById('cover-preview');
@@ -347,18 +331,13 @@ function clearCover() {
   p.src = ''; p.style.opacity = '0.2';
 }
 
-/* ---- Render ---- */
 function render() {
   let list = [...games];
-
   if (filterStatus === 'trouver') list = list.filter(g => !g.found);
   else if (filterStatus === 'trouvés') list = list.filter(g => g.found);
   if (filterConsole) list = list.filter(g => (g.consoles||[]).includes(filterConsole));
   if (filterGenre) list = list.filter(g => (g.genres||[]).includes(filterGenre));
-  if (searchQuery) {
-    const q = searchQuery.toLowerCase();
-    list = list.filter(g => g.title.toLowerCase().includes(q) || (g.note||'').toLowerCase().includes(q));
-  }
+  if (searchQuery) { const q = searchQuery.toLowerCase(); list = list.filter(g => g.title.toLowerCase().includes(q) || (g.note||"").toLowerCase().includes(q)); }
 
   list.sort((a,b) => {
     if (a.found !== b.found) return a.found ? 1 : -1;
@@ -396,7 +375,7 @@ function render() {
 
 function cardHTML(g) {
   const consoleBadges = (g.consoles||[]).map(c => `<span class="badge ${CONSOLE_BADGE[c]||''}">${c}</span>`).join('');
-  const genreBadges = (g.genres||[]).map(genre => `<span class="badge badge-genre">${escHtml(genre)}</span>`).join('<span style="color:var(--text-dim);font-size:0.7rem">·</span>');
+  const genreText = (g.genres||[]).join(' · ');
   const coverSection = g.cover
     ? `<img src="${esc(g.cover)}" alt="${esc(g.title)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none'" />`
     : `<svg class="placeholder-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`;
@@ -416,7 +395,7 @@ function cardHTML(g) {
     <div class="card-content">
       <div class="game-title">${escHtml(g.title)}</div>
       <div class="meta">${consoleBadges}${priceTag}${prioTag}</div>
-      <div class="meta">${genreBadges}</div>
+      ${genreText ? `<div class="meta"><span class="badge badge-genre">${escHtml(genreText)}</span></div>` : ''}
       ${g.note ? `<div class="game-note">${escHtml(g.note)}</div>` : ''}
       ${foundPriceSection}
     </div>
@@ -427,7 +406,6 @@ function cardHTML(g) {
   </div>`;
 }
 
-/* ---- Actions ---- */
 function toggleFound(id) {
   const g = games.find(x => x.id===id); if (!g) return;
   g.found = !g.found; if (!g.found) g.foundPrice = null;
@@ -471,10 +449,10 @@ function saveGame() {
   const title = document.getElementById('f-title').value.trim();
   if (!title) { document.getElementById('f-title').focus(); return; }
   const consoles = getChips('console-chips');
-  const genres = getChips('genre-chips');
   if (!consoles.length) { alert('Sélectionne au moins une console.'); return; }
   const g = {
-    id: editId||Date.now(), title, consoles, genres,
+    id: editId||Date.now(), title, consoles,
+    genres: getChips('genre-chips'),
     price: parseFloat(document.getElementById('f-price').value)||null,
     priority: document.getElementById('f-priority').value,
     note: document.getElementById('f-note').value.trim(),
@@ -491,33 +469,28 @@ function saveGame() {
 function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function esc(s) { return String(s||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 
-/* ---- Filter listeners ---- */
+/* Filters */
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const type = btn.dataset.type;
     const val = btn.dataset.val;
-
     if (type === 'status') {
       filterStatus = val;
       document.querySelectorAll('.filter-btn[data-type="status"]').forEach(b => b.classList.remove('active-status'));
       btn.classList.add('active-status');
     } else if (type === 'console') {
-      if (filterConsole === val) {
-        filterConsole = null;
-        btn.classList.remove('active');
-      } else {
+      if (filterConsole === val) { filterConsole = null; btn.classList.remove('active-console'); }
+      else {
         filterConsole = val;
-        document.querySelectorAll('.filter-btn[data-type="console"]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        document.querySelectorAll('.filter-btn[data-type="console"]').forEach(b => b.classList.remove('active-console'));
+        btn.classList.add('active-console');
       }
     } else if (type === 'genre') {
-      if (filterGenre === val) {
-        filterGenre = null;
-        btn.classList.remove('active');
-      } else {
+      if (filterGenre === val) { filterGenre = null; btn.classList.remove('active-genre'); }
+      else {
         filterGenre = val;
-        document.querySelectorAll('.filter-btn[data-type="genre"]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        document.querySelectorAll('.filter-btn[data-type="genre"]').forEach(b => b.classList.remove('active-genre'));
+        btn.classList.add('active-genre');
       }
     }
     render();
