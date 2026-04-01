@@ -307,7 +307,18 @@ async function loadGames() {
     if (res.ok) {
       const data = await res.json();
       githubSha = data.sha;
-      if (data.games.length) { games = data.games; } else { const raw = localStorage.getItem(STORAGE_KEY); games = raw ? JSON.parse(raw) : defaultGames(); }
+      if (data.games.length) {
+        games = data.games;
+      } else {
+        // Try current key first, then old versioned keys
+        const keys = [STORAGE_KEY,'jrpg-chasse-v7','jrpg-chasse-v6','jrpg-chasse-v5','jrpg-chasse-v4','jrpg-chasse-v3'];
+        let found = false;
+        for (const k of keys) {
+          const raw = localStorage.getItem(k);
+          if (raw) { try { const parsed = JSON.parse(raw); if (parsed.length) { games = parsed; found = true; break; } } catch(e){} }
+        }
+        if (!found) games = defaultGames();
+      }
       localStorage.setItem(STORAGE_KEY, JSON.stringify(games));
     } else {
       const raw = localStorage.getItem(STORAGE_KEY);
