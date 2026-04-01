@@ -1,1 +1,268 @@
-[]
+[
+  {
+    "id": 1,
+    "title": "Dragon Quest XI S 2",
+    "consoles": [
+      "Switch"
+    ],
+    "genres": [
+      "JRPG"
+    ],
+    "price": 30,
+    "priority": "haute",
+    "note": "Histoire solide, persos attachants — priorité n°1",
+    "cover": "https://m.media-amazon.com/images/I/71h7LlFFXqL._AC_SL1500_.jpg",
+    "found": false,
+    "foundPrice": null
+  },
+  {
+    "id": 2,
+    "title": "Metaphor: ReFantazio",
+    "consoles": [
+      "PS5",
+      "Xbox Series X"
+    ],
+    "genres": [
+      "JRPG"
+    ],
+    "price": 40,
+    "priority": "haute",
+    "note": "JRPG narratif très ambitieux, émotionnel",
+    "found": false,
+    "foundPrice": null,
+    "cover": null
+  },
+  {
+    "id": 3,
+    "title": "Tales of Arise",
+    "consoles": [
+      "PS5",
+      "Xbox Series X"
+    ],
+    "genres": [
+      "JRPG",
+      "Action / Aventure"
+    ],
+    "price": 20,
+    "priority": "moyenne",
+    "note": "Duo de persos attachants, beau visuellement",
+    "found": false,
+    "foundPrice": null,
+    "cover": null
+  },
+  {
+    "id": 4,
+    "title": "Eiyuden Chronicle: Hundred Heroes",
+    "consoles": [
+      "Switch",
+      "PS5",
+      "Xbox Series X"
+    ],
+    "genres": [
+      "JRPG"
+    ],
+    "price": 25,
+    "priority": "moyenne",
+    "note": "Successeur spirituel de Suikoden, 100 persos",
+    "found": false,
+    "foundPrice": null,
+    "cover": null
+  },
+  {
+    "id": 5,
+    "title": "Metroid Dread",
+    "consoles": [
+      "Switch"
+    ],
+    "genres": [
+      "Action / Aventure"
+    ],
+    "price": 35,
+    "priority": "haute",
+    "note": "Action/aventure tendu, atmosphérique — pas horrifique",
+    "found": false,
+    "foundPrice": null,
+    "cover": null
+  },
+  {
+    "id": 6,
+    "title": "Xenoblade Chronicles X : Definitive Edition",
+    "consoles": [
+      "Switch"
+    ],
+    "genres": [
+      "JRPG"
+    ],
+    "price": 50,
+    "priority": "moyenne",
+    "note": "Monde ouvert immense, tout juste sorti",
+    "found": false,
+    "foundPrice": null,
+    "cover": null
+  },
+  {
+    "id": 7,
+    "title": "Ghost of Tsushima",
+    "consoles": [
+      "PS5"
+    ],
+    "genres": [
+      "Action / Aventure"
+    ],
+    "price": 35,
+    "priority": "haute",
+    "note": "RDR2-like en mode samouraï — probablement coup de coeur",
+    "found": false,
+    "foundPrice": null,
+    "cover": null
+  },
+  {
+    "id": 8,
+    "title": "Horizon Forbidden West",
+    "consoles": [
+      "PS5"
+    ],
+    "genres": [
+      "Action / Aventure"
+    ],
+    "price": 25,
+    "priority": "moyenne",
+    "note": "Open world AAA très généreux, visuellement superbe",
+    "found": false,
+    "foundPrice": null,
+    "cover": null
+  },
+  {
+    "id": 9,
+    "title": "Spider-Man 2",
+    "consoles": [
+      "PS5"
+    ],
+    "genres": [
+      "Action / Aventure"
+    ],
+    "price": 40,
+    "priority": "moyenne",
+    "note": "Fun pur, bien rythmé",
+    "found": false,
+    "foundPrice": null,
+    "cover": null
+  },
+  {
+    "id": 10,
+    "title": "A Plague Tale : Innocence",
+    "consoles": [
+      "PS5",
+      "Xbox Series X"
+    ],
+    "genres": [
+      "Action / Aventure"
+    ],
+    "price": 15,
+    "priority": "haute",
+    "note": "Narratif/émotion, proche Life is Strange — pas d horreur",
+    "found": false,
+    "foundPrice": null,
+    "cover": null
+  },
+  {
+    "id": 11,
+    "title": "A Plague Tale : Requiem",
+    "consoles": [
+      "PS5",
+      "Xbox Series X"
+    ],
+    "genres": [
+      "Action / Aventure"
+    ],
+    "price": 25,
+    "priority": "haute",
+    "note": "Suite directe, encore plus ambitieux visuellement",
+    "found": false,
+    "foundPrice": null,
+    "cover": null
+  },
+  {
+    "id": 12,
+    "title": "Hi-Fi Rush",
+    "consoles": [
+      "Xbox Series X"
+    ],
+    "genres": [
+      "Action / Aventure"
+    ],
+    "price": 20,
+    "priority": "haute",
+    "note": "Action rythmique, fun et délirant, très original",
+    "found": false,
+    "foundPrice": null,
+    "cover": null
+  },
+  {
+    "id": 13,
+    "title": "Psychonauts 2",
+    "consoles": [
+      "Xbox Series X"
+    ],
+    "genres": [
+      "Plateforme"
+    ],
+    "price": 20,
+    "priority": "moyenne",
+    "note": "Plateforme/aventure très écrit, humour et émotion",
+    "found": false,
+    "foundPrice": null,
+    "cover": null
+  },
+  {
+    "id": 14,
+    "title": "Pentiment",
+    "consoles": [
+      "Xbox Series X"
+    ],
+    "genres": [
+      "Action / Aventure"
+    ],
+    "price": 15,
+    "priority": "basse",
+    "note": "Narratif pur, ovni absolu — expérience unique",
+    "found": false,
+    "foundPrice": null,
+    "cover": null
+  },
+  {
+    "id": 15,
+    "title": "Cyberpunk 2077",
+    "consoles": [
+      "PS5",
+      "Xbox Series X"
+    ],
+    "genres": [
+      "Action / Aventure",
+      "RPG occidental"
+    ],
+    "price": 20,
+    "priority": "haute",
+    "note": "Immersion totale, narration soignée — bien patché maintenant",
+    "found": false,
+    "foundPrice": null,
+    "cover": null
+  },
+  {
+    "id": 16,
+    "title": "Disco Elysium",
+    "consoles": [
+      "PS5",
+      "Xbox Series X"
+    ],
+    "genres": [
+      "RPG occidental"
+    ],
+    "price": 15,
+    "priority": "moyenne",
+    "note": "RPG narratif unique, si tu aimes lire — ovni total",
+    "found": false,
+    "foundPrice": null,
+    "cover": null
+  }
+]
