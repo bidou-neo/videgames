@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Liste de Chasse — Jeux Vidéo</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#c9a84c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Chasse">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
@@ -162,6 +167,7 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
   <div class="stat"><span class="stat-val" id="s-spent">0€</span><span class="stat-lbl">Dépensé</span></div>
 </div>
 
+<div id="sync-status" style="text-align:center;font-size:0.78rem;padding:6px;font-style:italic;color:var(--text-dim);display:none"></div>
 <main class="main">
   <div class="toolbar">
     <div class="toolbar-top">
@@ -275,7 +281,9 @@ body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color:
 
 <script>
 const STORAGE_KEY = 'jrpg-chasse';
-const OLD_KEYS = ['jrpg-chasse-v7','jrpg-chasse-v6','jrpg-chasse-v5','jrpg-chasse-v4','jrpg-chasse-v3','jrpg-chasse-v2','jrpg-chasse-v1'];
+const API_URL = 'https://videogames-kouyt929a-bidou-neos-projects.vercel.app/api/games';
+let githubSha = null;
+
 const CONSOLES = ['Switch','PS5','Xbox Series X'];
 const GENRES = ['JRPG','RPG occidental','Action / Aventure','FPS / TPS','Plateforme','Sport / Course','Stratégie / Tactique','Simulation'];
 const CONSOLE_BADGE = { 'Switch':'badge-switch','PS5':'badge-ps5','Xbox Series X':'badge-xbox' };
@@ -287,22 +295,46 @@ let filterGenre = null;
 let editId = null;
 let searchQuery = "";
 
-function loadGames() {
+function showSync(msg, duration) {
+  const el = document.getElementById('sync-status');
+  el.textContent = msg; el.style.display = 'block';
+  if (duration) setTimeout(() => { el.style.display = 'none'; }, duration);
+}
+
+async function loadGames() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) { games = JSON.parse(raw); return; }
-    // Migrate from old key
-    for (const old of OLD_KEYS) {
-      const oldRaw = localStorage.getItem(old);
-      if (oldRaw) {
-        games = JSON.parse(oldRaw);
-        saveGames();
-        localStorage.removeItem(old);
-        return;
-      }
+    const res = await fetch(API_URL);
+    if (res.ok) {
+      const data = await res.json();
+      githubSha = data.sha;
+      if (data.games.length) { games = data.games; } else { const raw = localStorage.getItem(STORAGE_KEY); games = raw ? JSON.parse(raw) : defaultGames(); }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(games));
+    } else {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      games = raw ? JSON.parse(raw) : defaultGames();
     }
-    games = defaultGames();
-  } catch(e) { games = defaultGames(); }
+  } catch(e) {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    games = raw ? JSON.parse(raw) : defaultGames();
+  }
+}
+
+async function saveGames() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(games));
+  try {
+    const res = await fetch(API_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ games, sha: githubSha })
+    });
+    if (res.ok) {
+      const data = await res.json();
+      githubSha = data.sha;
+      showSync('✓ Synchronisé', 2000);
+    }
+  } catch(e) {
+    // Silent fail
+  }
 }
 function saveGames() { localStorage.setItem(STORAGE_KEY, JSON.stringify(games)); }
 
@@ -536,8 +568,8 @@ document.getElementById('save-btn').addEventListener('click', saveGame);
 document.getElementById('clear-cover-btn').addEventListener('click', clearCover);
 document.getElementById('f-title').addEventListener('keydown', e => { if (e.key==='Enter') saveGame(); });
 
-loadGames();
-render();
+showSync('Chargement...');
+loadGames().then(() => { render(); document.getElementById('sync-status').style.display = 'none'; });
 initCoverPreview();
 </script>
 </body>
