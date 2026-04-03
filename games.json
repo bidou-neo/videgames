@@ -264,5 +264,22 @@
     "found": false,
     "foundPrice": null,
     "cover": null
+  },
+  {
+    "id": 1775257876321,
+    "title": "Claire obscure",
+    "consoles": [
+      "PS5",
+      "Xbox Series X"
+    ],
+    "genres": [
+      "RPG occidental"
+    ],
+    "price": null,
+    "priority": "moyenne",
+    "note": "",
+    "cover": null,
+    "found": false,
+    "foundPrice": null
   }
 ]
