@@ -183,22 +183,6 @@
     "cover": null
   },
   {
-    "id": 12,
-    "title": "Hi-Fi Rush",
-    "consoles": [
-      "Xbox Series X"
-    ],
-    "genres": [
-      "Action / Aventure"
-    ],
-    "price": 20,
-    "priority": "haute",
-    "note": "Action rythmique, fun et délirant, très original",
-    "found": false,
-    "foundPrice": null,
-    "cover": null
-  },
-  {
     "id": 13,
     "title": "Psychonauts 2",
     "consoles": [
