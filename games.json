@@ -215,22 +215,6 @@
     "cover": null
   },
   {
-    "id": 14,
-    "title": "Pentiment",
-    "consoles": [
-      "Xbox Series X"
-    ],
-    "genres": [
-      "Action / Aventure"
-    ],
-    "price": 15,
-    "priority": "basse",
-    "note": "Narratif pur, ovni absolu — expérience unique",
-    "found": false,
-    "foundPrice": null,
-    "cover": null
-  },
-  {
     "id": 15,
     "title": "Cyberpunk 2077",
     "consoles": [
