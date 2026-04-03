@@ -249,23 +249,6 @@
     "cover": null
   },
   {
-    "id": 16,
-    "title": "Disco Elysium",
-    "consoles": [
-      "PS5",
-      "Xbox Series X"
-    ],
-    "genres": [
-      "RPG occidental"
-    ],
-    "price": 15,
-    "priority": "moyenne",
-    "note": "RPG narratif unique, si tu aimes lire — ovni total",
-    "found": false,
-    "foundPrice": null,
-    "cover": null
-  },
-  {
     "id": 1775257876321,
     "title": "Claire obscure",
     "consoles": [
