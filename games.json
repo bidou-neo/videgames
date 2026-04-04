@@ -117,23 +117,6 @@
     "cover": null
   },
   {
-    "id": 11,
-    "title": "A Plague Tale : Requiem",
-    "consoles": [
-      "PS5",
-      "Xbox Series X"
-    ],
-    "genres": [
-      "Action / Aventure"
-    ],
-    "price": 25,
-    "priority": "haute",
-    "note": "Suite directe, encore plus ambitieux visuellement",
-    "found": false,
-    "foundPrice": null,
-    "cover": null
-  },
-  {
     "id": 13,
     "title": "Psychonauts 2",
     "consoles": [
