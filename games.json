@@ -28,9 +28,9 @@
     "price": 40,
     "priority": "haute",
     "note": "JRPG narratif très ambitieux, émotionnel",
+    "cover": "https://cdn.loaded.com/496x700/media/catalog/product/m/e/metaphor-_refantazio_1.jpg",
     "found": false,
-    "foundPrice": null,
-    "cover": null
+    "foundPrice": null
   },
   {
     "id": 3,
