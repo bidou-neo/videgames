@@ -117,22 +117,6 @@
     "cover": null
   },
   {
-    "id": 8,
-    "title": "Horizon Forbidden West",
-    "consoles": [
-      "PS5"
-    ],
-    "genres": [
-      "Action / Aventure"
-    ],
-    "price": 25,
-    "priority": "moyenne",
-    "note": "Open world AAA très généreux, visuellement superbe",
-    "found": false,
-    "foundPrice": null,
-    "cover": null
-  },
-  {
     "id": 10,
     "title": "A Plague Tale : Innocence",
     "consoles": [
