@@ -1,6 +1,6 @@
 {
   "name": "Liste de Chasse",
-  "short_name": "Chasse",
+  "short_name": "Chasse aux jeux",
   "description": "Ma liste de jeux à trouver en magasin",
   "start_url": "/videgames/",
   "display": "standalone",
