@@ -476,15 +476,15 @@ function cardHTML(g) {
 function toggleFound(id) {
   const g = games.find(x => x.id===id); if (!g) return;
   g.found = !g.found; if (!g.found) g.foundPrice = null;
-  saveGames(); render();
+  saveGames().then(() => render());
 }
 function setFoundPrice(id, val) {
   const g = games.find(x => x.id===id);
-  if (g) { g.foundPrice = parseFloat(val)||null; saveGames(); render(); }
+  if (g) { g.foundPrice = parseFloat(val)||null; saveGames().then(() => render()); }
 }
 function deleteGame(id) {
   if (!confirm('Supprimer ce jeu ?')) return;
-  games = games.filter(x => x.id!==id); saveGames(); render();
+  games = games.filter(x => x.id!==id); saveGames().then(() => render());
 }
 function startEdit(id) {
   const g = games.find(x => x.id===id); if (!g) return;
@@ -530,7 +530,7 @@ function saveGame() {
     const idx = games.findIndex(x => x.id===editId);
     if (idx!==-1) { g.found=games[idx].found; g.foundPrice=games[idx].foundPrice; games[idx]=g; }
   } else { games.push(g); }
-  saveGames(); closeForm(); render();
+  saveGames().then(() => { closeForm(); render(); });
 }
 
 function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
