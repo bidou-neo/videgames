@@ -133,22 +133,6 @@
     "cover": null
   },
   {
-    "id": 9,
-    "title": "Spider-Man 2",
-    "consoles": [
-      "PS5"
-    ],
-    "genres": [
-      "Action / Aventure"
-    ],
-    "price": 40,
-    "priority": "moyenne",
-    "note": "Fun pur, bien rythmé",
-    "found": false,
-    "foundPrice": null,
-    "cover": null
-  },
-  {
     "id": 10,
     "title": "A Plague Tale : Innocence",
     "consoles": [
