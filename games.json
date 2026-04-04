@@ -117,23 +117,6 @@
     "cover": null
   },
   {
-    "id": 10,
-    "title": "A Plague Tale : Innocence",
-    "consoles": [
-      "PS5",
-      "Xbox Series X"
-    ],
-    "genres": [
-      "Action / Aventure"
-    ],
-    "price": 15,
-    "priority": "haute",
-    "note": "Narratif/émotion, proche Life is Strange — pas d horreur",
-    "found": false,
-    "foundPrice": null,
-    "cover": null
-  },
-  {
     "id": 11,
     "title": "A Plague Tale : Requiem",
     "consoles": [
