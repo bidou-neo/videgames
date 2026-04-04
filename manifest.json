@@ -2,7 +2,7 @@
   "name": "Liste de Chasse",
   "short_name": "Chasse",
   "description": "Ma liste de jeux à trouver en magasin",
-  "start_url": "/videogames/",
+  "start_url": "/videgames/",
   "display": "standalone",
   "background_color": "#0e0c0a",
   "theme_color": "#c9a84c",
