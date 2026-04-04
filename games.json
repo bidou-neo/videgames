@@ -146,7 +146,7 @@
     "price": 20,
     "priority": "haute",
     "note": "Immersion totale, narration soignée — bien patché maintenant",
-    "found": false,
+    "found": true,
     "foundPrice": null,
     "cover": null
   },
