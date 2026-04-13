@@ -46,7 +46,7 @@
     "price": 20,
     "priority": "moyenne",
     "note": "Duo de persos attachants, beau visuellement",
-    "found": false,
+    "found": true,
     "foundPrice": null,
     "cover": null
   },
