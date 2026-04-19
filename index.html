@@ -584,7 +584,7 @@ document.getElementById('c-ean').addEventListener('input', function() {
         document.getElementById('c-title').value = d.title;
         if (d.platform) {
           resetChips('c-consoles');
-          const chip = document.querySelector('#c-consoles .chip-check[value= + d.platform + ]');
+          const chip = document.querySelector("#c-consoles .chip-check[value=" + JSON.stringify(d.platform) + "]");
           if (chip) chip.checked = true;
         }
         if (d.cover) {
