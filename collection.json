@@ -42,5 +42,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/51AoCkVRdKL._AC_UF894,1000_QL80_.jpg"
+  },
+  {
+    "id": 1776610838806,
+    "title": "Mafia Definitive Edition",
+    "consoles": [
+      "Xbox One"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/61WIJe1XgTL.jpg"
   }
 ]
