@@ -12,16 +12,14 @@
   },
   {
     "id": 1776610404852,
-    "fromHunt": 15,
     "title": "Cyberpunk 2077",
     "consoles": [
-      "PS5",
       "Xbox Series X"
     ],
     "status": "Pas commencé",
     "stars": 0,
     "review": "",
-    "cover": null
+    "cover": "https://m.media-amazon.com/images/I/81pjy+hhTfL.jpg"
   },
   {
     "id": 1776610445428,
