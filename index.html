@@ -268,6 +268,15 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
       </div>
     </div>
     <div class="form-panel" id="c-form">
+      <div style="margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border)">
+        <div class="field">
+          <label>Scan code-barres</label>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input id="c-ean" type="text" placeholder="Scanner ou saisir l'EAN..." autocomplete="off" style="flex:1" />
+            <div id="c-scan-status" style="font-size:0.76rem;color:var(--text-dim);font-style:italic;white-space:nowrap"></div>
+          </div>
+        </div>
+      </div>
       <div class="cover-section"><div class="cover-row">
         <img id="c-cover-prev" class="cover-preview" src="" alt="" onerror="this.style.opacity='0.2'" />
         <div class="cover-fields">
@@ -332,6 +341,7 @@ const HUNT_KEY='jrpg-chasse';
 const COLL_KEY='ludotheque-v1';
 const HUNT_API='https://videogames-api-rho.vercel.app/api/games';
 const COLL_API='https://videogames-api-rho.vercel.app/api/collection';
+const LOOKUP_API='https://videogames-api-rho.vercel.app/api/lookup';
 
 const CBADGE={'Switch':'b-switch','PS5':'b-ps','PS4':'b-ps','PS3':'b-ps','PS2':'b-ps','PS1':'b-ps','Xbox Series X':'b-xbox','Xbox One':'b-xbox','Xbox 360':'b-xbox','Xbox':'b-xbox','Master System':'b-sega','Mega Drive':'b-sega','Saturn':'b-sega','Dreamcast':'b-sega','NES':'b-ninretro','SNES':'b-ninretro','N64':'b-ninretro','GameCube':'b-ninretro','Wii':'b-ninretro','Wii U':'b-ninretro','Game Boy':'b-ninretro','GBA':'b-ninretro','DS':'b-ninretro','3DS':'b-ninretro','PC':'b-pc','Autre':'b-other'};
 const SBADGE={'Terminé':'b-termine','En cours':'b-encours','Pas commencé':'b-pascom','Collection':'b-collec'};
@@ -509,7 +519,7 @@ function cCard(g){
 function setStar(n){cStars=n;document.querySelectorAll('#c-stars .star-btn').forEach(b=>{b.classList.toggle('on',+b.dataset.v<=n);});}
 function cDel(id){if(!confirm('Supprimer ?'))return;cGames=cGames.filter(x=>x.id!==id);saveColl().then(()=>renderColl());}
 function cOpen(){document.getElementById('c-form').classList.add('open');setTimeout(()=>document.getElementById('c-title').focus(),60);}
-function cClose(){document.getElementById('c-form').classList.remove('open');cEditId=null;cStars=0;['c-title','c-cover','c-review'].forEach(i=>document.getElementById(i).value='');document.getElementById('cs-3').checked=true;resetChips('c-consoles');clearCover('c-cover','c-cover-prev');setStar(0);}
+function cClose(){document.getElementById('c-form').classList.remove('open');cEditId=null;cStars=0;['c-title','c-cover','c-review','c-ean'].forEach(i=>document.getElementById(i).value='');document.getElementById('c-scan-status').textContent='';document.getElementById('cs-3').checked=true;resetChips('c-consoles');clearCover('c-cover','c-cover-prev');setStar(0);}
 function cEdit(id){const g=cGames.find(x=>x.id===id);if(!g)return;cEditId=id;document.getElementById('c-title').value=g.title;document.getElementById('c-review').value=g.review||'';setChips('c-consoles',g.consoles||[]);const r=document.querySelector(`input[name="c-status"][value="${g.status}"]`);if(r)r.checked=true;setStar(g.stars||0);const p=document.getElementById('c-cover-prev');document.getElementById('c-cover').value=g.cover||'';p.src=g.cover||'';p.style.opacity=g.cover?'1':'0.2';cOpen();}
 function cSave(){const t=document.getElementById('c-title').value.trim();if(!t)return;const sr=document.querySelector('input[name="c-status"]:checked');const g={id:cEditId||Date.now(),title:t,consoles:chips('c-consoles'),status:sr?sr.value:'Terminé',stars:cStars,review:document.getElementById('c-review').value.trim(),cover:document.getElementById('c-cover').value.trim()||null};if(cEditId){const i=cGames.findIndex(x=>x.id===cEditId);if(i!==-1)cGames[i]=g;}else cGames.push(g);saveColl().then(()=>{cClose();renderColl();});}
 
@@ -557,6 +567,43 @@ document.getElementById('c-save').addEventListener('click',cSave);
 document.getElementById('c-title').addEventListener('keydown',e=>{if(e.key==='Enter')cSave();});
 document.getElementById('c-clear-cover').addEventListener('click',()=>clearCover('c-cover','c-cover-prev'));
 document.querySelectorAll('#c-stars .star-btn').forEach(b=>b.addEventListener('click',()=>setStar(+b.dataset.v)));
+
+// EAN lookup
+let eanDebounce;
+document.getElementById('c-ean').addEventListener('input', function() {
+  const ean = this.value.trim();
+  clearTimeout(eanDebounce);
+  if (ean.length < 8) return;
+  eanDebounce = setTimeout(async () => {
+    const status = document.getElementById('c-scan-status');
+    status.textContent = 'Recherche...';
+    try {
+      const r = await fetch(LOOKUP_API + '?ean=' + encodeURIComponent(ean));
+      const d = await r.json();
+      if (r.ok && d.title) {
+        document.getElementById('c-title').value = d.title;
+        if (d.platform) {
+          resetChips('c-consoles');
+          const chip = document.querySelector('#c-consoles .chip-check[value= + d.platform + ]');
+          if (chip) chip.checked = true;
+        }
+        if (d.cover) {
+          document.getElementById('c-cover').value = d.cover;
+          const prev = document.getElementById('c-cover-prev');
+          prev.src = d.cover; prev.style.opacity = '1';
+        }
+        status.textContent = '✓ Trouvé !';
+        setTimeout(() => status.textContent = '', 3000);
+      } else {
+        status.textContent = 'Non trouvé';
+        setTimeout(() => status.textContent = '', 3000);
+      }
+    } catch(e) {
+      status.textContent = 'Erreur réseau';
+      setTimeout(() => status.textContent = '', 3000);
+    }
+  }, 500);
+});
 
 initPreview('h-cover','h-cover-prev');
 initPreview('c-cover','c-cover-prev');
