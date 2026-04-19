@@ -87,5 +87,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/611P4suOeWL._AC_UF1000,1000_QL80_.jpg"
+  },
+  {
+    "id": 1776611064685,
+    "title": "Immortals Fenyx rising",
+    "consoles": [
+      "Switch"
+    ],
+    "status": "En cours",
+    "stars": 5,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/810oWgJuLRL.jpg"
   }
 ]
