@@ -3,584 +3,547 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Liste de Chasse — Jeux Vidéo</title>
+<title>Ma Ludothèque</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#c9a84c">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Chasse">
+<meta name="apple-mobile-web-app-title" content="Ludothèque">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0e0c0a;
-  --bg2: #161310;
-  --bg3: #1e1a16;
-  --border: rgba(255,220,140,0.12);
-  --border-hover: rgba(255,220,140,0.28);
-  --gold: #c9a84c;
-  --gold-light: #e8c97a;
-  --gold-dim: rgba(201,168,76,0.15);
-  --text: #f0e8d8;
-  --text-muted: #8a7d6a;
-  --text-dim: #5a5048;
-  --red: #c0392b;
-  --green: #2e7d52;
-  --green-light: #3da668;
+  --bg:#0e0c0a;--bg2:#161310;--bg3:#1e1a16;
+  --border:rgba(255,220,140,0.12);--border-hover:rgba(255,220,140,0.28);
+  --gold:#c9a84c;--gold-light:#e8c97a;--gold-dim:rgba(201,168,76,0.15);
+  --text:#f0e8d8;--text-muted:#8a7d6a;--text-dim:#5a5048;
+  --red:#c0392b;--green:#2e7d52;--green-light:#3da668;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Crimson Pro', Georgia, serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 17px; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:17px;}
 
-.site-header { border-bottom: 1px solid var(--border); padding: 2rem 1.5rem 1.5rem; text-align: center; position: relative; }
-.site-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
-.site-title { font-family: 'Cinzel', serif; font-size: clamp(1.4rem, 5vw, 2rem); font-weight: 600; color: var(--gold-light); letter-spacing: 0.05em; margin-bottom: 0.25rem; }
-.site-subtitle { font-size: 0.9rem; color: var(--text-muted); font-style: italic; }
+.site-header{border-bottom:1px solid var(--border);padding:1.25rem 1.5rem 0;text-align:center;position:relative;}
+.site-header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.site-title{font-family:'Cinzel',serif;font-size:clamp(1.2rem,5vw,1.7rem);font-weight:600;color:var(--gold-light);letter-spacing:0.05em;margin-bottom:0.75rem;}
+.tabs{display:flex;justify-content:center;gap:8px;padding-bottom:0;}
+.tab-btn{font-family:'Cinzel',serif;font-size:0.8rem;font-weight:600;letter-spacing:0.06em;padding:9px 24px;border:1px solid var(--border);border-bottom:none;border-radius:6px 6px 0 0;background:transparent;color:var(--text-muted);cursor:pointer;transition:all 0.15s;}
+.tab-btn:hover{color:var(--text);border-color:var(--border-hover);}
+.tab-btn.active{background:var(--bg2);color:var(--gold-light);border-color:var(--gold);}
 
-.stats-bar { display: flex; justify-content: center; gap: 2rem; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
-.stat { text-align: center; }
-.stat-val { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 600; color: var(--gold-light); display: block; }
-.stat-lbl { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.stats-bar{display:flex;justify-content:center;gap:1.5rem;padding:1rem 1.5rem;border-bottom:1px solid var(--border);background:var(--bg2);flex-wrap:wrap;}
+.stat{text-align:center;}
+.stat-val{font-family:'Cinzel',serif;font-size:1.35rem;font-weight:600;color:var(--gold-light);display:block;}
+.stat-lbl{font-size:0.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;}
+#sync-status{text-align:center;font-size:0.75rem;padding:5px;font-style:italic;color:var(--text-dim);display:none;background:var(--bg2);}
 
-.main { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+.main{max-width:760px;margin:0 auto;padding:1.25rem 1rem 4rem;}
 
-/* Toolbar */
-.toolbar { margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; }
-.toolbar-top { display: flex; gap: 0.75rem; align-items: center; justify-content: space-between; }
-.add-btn { font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; padding: 7px 18px; border: 1px solid var(--gold); border-radius: 4px; background: var(--gold-dim); color: var(--gold-light); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
-.add-btn:hover { background: rgba(201,168,76,0.28); }
-.search-input {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 99px;
-  color: var(--text);
-  font-family: 'Crimson Pro', serif;
-  font-size: 0.9rem;
-  padding: 6px 16px;
-  outline: none;
-  transition: border-color 0.15s;
-  width: 180px;
-}
-.search-input:focus { border-color: var(--border-hover); }
-.search-input::placeholder { color: var(--text-dim); font-style: italic; }
+.toolbar{margin-bottom:1.25rem;display:flex;flex-direction:column;gap:0.5rem;}
+.toolbar-top{display:flex;gap:0.75rem;align-items:center;}
+.search-input{background:var(--bg2);border:1px solid var(--border);border-radius:99px;color:var(--text);font-family:'Crimson Pro',serif;font-size:0.9rem;padding:6px 16px;outline:none;transition:border-color 0.15s;flex:1;}
+.search-input:focus{border-color:var(--border-hover);}
+.search-input::placeholder{color:var(--text-dim);font-style:italic;}
+.add-btn{font-family:'Cinzel',serif;font-size:0.75rem;font-weight:600;letter-spacing:0.07em;padding:7px 16px;border:1px solid var(--gold);border-radius:4px;background:var(--gold-dim);color:var(--gold-light);cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.add-btn:hover{background:rgba(201,168,76,0.28);}
+.filter-row{display:flex;gap:0.4rem;flex-wrap:wrap;align-items:center;}
+.filter-sep{width:1px;height:14px;background:var(--border);margin:0 2px;flex-shrink:0;}
+.filter-btn{font-family:'Crimson Pro',serif;font-size:0.8rem;padding:4px 11px;border:1px solid var(--border);border-radius:99px;background:transparent;color:var(--text-muted);cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.filter-btn:hover{border-color:var(--border-hover);color:var(--text);}
+.filter-btn.f-active-status{border-color:var(--text-muted);color:var(--text);background:rgba(255,255,255,0.05);}
+.filter-btn.f-active-console{border-color:var(--border-hover);color:var(--text);background:rgba(255,255,255,0.05);}
+.filter-btn.f-active-genre{border-color:var(--gold);color:var(--gold-light);background:var(--gold-dim);}
 
-.filter-row { display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center; }
-.filter-sep { width: 1px; height: 16px; background: var(--border); margin: 0 2px; flex-shrink: 0; }
-.filter-btn { font-family: 'Crimson Pro', serif; font-size: 0.82rem; padding: 4px 12px; border: 1px solid var(--border); border-radius: 99px; background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
-.filter-btn:hover { border-color: var(--border-hover); color: var(--text); }
-.filter-btn.active-status { border-color: var(--text-muted); color: var(--text); background: rgba(255,255,255,0.05); }
-.filter-btn.active-console { border-color: var(--border-hover); color: var(--text); background: rgba(255,255,255,0.05); }
-.filter-btn.active-genre { border-color: var(--gold); color: var(--gold-light); background: var(--gold-dim); }
+.form-panel{background:var(--bg2);border:1px solid var(--border-hover);border-radius:8px;padding:1.25rem;margin-bottom:1.25rem;display:none;}
+.form-panel.open{display:block;animation:fadeIn 0.2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
 
-/* Form */
-.form-panel { background: var(--bg2); border: 1px solid var(--border-hover); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem; display: none; }
-.form-panel.open { display: block; animation: fadeIn 0.2s ease; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+.cover-section{margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+.cover-row{display:flex;gap:1rem;align-items:flex-start;}
+.cover-preview{width:58px;height:80px;object-fit:cover;border-radius:4px;border:1px solid var(--border);display:block;background:var(--bg3);opacity:0.3;flex-shrink:0;}
+.cover-fields{flex:1;min-width:0;}
+.cover-hint{font-size:0.74rem;color:var(--text-dim);font-style:italic;margin-top:4px;}
+.clear-cover-btn{font-size:0.74rem;color:var(--text-dim);cursor:pointer;background:none;border:none;text-decoration:underline;margin-top:3px;display:block;}
+.clear-cover-btn:hover{color:var(--red);}
 
-.cover-section { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
-.cover-row { display: flex; gap: 1rem; align-items: flex-start; }
-.cover-preview-box { width: 60px; flex-shrink: 0; }
-.cover-preview { width: 60px; height: 82px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border); display: block; background: var(--bg3); opacity: 0.3; }
-.cover-fields { flex: 1; min-width: 0; }
-.cover-hint { font-size: 0.76rem; color: var(--text-dim); font-style: italic; margin-top: 5px; line-height: 1.4; }
-.clear-cover-btn { font-size: 0.76rem; color: var(--text-dim); cursor: pointer; background: none; border: none; text-decoration: underline; margin-top: 4px; display: block; }
-.clear-cover-btn:hover { color: var(--red); }
+.chip-group{display:flex;gap:5px;flex-wrap:wrap;margin-top:3px;}
+.chip-check{display:none;}
+.chip-label{font-family:'Cinzel',serif;font-size:0.68rem;padding:3px 10px;border-radius:99px;border:1px solid var(--border);cursor:pointer;color:var(--text-muted);transition:all 0.15s;user-select:none;}
+.chip-label:hover{border-color:var(--border-hover);color:var(--text);}
+.chip-check[value="Switch"]:checked+.chip-label{color:#ff6b6b;border-color:rgba(228,0,15,0.6);background:rgba(228,0,15,0.12);}
+.chip-check[value="PS5"]:checked+.chip-label,.chip-check[value="PS4"]:checked+.chip-label,.chip-check[value="PS3"]:checked+.chip-label,.chip-check[value="PS2"]:checked+.chip-label,.chip-check[value="PS1"]:checked+.chip-label{color:#6b9fff;border-color:rgba(0,48,135,0.7);background:rgba(0,48,135,0.18);}
+.chip-check[value="Xbox Series X"]:checked+.chip-label,.chip-check[value="Xbox One"]:checked+.chip-label,.chip-check[value="Xbox 360"]:checked+.chip-label,.chip-check[value="Xbox"]:checked+.chip-label{color:#6bdf6b;border-color:rgba(16,124,16,0.6);background:rgba(16,124,16,0.12);}
+.chip-check[value="Master System"]:checked+.chip-label,.chip-check[value="Mega Drive"]:checked+.chip-label,.chip-check[value="Saturn"]:checked+.chip-label,.chip-check[value="Dreamcast"]:checked+.chip-label{color:#ff9f43;border-color:rgba(255,159,67,0.5);background:rgba(255,159,67,0.1);}
+.chip-check[value="NES"]:checked+.chip-label,.chip-check[value="SNES"]:checked+.chip-label,.chip-check[value="N64"]:checked+.chip-label,.chip-check[value="GameCube"]:checked+.chip-label,.chip-check[value="Wii"]:checked+.chip-label,.chip-check[value="Wii U"]:checked+.chip-label,.chip-check[value="Game Boy"]:checked+.chip-label,.chip-check[value="GBA"]:checked+.chip-label,.chip-check[value="DS"]:checked+.chip-label,.chip-check[value="3DS"]:checked+.chip-label{color:#ff6b6b;border-color:rgba(228,0,15,0.6);background:rgba(228,0,15,0.12);}
+.chip-check[value="PC"]:checked+.chip-label{color:#a0a0b0;border-color:rgba(160,160,176,0.5);background:rgba(160,160,176,0.1);}
+.chip-check.genre-chip:checked+.chip-label,.chip-check.platform-chip:checked+.chip-label{color:var(--gold-light);border-color:rgba(201,168,76,0.6);background:rgba(201,168,76,0.12);}
 
-/* Chips */
-.chip-group { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
-.chip-check { display: none; }
-.chip-label { font-family: 'Cinzel', serif; font-size: 0.7rem; padding: 4px 11px; border-radius: 99px; border: 1px solid var(--border); cursor: pointer; color: var(--text-muted); transition: all 0.15s; user-select: none; letter-spacing: 0.03em; }
-.chip-label:hover { border-color: var(--border-hover); color: var(--text); }
-.chip-check[value="Switch"]:checked + .chip-label { color: #ff6b6b; border-color: rgba(228,0,15,0.6); background: rgba(228,0,15,0.12); }
-.chip-check[value="PS5"]:checked + .chip-label { color: #6b9fff; border-color: rgba(0,48,135,0.7); background: rgba(0,48,135,0.18); }
-.chip-check[value="Xbox Series X"]:checked + .chip-label { color: #6bdf6b; border-color: rgba(16,124,16,0.6); background: rgba(16,124,16,0.12); }
-.chip-check.genre-chip:checked + .chip-label { color: var(--gold-light); border-color: rgba(201,168,76,0.6); background: rgba(201,168,76,0.12); }
+.status-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:3px;}
+.status-radio{display:none;}
+.status-label{font-family:'Cinzel',serif;font-size:0.68rem;padding:3px 10px;border-radius:99px;border:1px solid var(--border);cursor:pointer;color:var(--text-muted);transition:all 0.15s;user-select:none;}
+.status-label:hover{border-color:var(--border-hover);color:var(--text);}
+.status-radio:checked+.status-label{color:var(--gold-light);border-color:rgba(201,168,76,0.6);background:rgba(201,168,76,0.12);}
 
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-.form-grid .full { grid-column: 1 / -1; }
-.field label { display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 5px; }
-.field input, .field select { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-family: 'Crimson Pro', serif; font-size: 1rem; padding: 8px 12px; outline: none; transition: border-color 0.15s; }
-.field input:focus, .field select:focus { border-color: var(--gold); }
-.field select option { background: var(--bg3); }
-.form-actions { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1rem; }
-.btn-save { font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; padding: 8px 22px; border: none; border-radius: 4px; background: var(--gold); color: var(--bg); cursor: pointer; transition: background 0.15s; }
-.btn-save:hover { background: var(--gold-light); }
-.btn-cancel { font-family: 'Crimson Pro', serif; font-size: 1rem; padding: 8px 16px; border: 1px solid var(--border); border-radius: 4px; background: transparent; color: var(--text-muted); cursor: pointer; }
+.stars-input{display:flex;gap:3px;margin-top:3px;}
+.star-btn{font-size:1.4rem;background:none;border:none;cursor:pointer;color:var(--text-dim);transition:color 0.1s;line-height:1;padding:0 1px;}
+.star-btn.on{color:var(--gold);}
+.star-btn:hover{color:var(--gold-light);}
 
-/* Cards */
-.game-list { display: flex; flex-direction: column; gap: 0.6rem; }
-.game-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; align-items: stretch; transition: border-color 0.15s, opacity 0.2s; animation: fadeIn 0.25s ease; }
-.game-card:hover { border-color: var(--border-hover); }
-.game-card.found { opacity: 0.4; }
-.game-card.found:hover { opacity: 0.65; }
-.card-cover { width: 64px; min-height: 90px; flex-shrink: 0; background: var(--bg3); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.card-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.placeholder-icon { opacity: 0.2; }
-.check-col { display: flex; align-items: flex-start; padding: 0.85rem 0 0.85rem 0.85rem; flex-shrink: 0; }
-.check-btn { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--text-dim); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; color: transparent; font-size: 12px; }
-.check-btn:hover { border-color: var(--green-light); }
-.game-card.found .check-btn { background: var(--green); border-color: var(--green); color: #fff; }
-.card-content { flex: 1; min-width: 0; padding: 0.75rem; display: flex; flex-direction: column; gap: 3px; }
-.game-title { font-family: 'Cinzel', serif; font-size: 0.88rem; font-weight: 600; color: var(--gold-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.game-card.found .game-title { text-decoration: line-through; color: var(--text-dim); }
-.meta { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
-.badge { font-size: 0.66rem; padding: 2px 7px; border-radius: 99px; border: 1px solid; letter-spacing: 0.03em; font-family: 'Cinzel', serif; }
-.badge-switch { color: #ff6b6b; border-color: rgba(228,0,15,0.4); background: rgba(228,0,15,0.1); }
-.badge-ps5 { color: #6b9fff; border-color: rgba(0,48,135,0.5); background: rgba(0,48,135,0.15); }
-.badge-xbox { color: #6bdf6b; border-color: rgba(16,124,16,0.4); background: rgba(16,124,16,0.1); }
-.badge-price { color: var(--gold); border-color: rgba(201,168,76,0.35); background: var(--gold-dim); }
-.badge-found-price { color: var(--green-light); border-color: rgba(46,125,82,0.4); background: rgba(46,125,82,0.12); }
-.badge-prio { color: #e8945a; border-color: rgba(232,148,90,0.35); background: rgba(232,148,90,0.1); }
-.badge-genre { font-family: 'Crimson Pro', serif; font-size: 0.75rem; font-style: italic; color: var(--text-dim); border: none; padding: 0; border-radius: 0; background: transparent; letter-spacing: 0; }
-.game-note { font-size: 0.82rem; color: var(--text-muted); font-style: italic; }
-.found-price-row { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
-.found-price-row label { font-size: 0.78rem; color: var(--text-muted); }
-.found-price-input { width: 72px; background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; color: var(--green-light); font-family: 'Crimson Pro', serif; font-size: 0.9rem; padding: 3px 8px; outline: none; }
-.found-price-input:focus { border-color: var(--green-light); }
-.card-actions { display: flex; flex-direction: column; gap: 4px; padding: 0.6rem 0.7rem 0.6rem 0; justify-content: flex-start; flex-shrink: 0; }
-.icon-btn { width: 28px; height: 28px; border: 1px solid var(--border); border-radius: 4px; background: transparent; cursor: pointer; color: var(--text-dim); font-size: 13px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
-.icon-btn:hover { border-color: var(--border-hover); color: var(--text-muted); }
-.icon-btn.del:hover { border-color: rgba(192,57,43,0.5); color: var(--red); }
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;}
+.form-grid .full{grid-column:1/-1;}
+.field label{display:block;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:4px;}
+.field input,.field select,.field textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:'Crimson Pro',serif;font-size:1rem;padding:7px 11px;outline:none;transition:border-color 0.15s;resize:vertical;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);}
+.field select option{background:var(--bg3);}
+.form-actions{display:flex;gap:0.75rem;justify-content:flex-end;margin-top:1rem;}
+.btn-save{font-family:'Cinzel',serif;font-size:0.75rem;font-weight:600;letter-spacing:0.06em;padding:8px 20px;border:none;border-radius:4px;background:var(--gold);color:var(--bg);cursor:pointer;}
+.btn-save:hover{background:var(--gold-light);}
+.btn-cancel{font-family:'Crimson Pro',serif;font-size:1rem;padding:8px 14px;border:1px solid var(--border);border-radius:4px;background:transparent;color:var(--text-muted);cursor:pointer;}
 
-.empty { text-align: center; padding: 3rem 1rem; color: var(--text-dim); font-style: italic; }
-.divider { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-dim); text-align: center; margin: 1rem 0 0.75rem; display: flex; align-items: center; gap: 1rem; }
-.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.game-list{display:flex;flex-direction:column;gap:0.55rem;}
+.game-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;display:flex;align-items:stretch;transition:border-color 0.15s,opacity 0.2s;animation:fadeIn 0.25s ease;}
+.game-card:hover{border-color:var(--border-hover);}
+.game-card.found,.game-card.dimmed{opacity:0.42;}
+.game-card.found:hover,.game-card.dimmed:hover{opacity:0.7;}
+.card-cover{width:62px;min-height:88px;flex-shrink:0;background:var(--bg3);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.card-cover img{width:100%;height:100%;object-fit:cover;display:block;}
+.placeholder-icon{opacity:0.2;}
+.check-col{display:flex;align-items:flex-start;padding:0.8rem 0 0.8rem 0.8rem;flex-shrink:0;}
+.check-btn{width:21px;height:21px;border-radius:50%;border:1.5px solid var(--text-dim);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;color:transparent;font-size:11px;}
+.check-btn:hover{border-color:var(--green-light);}
+.game-card.found .check-btn{background:var(--green);border-color:var(--green);color:#fff;}
+.card-content{flex:1;min-width:0;padding:0.7rem;display:flex;flex-direction:column;gap:3px;}
+.game-title{font-family:'Cinzel',serif;font-size:0.86rem;font-weight:600;color:var(--gold-light);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.game-card.found .game-title{text-decoration:line-through;color:var(--text-dim);}
+.meta{display:flex;gap:4px;flex-wrap:wrap;align-items:center;}
+.badge{font-size:0.64rem;padding:2px 7px;border-radius:99px;border:1px solid;letter-spacing:0.02em;font-family:'Cinzel',serif;}
+.b-switch{color:#ff6b6b;border-color:rgba(228,0,15,0.4);background:rgba(228,0,15,0.1);}
+.b-ps{color:#6b9fff;border-color:rgba(0,48,135,0.5);background:rgba(0,48,135,0.15);}
+.b-xbox{color:#6bdf6b;border-color:rgba(16,124,16,0.4);background:rgba(16,124,16,0.1);}
+.b-sega{color:#ff9f43;border-color:rgba(255,159,67,0.4);background:rgba(255,159,67,0.1);}
+.b-ninretro{color:#ff6b6b;border-color:rgba(228,0,15,0.4);background:rgba(228,0,15,0.1);}
+.b-pc{color:#a0a0b0;border-color:rgba(160,160,176,0.4);background:rgba(160,160,176,0.1);}
+.b-other{color:var(--text-muted);border-color:var(--border);background:transparent;}
+.b-price{color:var(--gold);border-color:rgba(201,168,76,0.35);background:var(--gold-dim);}
+.b-paid{color:var(--green-light);border-color:rgba(46,125,82,0.4);background:rgba(46,125,82,0.12);}
+.b-prio{color:#e8945a;border-color:rgba(232,148,90,0.35);background:rgba(232,148,90,0.1);}
+.b-genre{font-family:'Crimson Pro',serif;font-size:0.75rem;font-style:italic;color:var(--text-dim);border:none;padding:0;border-radius:0;background:transparent;}
+.b-encours{color:#6b9fff;border-color:rgba(0,48,135,0.5);background:rgba(0,48,135,0.15);}
+.b-termine{color:var(--green-light);border-color:rgba(46,125,82,0.4);background:rgba(46,125,82,0.12);}
+.b-pascom{color:var(--text-muted);border-color:var(--border);background:transparent;}
+.b-collec{color:var(--gold);border-color:rgba(201,168,76,0.35);background:var(--gold-dim);}
+.stars-disp{color:var(--gold);font-size:0.82rem;letter-spacing:1px;}
+.game-note{font-size:0.8rem;color:var(--text-muted);font-style:italic;}
+.found-price-row{display:flex;align-items:center;gap:7px;margin-top:2px;}
+.found-price-row label{font-size:0.76rem;color:var(--text-muted);}
+.found-price-input{width:68px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--green-light);font-family:'Crimson Pro',serif;font-size:0.88rem;padding:3px 7px;outline:none;}
+.card-actions{display:flex;flex-direction:column;gap:4px;padding:0.55rem 0.65rem 0.55rem 0;justify-content:flex-start;flex-shrink:0;}
+.icon-btn{width:27px;height:27px;border:1px solid var(--border);border-radius:4px;background:transparent;cursor:pointer;color:var(--text-dim);font-size:12px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
+.icon-btn:hover{border-color:var(--border-hover);color:var(--text-muted);}
+.icon-btn.del:hover{border-color:rgba(192,57,43,0.5);color:var(--red);}
+.empty{text-align:center;padding:3rem 1rem;color:var(--text-dim);font-style:italic;}
+.divider{font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.1em;color:var(--text-dim);text-align:center;margin:1rem 0 0.75rem;display:flex;align-items:center;gap:1rem;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
 
-@media (max-width: 520px) {
-  .form-grid { grid-template-columns: 1fr; }
-  .form-grid .full { grid-column: 1; }
-  .stats-bar { gap: 1rem; }
-  .cover-row { flex-direction: column; }
-}
+@media(max-width:520px){.form-grid{grid-template-columns:1fr;}.form-grid .full{grid-column:1;}.stats-bar{gap:1rem;}.cover-row{flex-direction:column;}}
 </style>
 </head>
 <body>
 
 <header class="site-header">
-  <div class="site-title">Liste de Chasse</div>
-  <div class="site-subtitle" id="site-sub">bureau de jardin en préparation...</div>
+  <div class="site-title">Ma Ludothèque</div>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="chasse">🎯 Chasse</button>
+    <button class="tab-btn" data-tab="collection">🎮 Collection</button>
+  </div>
 </header>
+<div id="sync-status"></div>
 
-<div class="stats-bar">
-  <div class="stat"><span class="stat-val" id="s-cherche">0</span><span class="stat-lbl">À trouver</span></div>
-  <div class="stat"><span class="stat-val" id="s-found">0</span><span class="stat-lbl">Trouvés</span></div>
-  <div class="stat"><span class="stat-val" id="s-budget">0€</span><span class="stat-lbl">Budget max</span></div>
-  <div class="stat"><span class="stat-val" id="s-spent">0€</span><span class="stat-lbl">Dépensé</span></div>
+<!-- CHASSE -->
+<div id="tab-chasse" class="tab-content active">
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-val" id="h-cherche">0</span><span class="stat-lbl">À trouver</span></div>
+    <div class="stat"><span class="stat-val" id="h-found">0</span><span class="stat-lbl">Trouvés</span></div>
+    <div class="stat"><span class="stat-val" id="h-budget">0€</span><span class="stat-lbl">Budget max</span></div>
+    <div class="stat"><span class="stat-val" id="h-spent">0€</span><span class="stat-lbl">Dépensé</span></div>
+  </div>
+  <main class="main">
+    <div class="toolbar">
+      <div class="toolbar-top">
+        <input class="search-input" id="h-search" type="search" placeholder="Rechercher..." />
+        <button class="add-btn" id="h-add-btn">+ Ajouter</button>
+      </div>
+      <div class="filter-row">
+        <button class="filter-btn f-active-status" data-section="h" data-type="status" data-val="tous">Tous</button>
+        <button class="filter-btn" data-section="h" data-type="status" data-val="trouver">À trouver</button>
+        <button class="filter-btn" data-section="h" data-type="status" data-val="trouvés">Trouvés</button>
+      </div>
+      <div class="filter-row">
+        <button class="filter-btn" data-section="h" data-type="console" data-val="Switch">Switch</button>
+        <button class="filter-btn" data-section="h" data-type="console" data-val="PS5">PS5</button>
+        <button class="filter-btn" data-section="h" data-type="console" data-val="Xbox Series X">Xbox</button>
+      </div>
+      <div class="filter-row">
+        <button class="filter-btn" data-section="h" data-type="genre" data-val="JRPG">JRPG</button>
+        <button class="filter-btn" data-section="h" data-type="genre" data-val="RPG occidental">RPG occ.</button>
+        <button class="filter-btn" data-section="h" data-type="genre" data-val="Action / Aventure">Action</button>
+        <button class="filter-btn" data-section="h" data-type="genre" data-val="FPS / TPS">FPS/TPS</button>
+        <button class="filter-btn" data-section="h" data-type="genre" data-val="Plateforme">Plateforme</button>
+        <button class="filter-btn" data-section="h" data-type="genre" data-val="Sport / Course">Sport</button>
+        <button class="filter-btn" data-section="h" data-type="genre" data-val="Stratégie / Tactique">Stratégie</button>
+        <button class="filter-btn" data-section="h" data-type="genre" data-val="Simulation">Simulation</button>
+      </div>
+    </div>
+    <div class="form-panel" id="h-form">
+      <div class="cover-section"><div class="cover-row">
+        <img id="h-cover-prev" class="cover-preview" src="" alt="" onerror="this.style.opacity='0.2'" />
+        <div class="cover-fields">
+          <div class="field"><label>URL jaquette</label><input id="h-cover" type="url" placeholder="https://..." autocomplete="off" /></div>
+          <div class="cover-hint">Google Images → clic droit → Copier l'adresse de l'image</div>
+          <button class="clear-cover-btn" id="h-clear-cover">Retirer</button>
+        </div>
+      </div></div>
+      <div class="form-grid">
+        <div class="field full"><label>Titre</label><input id="h-title" type="text" placeholder="ex: Dragon Quest XI S" autocomplete="off" /></div>
+        <div class="field full"><label>Consoles</label><div class="chip-group" id="h-consoles">
+          <input class="chip-check" type="checkbox" id="hc-sw" value="Switch"><label class="chip-label" for="hc-sw">Switch</label>
+          <input class="chip-check" type="checkbox" id="hc-ps5" value="PS5"><label class="chip-label" for="hc-ps5">PS5</label>
+          <input class="chip-check" type="checkbox" id="hc-xsx" value="Xbox Series X"><label class="chip-label" for="hc-xsx">Xbox Series X</label>
+        </div></div>
+        <div class="field full"><label>Genres</label><div class="chip-group" id="h-genres">
+          <input class="chip-check genre-chip" type="checkbox" id="hg-1" value="JRPG"><label class="chip-label" for="hg-1">JRPG</label>
+          <input class="chip-check genre-chip" type="checkbox" id="hg-2" value="RPG occidental"><label class="chip-label" for="hg-2">RPG occidental</label>
+          <input class="chip-check genre-chip" type="checkbox" id="hg-3" value="Action / Aventure"><label class="chip-label" for="hg-3">Action / Aventure</label>
+          <input class="chip-check genre-chip" type="checkbox" id="hg-4" value="FPS / TPS"><label class="chip-label" for="hg-4">FPS / TPS</label>
+          <input class="chip-check genre-chip" type="checkbox" id="hg-5" value="Plateforme"><label class="chip-label" for="hg-5">Plateforme</label>
+          <input class="chip-check genre-chip" type="checkbox" id="hg-6" value="Sport / Course"><label class="chip-label" for="hg-6">Sport / Course</label>
+          <input class="chip-check genre-chip" type="checkbox" id="hg-7" value="Stratégie / Tactique"><label class="chip-label" for="hg-7">Stratégie / Tactique</label>
+          <input class="chip-check genre-chip" type="checkbox" id="hg-8" value="Simulation"><label class="chip-label" for="hg-8">Simulation</label>
+        </div></div>
+        <div class="field"><label>Prix max (€)</label><input id="h-price" type="number" placeholder="30" min="0" /></div>
+        <div class="field"><label>Priorité</label><select id="h-priority"><option value="haute">Haute</option><option value="moyenne" selected>Moyenne</option><option value="basse">Basse</option></select></div>
+        <div class="field full"><label>Note</label><input id="h-note" type="text" placeholder="ex: Recommandé, successeur de Suikoden..." /></div>
+      </div>
+      <div class="form-actions"><button class="btn-cancel" id="h-cancel">Annuler</button><button class="btn-save" id="h-save">Enregistrer</button></div>
+    </div>
+    <div class="game-list" id="h-list"></div>
+  </main>
 </div>
 
-<div id="sync-status" style="text-align:center;font-size:0.78rem;padding:6px;font-style:italic;color:var(--text-dim);display:none"></div>
-<main class="main">
-  <div class="toolbar">
-    <div class="toolbar-top">
-      <div class="filter-row" id="filter-row-status">
-        <button class="filter-btn active-status" data-type="status" data-val="tous">Tous</button>
-        <button class="filter-btn" data-type="status" data-val="trouver">À trouver</button>
-        <button class="filter-btn" data-type="status" data-val="trouvés">Trouvés</button>
-      </div>
-      <input class="search-input" id="search-input" type="search" placeholder="Rechercher..." />
-      <button class="add-btn" id="add-btn">+ Ajouter</button>
-    </div>
-    <div class="filter-row">
-      <button class="filter-btn" data-type="console" data-val="Switch">Switch</button>
-      <button class="filter-btn" data-type="console" data-val="PS5">PS5</button>
-      <button class="filter-btn" data-type="console" data-val="Xbox Series X">Xbox Series X</button>
-    </div>
-    <div class="filter-row">
-      <button class="filter-btn" data-type="genre" data-val="JRPG">JRPG</button>
-      <button class="filter-btn" data-type="genre" data-val="RPG occidental">RPG occ.</button>
-      <button class="filter-btn" data-type="genre" data-val="Action / Aventure">Action</button>
-      <button class="filter-btn" data-type="genre" data-val="FPS / TPS">FPS/TPS</button>
-      <button class="filter-btn" data-type="genre" data-val="Plateforme">Plateforme</button>
-      <button class="filter-btn" data-type="genre" data-val="Sport / Course">Sport / Course</button>
-      <button class="filter-btn" data-type="genre" data-val="Stratégie / Tactique">Stratégie</button>
-      <button class="filter-btn" data-type="genre" data-val="Simulation">Simulation</button>
-    </div>
+<!-- COLLECTION -->
+<div id="tab-collection" class="tab-content">
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-val" id="c-total">0</span><span class="stat-lbl">Jeux</span></div>
+    <div class="stat"><span class="stat-val" id="c-termines">0</span><span class="stat-lbl">Terminés</span></div>
+    <div class="stat"><span class="stat-val" id="c-encours">0</span><span class="stat-lbl">En cours</span></div>
+    <div class="stat"><span class="stat-val" id="c-avg">-</span><span class="stat-lbl">Note moy.</span></div>
   </div>
-
-  <div class="form-panel" id="form-panel">
-    <div class="cover-section">
-      <div class="cover-row">
-        <div class="cover-preview-box">
-          <img id="cover-preview" class="cover-preview" src="" alt="Jaquette" onerror="this.style.opacity='0.2'" />
-        </div>
+  <main class="main">
+    <div class="toolbar">
+      <div class="toolbar-top">
+        <input class="search-input" id="c-search" type="search" placeholder="Rechercher..." />
+        <button class="add-btn" id="c-add-btn">+ Ajouter</button>
+      </div>
+      <div class="filter-row">
+        <button class="filter-btn f-active-status" data-section="c" data-type="status" data-val="tous">Tous</button>
+        <button class="filter-btn" data-section="c" data-type="status" data-val="Pas commencé">Pas commencé</button>
+        <button class="filter-btn" data-section="c" data-type="status" data-val="En cours">En cours</button>
+        <button class="filter-btn" data-section="c" data-type="status" data-val="Terminé">Terminé</button>
+        <button class="filter-btn" data-section="c" data-type="status" data-val="Collection">Collection</button>
+      </div>
+      <div class="filter-row">
+        <button class="filter-btn" data-section="c" data-type="console" data-val="Switch">Switch</button>
+        <button class="filter-btn" data-section="c" data-type="console" data-val="PS5">PS5</button>
+        <button class="filter-btn" data-section="c" data-type="console" data-val="PS4">PS4</button>
+        <button class="filter-btn" data-section="c" data-type="console" data-val="PS3">PS3</button>
+        <button class="filter-btn" data-section="c" data-type="console" data-val="Xbox Series X">Xbox SX</button>
+        <button class="filter-btn" data-section="c" data-type="console" data-val="Xbox One">Xbox One</button>
+        <div class="filter-sep"></div>
+        <button class="filter-btn" data-section="c" data-type="console" data-val="NES">NES</button>
+        <button class="filter-btn" data-section="c" data-type="console" data-val="SNES">SNES</button>
+        <button class="filter-btn" data-section="c" data-type="console" data-val="Mega Drive">Mega Drive</button>
+        <button class="filter-btn" data-section="c" data-type="console" data-val="PC">PC</button>
+      </div>
+    </div>
+    <div class="form-panel" id="c-form">
+      <div class="cover-section"><div class="cover-row">
+        <img id="c-cover-prev" class="cover-preview" src="" alt="" onerror="this.style.opacity='0.2'" />
         <div class="cover-fields">
-          <div class="field">
-            <label>URL de la jaquette</label>
-            <input id="f-cover" type="url" placeholder="https://..." autocomplete="off" />
-          </div>
-          <div class="cover-hint">Google Images → clic droit → "Copier l'adresse de l'image" → coller ici.</div>
-          <button class="clear-cover-btn" id="clear-cover-btn">Retirer la jaquette</button>
+          <div class="field"><label>URL jaquette</label><input id="c-cover" type="url" placeholder="https://..." autocomplete="off" /></div>
+          <div class="cover-hint">Google Images → clic droit → Copier l'adresse de l'image</div>
+          <button class="clear-cover-btn" id="c-clear-cover">Retirer</button>
         </div>
+      </div></div>
+      <div class="form-grid">
+        <div class="field full"><label>Titre</label><input id="c-title" type="text" placeholder="ex: Red Dead Redemption 2" autocomplete="off" /></div>
+        <div class="field full"><label>Console</label><div class="chip-group" id="c-consoles">
+          <input class="chip-check platform-chip" type="checkbox" id="cc-sw" value="Switch"><label class="chip-label" for="cc-sw">Switch</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-nes" value="NES"><label class="chip-label" for="cc-nes">NES</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-snes" value="SNES"><label class="chip-label" for="cc-snes">SNES</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-n64" value="N64"><label class="chip-label" for="cc-n64">N64</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-gc" value="GameCube"><label class="chip-label" for="cc-gc">GameCube</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-wii" value="Wii"><label class="chip-label" for="cc-wii">Wii</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-wiiu" value="Wii U"><label class="chip-label" for="cc-wiiu">Wii U</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-gb" value="Game Boy"><label class="chip-label" for="cc-gb">Game Boy</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-gba" value="GBA"><label class="chip-label" for="cc-gba">GBA</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-ds" value="DS"><label class="chip-label" for="cc-ds">DS</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-3ds" value="3DS"><label class="chip-label" for="cc-3ds">3DS</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-ps5" value="PS5"><label class="chip-label" for="cc-ps5">PS5</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-ps4" value="PS4"><label class="chip-label" for="cc-ps4">PS4</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-ps3" value="PS3"><label class="chip-label" for="cc-ps3">PS3</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-ps2" value="PS2"><label class="chip-label" for="cc-ps2">PS2</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-ps1" value="PS1"><label class="chip-label" for="cc-ps1">PS1</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-xsx" value="Xbox Series X"><label class="chip-label" for="cc-xsx">Xbox Series X</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-xone" value="Xbox One"><label class="chip-label" for="cc-xone">Xbox One</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-x360" value="Xbox 360"><label class="chip-label" for="cc-x360">Xbox 360</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-xbox" value="Xbox"><label class="chip-label" for="cc-xbox">Xbox</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-ms" value="Master System"><label class="chip-label" for="cc-ms">Master System</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-md" value="Mega Drive"><label class="chip-label" for="cc-md">Mega Drive</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-sat" value="Saturn"><label class="chip-label" for="cc-sat">Saturn</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-dc" value="Dreamcast"><label class="chip-label" for="cc-dc">Dreamcast</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-pc" value="PC"><label class="chip-label" for="cc-pc">PC</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-other" value="Autre"><label class="chip-label" for="cc-other">Autre</label>
+        </div></div>
+        <div class="field full"><label>Statut</label><div class="status-chips">
+          <input class="status-radio" type="radio" name="c-status" id="cs-1" value="Pas commencé"><label class="status-label" for="cs-1">Pas commencé</label>
+          <input class="status-radio" type="radio" name="c-status" id="cs-2" value="En cours"><label class="status-label" for="cs-2">En cours</label>
+          <input class="status-radio" type="radio" name="c-status" id="cs-3" value="Terminé" checked><label class="status-label" for="cs-3">Terminé</label>
+          <input class="status-radio" type="radio" name="c-status" id="cs-4" value="Collection"><label class="status-label" for="cs-4">Collection</label>
+        </div></div>
+        <div class="field full"><label>Note</label><div class="stars-input" id="c-stars">
+          <button type="button" class="star-btn" data-v="1">★</button>
+          <button type="button" class="star-btn" data-v="2">★</button>
+          <button type="button" class="star-btn" data-v="3">★</button>
+          <button type="button" class="star-btn" data-v="4">★</button>
+          <button type="button" class="star-btn" data-v="5">★</button>
+        </div></div>
+        <div class="field full"><label>Avis</label><textarea id="c-review" rows="2" placeholder="Quelques mots..."></textarea></div>
       </div>
+      <div class="form-actions"><button class="btn-cancel" id="c-cancel">Annuler</button><button class="btn-save" id="c-save">Enregistrer</button></div>
     </div>
-
-    <div class="form-grid">
-      <div class="field full">
-        <label>Titre du jeu</label>
-        <input id="f-title" type="text" placeholder="ex: Dragon Quest XI S" autocomplete="off" />
-      </div>
-
-      <div class="field full">
-        <label>Consoles</label>
-        <div class="chip-group" id="console-chips">
-          <input class="chip-check" type="checkbox" id="ck-switch" value="Switch" />
-          <label class="chip-label" for="ck-switch">Switch</label>
-          <input class="chip-check" type="checkbox" id="ck-ps5" value="PS5" />
-          <label class="chip-label" for="ck-ps5">PS5</label>
-          <input class="chip-check" type="checkbox" id="ck-xbox" value="Xbox Series X" />
-          <label class="chip-label" for="ck-xbox">Xbox Series X</label>
-        </div>
-      </div>
-
-      <div class="field full">
-        <label>Genres</label>
-        <div class="chip-group" id="genre-chips">
-          <input class="chip-check genre-chip" type="checkbox" id="gk-jrpg" value="JRPG" />
-          <label class="chip-label" for="gk-jrpg">JRPG</label>
-          <input class="chip-check genre-chip" type="checkbox" id="gk-rpgoc" value="RPG occidental" />
-          <label class="chip-label" for="gk-rpgoc">RPG occidental</label>
-          <input class="chip-check genre-chip" type="checkbox" id="gk-action" value="Action / Aventure" />
-          <label class="chip-label" for="gk-action">Action / Aventure</label>
-          <input class="chip-check genre-chip" type="checkbox" id="gk-fps" value="FPS / TPS" />
-          <label class="chip-label" for="gk-fps">FPS / TPS</label>
-          <input class="chip-check genre-chip" type="checkbox" id="gk-plateforme" value="Plateforme" />
-          <label class="chip-label" for="gk-plateforme">Plateforme</label>
-          <input class="chip-check genre-chip" type="checkbox" id="gk-sport" value="Sport / Course" />
-          <label class="chip-label" for="gk-sport">Sport / Course</label>
-          <input class="chip-check genre-chip" type="checkbox" id="gk-strat" value="Stratégie / Tactique" />
-          <label class="chip-label" for="gk-strat">Stratégie / Tactique</label>
-          <input class="chip-check genre-chip" type="checkbox" id="gk-simu" value="Simulation" />
-          <label class="chip-label" for="gk-simu">Simulation</label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label>Prix max (€)</label>
-        <input id="f-price" type="number" placeholder="30" min="0" />
-      </div>
-      <div class="field">
-        <label>Priorité</label>
-        <select id="f-priority">
-          <option value="haute">Haute</option>
-          <option value="moyenne" selected>Moyenne</option>
-          <option value="basse">Basse</option>
-        </select>
-      </div>
-      <div class="field full">
-        <label>Note</label>
-        <input id="f-note" type="text" placeholder="ex: Successeur de Suikoden, recommandé..." />
-      </div>
-    </div>
-    <div class="form-actions">
-      <button class="btn-cancel" id="cancel-btn">Annuler</button>
-      <button class="btn-save" id="save-btn">Enregistrer</button>
-    </div>
-  </div>
-
-  <div class="game-list" id="list"></div>
-</main>
+    <div class="game-list" id="c-list"></div>
+  </main>
+</div>
 
 <script>
-const STORAGE_KEY = 'jrpg-chasse';
-const API_URL = 'https://videogames-api-rho.vercel.app/api/games';
-let githubSha = null;
+const HUNT_KEY='jrpg-chasse';
+const COLL_KEY='ludotheque-v1';
+const HUNT_API='https://videogames-api-rho.vercel.app/api/games';
+const COLL_API='https://videogames-api-rho.vercel.app/api/collection';
 
-const CONSOLES = ['Switch','PS5','Xbox Series X'];
-const GENRES = ['JRPG','RPG occidental','Action / Aventure','FPS / TPS','Plateforme','Sport / Course','Stratégie / Tactique','Simulation'];
-const CONSOLE_BADGE = { 'Switch':'badge-switch','PS5':'badge-ps5','Xbox Series X':'badge-xbox' };
+const CBADGE={'Switch':'b-switch','PS5':'b-ps','PS4':'b-ps','PS3':'b-ps','PS2':'b-ps','PS1':'b-ps','Xbox Series X':'b-xbox','Xbox One':'b-xbox','Xbox 360':'b-xbox','Xbox':'b-xbox','Master System':'b-sega','Mega Drive':'b-sega','Saturn':'b-sega','Dreamcast':'b-sega','NES':'b-ninretro','SNES':'b-ninretro','N64':'b-ninretro','GameCube':'b-ninretro','Wii':'b-ninretro','Wii U':'b-ninretro','Game Boy':'b-ninretro','GBA':'b-ninretro','DS':'b-ninretro','3DS':'b-ninretro','PC':'b-pc','Autre':'b-other'};
+const SBADGE={'Terminé':'b-termine','En cours':'b-encours','Pas commencé':'b-pascom','Collection':'b-collec'};
 
-let games = [];
-let filterStatus = 'tous';
-let filterConsole = null;
-let filterGenre = null;
-let editId = null;
-let searchQuery = "";
+let hGames=[],hSha=null,hFilter={status:'tous',console:null,genre:null,search:''};
+let cGames=[],cSha=null,cFilter={status:'tous',console:null,search:''};
+let hEditId=null,cEditId=null,cStars=0;
 
-function showSync(msg, duration) {
-  const el = document.getElementById('sync-status');
-  el.textContent = msg; el.style.display = 'block';
-  if (duration) setTimeout(() => { el.style.display = 'none'; }, duration);
+function sync(msg,dur){const e=document.getElementById('sync-status');e.textContent=msg;e.style.display='block';if(dur)setTimeout(()=>e.style.display='none',dur);}
+
+async function loadAll(){
+  sync('Chargement...');
+  await Promise.all([loadHunt(),loadColl()]);
+  document.getElementById('sync-status').style.display='none';
+  renderHunt();renderColl();
 }
 
-async function loadGames() {
-  try {
-    const res = await fetch(API_URL);
-    if (res.ok) {
-      const data = await res.json();
-      githubSha = data.sha;
-      if (data.games.length) {
-        games = data.games;
-      } else {
-        // Try current key first, then old versioned keys
-        const keys = [STORAGE_KEY,'jrpg-chasse-v7','jrpg-chasse-v6','jrpg-chasse-v5','jrpg-chasse-v4','jrpg-chasse-v3'];
-        let found = false;
-        for (const k of keys) {
-          const raw = localStorage.getItem(k);
-          if (raw) { try { const parsed = JSON.parse(raw); if (parsed.length) { games = parsed; found = true; break; } } catch(e){} }
-        }
-        if (!found) games = defaultGames();
-      }
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(games));
-    } else {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      games = raw ? JSON.parse(raw) : defaultGames();
-    }
-  } catch(e) {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    games = raw ? JSON.parse(raw) : defaultGames();
-  }
+async function loadHunt(){
+  try{const r=await fetch(HUNT_API);if(r.ok){const d=await r.json();hSha=d.sha;if(d.games&&d.games.length){hGames=d.games;localStorage.setItem(HUNT_KEY,JSON.stringify(hGames));return;}}}catch(e){}
+  const keys=[HUNT_KEY,'jrpg-chasse-v7','jrpg-chasse-v6','jrpg-chasse-v5','jrpg-chasse-v4','jrpg-chasse-v3'];
+  for(const k of keys){const r=localStorage.getItem(k);if(r){try{const p=JSON.parse(r);if(p.length){hGames=p;return;}}catch(e){}}}
+  hGames=defaultHunt();
 }
 
-async function saveGames() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(games));
-  try {
-    const res = await fetch(API_URL, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ games, sha: githubSha })
-    });
-    if (res.ok) {
-      const data = await res.json();
-      githubSha = data.sha;
-      showSync('✓ Synchronisé', 2000);
-    }
-  } catch(e) {
-    // Silent fail
-  }
+async function saveHunt(){
+  localStorage.setItem(HUNT_KEY,JSON.stringify(hGames));
+  try{const r=await fetch(HUNT_API,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({games:hGames,sha:hSha})});if(r.ok){const d=await r.json();hSha=d.sha;sync('✓ Synchronisé',2000);}}catch(e){}
 }
 
-function defaultGames() {
-  return [
-    { id:1, title:'Dragon Quest XI S', consoles:['Switch'], genres:['JRPG'], price:30, priority:'haute', note:'Histoire solide, persos attachants — priorité n°1', found:false, foundPrice:null, cover:null },
-    { id:2, title:'Metaphor: ReFantazio', consoles:['PS5','Xbox Series X'], genres:['JRPG'], price:40, priority:'haute', note:'JRPG narratif très ambitieux, émotionnel', found:false, foundPrice:null, cover:null },
-    { id:3, title:'Tales of Arise', consoles:['PS5','Xbox Series X'], genres:['JRPG','Action / Aventure'], price:20, priority:'moyenne', note:'Duo de persos attachants, beau visuellement', found:false, foundPrice:null, cover:null },
-    { id:4, title:'Eiyuden Chronicle: Hundred Heroes', consoles:['Switch','PS5','Xbox Series X'], genres:['JRPG'], price:25, priority:'moyenne', note:'Successeur spirituel de Suikoden, 100 persos', found:false, foundPrice:null, cover:null },
-    { id:5, title:'Metroid Dread', consoles:['Switch'], genres:['Action / Aventure'], price:35, priority:'haute', note:'Action/aventure tendu, atmosphérique — pas horrifique', found:false, foundPrice:null, cover:null },
-    { id:6, title:'Xenoblade Chronicles X : Definitive Edition', consoles:['Switch'], genres:['JRPG'], price:50, priority:'moyenne', note:'Monde ouvert immense, tout juste sorti', found:false, foundPrice:null, cover:null },
-    { id:7, title:'Ghost of Tsushima', consoles:['PS5'], genres:['Action / Aventure'], price:35, priority:'haute', note:'RDR2-like en mode samouraï — probablement coup de coeur', found:false, foundPrice:null, cover:null },
-    { id:8, title:'Horizon Forbidden West', consoles:['PS5'], genres:['Action / Aventure'], price:25, priority:'moyenne', note:'Open world AAA très généreux, visuellement superbe', found:false, foundPrice:null, cover:null },
-    { id:9, title:'Spider-Man 2', consoles:['PS5'], genres:['Action / Aventure'], price:40, priority:'moyenne', note:'Fun pur, bien rythmé', found:false, foundPrice:null, cover:null },
-    { id:10, title:'A Plague Tale : Innocence', consoles:['PS5','Xbox Series X'], genres:['Action / Aventure'], price:15, priority:'haute', note:'Narratif/émotion, proche Life is Strange — pas d horreur', found:false, foundPrice:null, cover:null },
-    { id:11, title:'A Plague Tale : Requiem', consoles:['PS5','Xbox Series X'], genres:['Action / Aventure'], price:25, priority:'haute', note:'Suite directe, encore plus ambitieux visuellement', found:false, foundPrice:null, cover:null },
-    { id:12, title:'Hi-Fi Rush', consoles:['Xbox Series X'], genres:['Action / Aventure'], price:20, priority:'haute', note:'Action rythmique, fun et délirant, très original', found:false, foundPrice:null, cover:null },
-    { id:13, title:'Psychonauts 2', consoles:['Xbox Series X'], genres:['Plateforme'], price:20, priority:'moyenne', note:'Plateforme/aventure très écrit, humour et émotion', found:false, foundPrice:null, cover:null },
-    { id:14, title:'Pentiment', consoles:['Xbox Series X'], genres:['Action / Aventure'], price:15, priority:'basse', note:'Narratif pur, ovni absolu — expérience unique', found:false, foundPrice:null, cover:null },
-    { id:15, title:'Cyberpunk 2077', consoles:['PS5','Xbox Series X'], genres:['Action / Aventure','RPG occidental'], price:20, priority:'haute', note:'Immersion totale, narration soignée — bien patché maintenant', found:false, foundPrice:null, cover:null },
-    { id:16, title:'Disco Elysium', consoles:['PS5','Xbox Series X'], genres:['RPG occidental'], price:15, priority:'moyenne', note:'RPG narratif unique, si tu aimes lire — ovni total', found:false, foundPrice:null, cover:null },
-  ];
+async function loadColl(){
+  try{const r=await fetch(COLL_API);if(r.ok){const d=await r.json();cSha=d.sha;cGames=d.games||[];localStorage.setItem(COLL_KEY,JSON.stringify(cGames));return;}}catch(e){}
+  const r=localStorage.getItem(COLL_KEY);cGames=r?JSON.parse(r):[];
 }
 
-function getChips(groupId) {
-  return [...document.querySelectorAll(`#${groupId} .chip-check`)].filter(c => c.checked).map(c => c.value);
-}
-function setChips(groupId, values) {
-  document.querySelectorAll(`#${groupId} .chip-check`).forEach(c => { c.checked = (values||[]).includes(c.value); });
-}
-function resetChips(groupId) {
-  document.querySelectorAll(`#${groupId} .chip-check`).forEach(c => { c.checked = false; });
+async function saveColl(){
+  localStorage.setItem(COLL_KEY,JSON.stringify(cGames));
+  try{const r=await fetch(COLL_API,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({games:cGames,sha:cSha})});if(r.ok){const d=await r.json();cSha=d.sha;sync('✓ Synchronisé',2000);}}catch(e){}
 }
 
-function initCoverPreview() {
-  const input = document.getElementById('f-cover');
-  const preview = document.getElementById('cover-preview');
-  let t;
-  input.addEventListener('input', () => {
-    clearTimeout(t);
-    t = setTimeout(() => {
-      const url = input.value.trim();
-      preview.src = url || '';
-      preview.style.opacity = url ? '1' : '0.2';
-    }, 400);
-  });
+function defaultHunt(){return[
+  {id:1,title:'Dragon Quest XI S',consoles:['Switch'],genres:['JRPG'],price:30,priority:'haute',note:'Histoire solide, persos attachants',found:false,foundPrice:null,cover:null},
+  {id:2,title:'Metaphor: ReFantazio',consoles:['PS5','Xbox Series X'],genres:['JRPG'],price:40,priority:'haute',note:'JRPG narratif très ambitieux',found:false,foundPrice:null,cover:null},
+  {id:3,title:'Ghost of Tsushima',consoles:['PS5'],genres:['Action / Aventure'],price:35,priority:'haute',note:'RDR2-like en mode samouraï',found:false,foundPrice:null,cover:null},
+  {id:4,title:'A Plague Tale : Innocence',consoles:['PS5','Xbox Series X'],genres:['Action / Aventure'],price:15,priority:'haute',note:'Narratif/émotion, proche Life is Strange',found:false,foundPrice:null,cover:null},
+];}
+
+function chips(id){return[...document.querySelectorAll(`#${id} .chip-check`)].filter(c=>c.checked).map(c=>c.value);}
+function setChips(id,vals){document.querySelectorAll(`#${id} .chip-check`).forEach(c=>{c.checked=(vals||[]).includes(c.value);});}
+function resetChips(id){document.querySelectorAll(`#${id} .chip-check`).forEach(c=>{c.checked=false;});}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function cbadge(c){return`<span class="badge ${CBADGE[c]||'b-other'}">${esc(c)}</span>`;}
+function placeholder(){return`<svg class="placeholder-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`;}
+function coverImg(g){return g.cover?`<img src="${esc(g.cover)}" alt="${esc(g.title)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none'" />`:placeholder();}
+
+function initPreview(inId,prevId){
+  const inp=document.getElementById(inId),prev=document.getElementById(prevId);let t;
+  inp.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(()=>{const u=inp.value.trim();prev.src=u||'';prev.style.opacity=u?'1':'0.2';},400);});
 }
-function clearCover() {
-  document.getElementById('f-cover').value = '';
-  const p = document.getElementById('cover-preview');
-  p.src = ''; p.style.opacity = '0.2';
-}
+function clearCover(inId,prevId){document.getElementById(inId).value='';const p=document.getElementById(prevId);p.src='';p.style.opacity='0.2';}
 
-function render() {
-  let list = [...games];
-  if (filterStatus === 'trouver') list = list.filter(g => !g.found);
-  else if (filterStatus === 'trouvés') list = list.filter(g => g.found);
-  if (filterConsole) list = list.filter(g => (g.consoles||[]).includes(filterConsole));
-  if (filterGenre) list = list.filter(g => (g.genres||[]).includes(filterGenre));
-  if (searchQuery) { const q = searchQuery.toLowerCase(); list = list.filter(g => g.title.toLowerCase().includes(q) || (g.note||"").toLowerCase().includes(q)); }
+/* HUNT RENDER */
+function renderHunt(){
+  let list=[...hGames];
+  if(hFilter.status==='trouver')list=list.filter(g=>!g.found);
+  else if(hFilter.status==='trouvés')list=list.filter(g=>g.found);
+  if(hFilter.console)list=list.filter(g=>(g.consoles||[]).includes(hFilter.console));
+  if(hFilter.genre)list=list.filter(g=>(g.genres||[]).includes(hFilter.genre));
+  if(hFilter.search){const q=hFilter.search.toLowerCase();list=list.filter(g=>g.title.toLowerCase().includes(q)||(g.note||'').toLowerCase().includes(q));}
+  list.sort((a,b)=>{if(a.found!==b.found)return a.found?1:-1;return({haute:0,moyenne:1,basse:2}[a.priority]||1)-({haute:0,moyenne:1,basse:2}[b.priority]||1);});
 
-  list.sort((a,b) => {
-    if (a.found !== b.found) return a.found ? 1 : -1;
-    return ({haute:0,moyenne:1,basse:2}[a.priority]||1) - ({haute:0,moyenne:1,basse:2}[b.priority]||1);
-  });
+  const tot=hGames.filter(g=>!g.found).length,fnd=hGames.filter(g=>g.found).length;
+  const bud=hGames.filter(g=>!g.found&&g.price).reduce((s,g)=>s+g.price,0);
+  const spt=hGames.filter(g=>g.found&&g.foundPrice).reduce((s,g)=>s+g.foundPrice,0);
+  document.getElementById('h-cherche').textContent=tot;
+  document.getElementById('h-found').textContent=fnd;
+  document.getElementById('h-budget').textContent=Math.round(bud)+'€';
+  document.getElementById('h-spent').textContent=Math.round(spt)+'€';
 
-  const total = games.filter(g => !g.found).length;
-  const found = games.filter(g => g.found).length;
-  const budget = games.filter(g => !g.found && g.price).reduce((s,g) => s+g.price, 0);
-  const spent = games.filter(g => g.found && g.foundPrice).reduce((s,g) => s+g.foundPrice, 0);
-
-  document.getElementById('s-cherche').textContent = total;
-  document.getElementById('s-found').textContent = found;
-  document.getElementById('s-budget').textContent = Math.round(budget) + '€';
-  document.getElementById('s-spent').textContent = Math.round(spent) + '€';
-  document.getElementById('site-sub').textContent = found > 0
-    ? `${found} jeu${found>1?'x':''} trouvé${found>1?'s':''} · ${total} restant${total>1?'s':''}`
-    : 'bureau de jardin en préparation...';
-
-  const el = document.getElementById('list');
-  if (!list.length) { el.innerHTML = '<div class="empty">Aucun jeu dans cette sélection</div>'; return; }
-
-  const toFind = list.filter(g => !g.found);
-  const foundList = list.filter(g => g.found);
-  let html = toFind.map(cardHTML).join('');
-  if (foundList.length && toFind.length) html += '<div class="divider">Trouvés</div>';
-  html += foundList.map(cardHTML).join('');
-  el.innerHTML = html;
-
-  el.querySelectorAll('.check-btn').forEach(b => b.addEventListener('click', () => toggleFound(+b.dataset.id)));
-  el.querySelectorAll('.edit-btn').forEach(b => b.addEventListener('click', () => startEdit(+b.dataset.id)));
-  el.querySelectorAll('.del-btn').forEach(b => b.addEventListener('click', () => deleteGame(+b.dataset.id)));
-  el.querySelectorAll('.found-price-input').forEach(inp => inp.addEventListener('change', () => setFoundPrice(+inp.dataset.id, inp.value)));
+  const el=document.getElementById('h-list');
+  if(!list.length){el.innerHTML='<div class="empty">Aucun jeu</div>';return;}
+  const tf=list.filter(g=>!g.found),fl=list.filter(g=>g.found);
+  let html=tf.map(hCard).join('');
+  if(fl.length&&tf.length)html+='<div class="divider">Trouvés</div>';
+  html+=fl.map(hCard).join('');
+  el.innerHTML=html;
+  el.querySelectorAll('.check-btn').forEach(b=>b.addEventListener('click',()=>hToggle(+b.dataset.id)));
+  el.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>hEdit(+b.dataset.edit)));
+  el.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>hDel(+b.dataset.del)));
+  el.querySelectorAll('.found-price-input').forEach(i=>i.addEventListener('change',()=>hPrice(+i.dataset.id,i.value)));
 }
 
-function cardHTML(g) {
-  const consoleBadges = (g.consoles||[]).map(c => `<span class="badge ${CONSOLE_BADGE[c]||''}">${c}</span>`).join('');
-  const genreText = (g.genres||[]).join(' · ');
-  const coverSection = g.cover
-    ? `<img src="${esc(g.cover)}" alt="${esc(g.title)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none'" />`
-    : `<svg class="placeholder-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>`;
-  const prioTag = g.priority==='haute' ? '<span class="badge badge-prio">Priorité</span>' : '';
-  const priceTag = g.price ? `<span class="badge badge-price">max ${g.price}€</span>` : '';
-  const foundPriceSection = g.found ? `
-    <div class="found-price-row">
-      <label>Payé :</label>
-      <input class="found-price-input" data-id="${g.id}" type="number" placeholder="€" value="${g.foundPrice||''}" />
-      ${g.foundPrice ? `<span class="badge badge-found-price">${g.foundPrice}€</span>` : ''}
-    </div>` : '';
-
-  return `
-  <div class="game-card ${g.found?'found':''}">
-    <div class="card-cover">${coverSection}</div>
+function hCard(g){
+  const prioTag=g.priority==='haute'?'<span class="badge b-prio">Priorité</span>':'';
+  const priceTag=g.price?`<span class="badge b-price">max ${g.price}€</span>`:'';
+  const genreText=(g.genres||[]).join(' · ');
+  const foundSection=g.found?`<div class="found-price-row"><label>Payé :</label><input class="found-price-input" data-id="${g.id}" type="number" placeholder="€" value="${g.foundPrice||''}" />${g.foundPrice?`<span class="badge b-paid">${g.foundPrice}€</span>`:''}</div>`:'';
+  return`<div class="game-card ${g.found?'found':''}">
+    <div class="card-cover">${coverImg(g)}</div>
     <div class="check-col"><button class="check-btn" data-id="${g.id}">${g.found?'✓':''}</button></div>
     <div class="card-content">
-      <div class="game-title">${escHtml(g.title)}</div>
-      <div class="meta">${consoleBadges}${priceTag}${prioTag}</div>
-      ${genreText ? `<div class="meta"><span class="badge badge-genre">${escHtml(genreText)}</span></div>` : ''}
-      ${g.note ? `<div class="game-note">${escHtml(g.note)}</div>` : ''}
-      ${foundPriceSection}
+      <div class="game-title">${esc(g.title)}</div>
+      <div class="meta">${(g.consoles||[]).map(cbadge).join('')}${priceTag}${prioTag}</div>
+      ${genreText?`<div class="meta"><span class="badge b-genre">${esc(genreText)}</span></div>`:''}
+      ${g.note?`<div class="game-note">${esc(g.note)}</div>`:''}
+      ${foundSection}
     </div>
-    <div class="card-actions">
-      <button class="icon-btn edit-btn" data-id="${g.id}" title="Modifier">✎</button>
-      <button class="icon-btn del del-btn" data-id="${g.id}" title="Supprimer">✕</button>
-    </div>
+    <div class="card-actions"><button class="icon-btn" data-edit="${g.id}">✎</button><button class="icon-btn del" data-del="${g.id}">✕</button></div>
   </div>`;
 }
 
-function toggleFound(id) {
-  const g = games.find(x => x.id===id); if (!g) return;
-  g.found = !g.found; if (!g.found) g.foundPrice = null;
-  saveGames().then(() => render());
-}
-function setFoundPrice(id, val) {
-  const g = games.find(x => x.id===id);
-  if (g) { g.foundPrice = parseFloat(val)||null; saveGames().then(() => render()); }
-}
-function deleteGame(id) {
-  if (!confirm('Supprimer ce jeu ?')) return;
-  games = games.filter(x => x.id!==id); saveGames().then(() => render());
-}
-function startEdit(id) {
-  const g = games.find(x => x.id===id); if (!g) return;
-  editId = id;
-  document.getElementById('f-title').value = g.title;
-  document.getElementById('f-price').value = g.price||'';
-  document.getElementById('f-priority').value = g.priority;
-  document.getElementById('f-note').value = g.note||'';
-  setChips('console-chips', g.consoles||[]);
-  setChips('genre-chips', g.genres||[]);
-  const p = document.getElementById('cover-preview');
-  document.getElementById('f-cover').value = g.cover||'';
-  p.src = g.cover||''; p.style.opacity = g.cover ? '1' : '0.2';
-  openForm();
-}
-function openForm() {
-  document.getElementById('form-panel').classList.add('open');
-  setTimeout(() => document.getElementById('f-title').focus(), 60);
-}
-function closeForm() {
-  document.getElementById('form-panel').classList.remove('open');
-  editId = null;
-  ['f-title','f-price','f-note','f-cover'].forEach(id => document.getElementById(id).value='');
-  document.getElementById('f-priority').value = 'moyenne';
-  resetChips('console-chips'); resetChips('genre-chips');
-  clearCover();
-}
-function saveGame() {
-  const title = document.getElementById('f-title').value.trim();
-  if (!title) { document.getElementById('f-title').focus(); return; }
-  const consoles = getChips('console-chips');
-  if (!consoles.length) { alert('Sélectionne au moins une console.'); return; }
-  const g = {
-    id: editId||Date.now(), title, consoles,
-    genres: getChips('genre-chips'),
-    price: parseFloat(document.getElementById('f-price').value)||null,
-    priority: document.getElementById('f-priority').value,
-    note: document.getElementById('f-note').value.trim(),
-    cover: document.getElementById('f-cover').value.trim()||null,
-    found: false, foundPrice: null
-  };
-  if (editId) {
-    const idx = games.findIndex(x => x.id===editId);
-    if (idx!==-1) { g.found=games[idx].found; g.foundPrice=games[idx].foundPrice; games[idx]=g; }
-  } else { games.push(g); }
-  saveGames().then(() => { closeForm(); render(); });
+function hToggle(id){const g=hGames.find(x=>x.id===id);if(!g)return;g.found=!g.found;if(!g.found)g.foundPrice=null;saveHunt().then(()=>renderHunt());}
+function hPrice(id,val){const g=hGames.find(x=>x.id===id);if(g){g.foundPrice=parseFloat(val)||null;saveHunt().then(()=>renderHunt());}}
+function hDel(id){if(!confirm('Supprimer ?'))return;hGames=hGames.filter(x=>x.id!==id);saveHunt().then(()=>renderHunt());}
+function hOpen(){document.getElementById('h-form').classList.add('open');setTimeout(()=>document.getElementById('h-title').focus(),60);}
+function hClose(){document.getElementById('h-form').classList.remove('open');hEditId=null;['h-title','h-price','h-note','h-cover'].forEach(i=>document.getElementById(i).value='');document.getElementById('h-priority').value='moyenne';resetChips('h-consoles');resetChips('h-genres');clearCover('h-cover','h-cover-prev');}
+function hEdit(id){const g=hGames.find(x=>x.id===id);if(!g)return;hEditId=id;document.getElementById('h-title').value=g.title;document.getElementById('h-price').value=g.price||'';document.getElementById('h-priority').value=g.priority;document.getElementById('h-note').value=g.note||'';setChips('h-consoles',g.consoles||[]);setChips('h-genres',g.genres||[]);const p=document.getElementById('h-cover-prev');document.getElementById('h-cover').value=g.cover||'';p.src=g.cover||'';p.style.opacity=g.cover?'1':'0.2';hOpen();}
+function hSave(){const t=document.getElementById('h-title').value.trim();if(!t)return;const c=chips('h-consoles');if(!c.length){alert('Sélectionne au moins une console.');return;}const g={id:hEditId||Date.now(),title:t,consoles:c,genres:chips('h-genres'),price:parseFloat(document.getElementById('h-price').value)||null,priority:document.getElementById('h-priority').value,note:document.getElementById('h-note').value.trim(),cover:document.getElementById('h-cover').value.trim()||null,found:false,foundPrice:null};if(hEditId){const i=hGames.findIndex(x=>x.id===hEditId);if(i!==-1){g.found=hGames[i].found;g.foundPrice=hGames[i].foundPrice;hGames[i]=g;}}else hGames.push(g);saveHunt().then(()=>{hClose();renderHunt();});}
+
+/* COLLECTION RENDER */
+function renderColl(){
+  let list=[...cGames];
+  if(cFilter.status!=='tous')list=list.filter(g=>g.status===cFilter.status);
+  if(cFilter.console)list=list.filter(g=>(g.consoles||[]).includes(cFilter.console));
+  if(cFilter.search){const q=cFilter.search.toLowerCase();list=list.filter(g=>g.title.toLowerCase().includes(q)||(g.review||'').toLowerCase().includes(q));}
+  list.sort((a,b)=>a.title.localeCompare(b.title,'fr'));
+
+  const tot=cGames.length,ter=cGames.filter(g=>g.status==='Terminé').length,enc=cGames.filter(g=>g.status==='En cours').length;
+  const noted=cGames.filter(g=>g.stars>0);
+  const avg=noted.length?(Math.round(noted.reduce((s,g)=>s+g.stars,0)/noted.length*10)/10).toFixed(1):'-';
+  document.getElementById('c-total').textContent=tot;
+  document.getElementById('c-termines').textContent=ter;
+  document.getElementById('c-encours').textContent=enc;
+  document.getElementById('c-avg').textContent=avg;
+
+  const el=document.getElementById('c-list');
+  if(!list.length){el.innerHTML='<div class="empty">Aucun jeu</div>';return;}
+  el.innerHTML=list.map(cCard).join('');
+  el.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>cEdit(+b.dataset.edit)));
+  el.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>cDel(+b.dataset.del)));
 }
 
-function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function esc(s) { return String(s||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+function cCard(g){
+  const sb=g.status?`<span class="badge ${SBADGE[g.status]||''}">${esc(g.status)}</span>`:'';
+  const stars=g.stars?`<span class="stars-disp">${'★'.repeat(g.stars)}${'☆'.repeat(5-g.stars)}</span>`:'';
+  return`<div class="game-card ${g.status==='Collection'?'dimmed':''}">
+    <div class="card-cover">${coverImg(g)}</div>
+    <div class="card-content" style="padding-left:0.8rem">
+      <div class="game-title">${esc(g.title)}</div>
+      <div class="meta">${(g.consoles||[]).map(cbadge).join('')}${sb}</div>
+      ${stars?`<div class="meta">${stars}</div>`:''}
+      ${g.review?`<div class="game-note">${esc(g.review)}</div>`:''}
+    </div>
+    <div class="card-actions"><button class="icon-btn" data-edit="${g.id}">✎</button><button class="icon-btn del" data-del="${g.id}">✕</button></div>
+  </div>`;
+}
 
-/* Filters */
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const type = btn.dataset.type;
-    const val = btn.dataset.val;
-    if (type === 'status') {
-      filterStatus = val;
-      document.querySelectorAll('.filter-btn[data-type="status"]').forEach(b => b.classList.remove('active-status'));
-      btn.classList.add('active-status');
-    } else if (type === 'console') {
-      if (filterConsole === val) { filterConsole = null; btn.classList.remove('active-console'); }
-      else {
-        filterConsole = val;
-        document.querySelectorAll('.filter-btn[data-type="console"]').forEach(b => b.classList.remove('active-console'));
-        btn.classList.add('active-console');
-      }
-    } else if (type === 'genre') {
-      if (filterGenre === val) { filterGenre = null; btn.classList.remove('active-genre'); }
-      else {
-        filterGenre = val;
-        document.querySelectorAll('.filter-btn[data-type="genre"]').forEach(b => b.classList.remove('active-genre'));
-        btn.classList.add('active-genre');
-      }
+function setStar(n){cStars=n;document.querySelectorAll('#c-stars .star-btn').forEach(b=>{b.classList.toggle('on',+b.dataset.v<=n);});}
+function cDel(id){if(!confirm('Supprimer ?'))return;cGames=cGames.filter(x=>x.id!==id);saveColl().then(()=>renderColl());}
+function cOpen(){document.getElementById('c-form').classList.add('open');setTimeout(()=>document.getElementById('c-title').focus(),60);}
+function cClose(){document.getElementById('c-form').classList.remove('open');cEditId=null;cStars=0;['c-title','c-cover','c-review'].forEach(i=>document.getElementById(i).value='');document.getElementById('cs-3').checked=true;resetChips('c-consoles');clearCover('c-cover','c-cover-prev');setStar(0);}
+function cEdit(id){const g=cGames.find(x=>x.id===id);if(!g)return;cEditId=id;document.getElementById('c-title').value=g.title;document.getElementById('c-review').value=g.review||'';setChips('c-consoles',g.consoles||[]);const r=document.querySelector(`input[name="c-status"][value="${g.status}"]`);if(r)r.checked=true;setStar(g.stars||0);const p=document.getElementById('c-cover-prev');document.getElementById('c-cover').value=g.cover||'';p.src=g.cover||'';p.style.opacity=g.cover?'1':'0.2';cOpen();}
+function cSave(){const t=document.getElementById('c-title').value.trim();if(!t)return;const sr=document.querySelector('input[name="c-status"]:checked');const g={id:cEditId||Date.now(),title:t,consoles:chips('c-consoles'),status:sr?sr.value:'Terminé',stars:cStars,review:document.getElementById('c-review').value.trim(),cover:document.getElementById('c-cover').value.trim()||null};if(cEditId){const i=cGames.findIndex(x=>x.id===cEditId);if(i!==-1)cGames[i]=g;}else cGames.push(g);saveColl().then(()=>{cClose();renderColl();});}
+
+/* FILTERS */
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const sec=btn.dataset.section,type=btn.dataset.type,val=btn.dataset.val;
+    const cls=type==='status'?'f-active-status':type==='console'?'f-active-console':'f-active-genre';
+    if(sec==='h'){
+      if(type==='status'){hFilter.status=val;document.querySelectorAll('[data-section="h"][data-type="status"]').forEach(b=>b.classList.remove('f-active-status'));btn.classList.add('f-active-status');}
+      else if(type==='console'){if(hFilter.console===val){hFilter.console=null;btn.classList.remove('f-active-console');}else{hFilter.console=val;document.querySelectorAll('[data-section="h"][data-type="console"]').forEach(b=>b.classList.remove('f-active-console'));btn.classList.add('f-active-console');}}
+      else{if(hFilter.genre===val){hFilter.genre=null;btn.classList.remove('f-active-genre');}else{hFilter.genre=val;document.querySelectorAll('[data-section="h"][data-type="genre"]').forEach(b=>b.classList.remove('f-active-genre'));btn.classList.add('f-active-genre');}}
+      renderHunt();
+    } else {
+      if(type==='status'){cFilter.status=val;document.querySelectorAll('[data-section="c"][data-type="status"]').forEach(b=>b.classList.remove('f-active-status'));btn.classList.add('f-active-status');}
+      else{if(cFilter.console===val){cFilter.console=null;btn.classList.remove('f-active-console');}else{cFilter.console=val;document.querySelectorAll('[data-section="c"][data-type="console"]').forEach(b=>b.classList.remove('f-active-console'));btn.classList.add('f-active-console');}}
+      renderColl();
     }
-    render();
   });
 });
 
-document.getElementById('search-input').addEventListener('input', e => {
-  searchQuery = e.target.value.trim();
-  render();
+/* TAB */
+document.querySelectorAll('.tab-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));
+    document.getElementById('tab-'+b.dataset.tab).classList.add('active');
+  });
 });
 
-document.getElementById('add-btn').addEventListener('click', () => {
-  if (document.getElementById('form-panel').classList.contains('open') && !editId) closeForm();
-  else { editId=null; clearCover(); resetChips('console-chips'); resetChips('genre-chips'); openForm(); }
-});
-document.getElementById('cancel-btn').addEventListener('click', closeForm);
-document.getElementById('save-btn').addEventListener('click', saveGame);
-document.getElementById('clear-cover-btn').addEventListener('click', clearCover);
-document.getElementById('f-title').addEventListener('keydown', e => { if (e.key==='Enter') saveGame(); });
+/* SEARCH */
+document.getElementById('h-search').addEventListener('input',e=>{hFilter.search=e.target.value.trim();renderHunt();});
+document.getElementById('c-search').addEventListener('input',e=>{cFilter.search=e.target.value.trim();renderColl();});
 
-showSync('Chargement...');
-loadGames().then(() => { render(); document.getElementById('sync-status').style.display = 'none'; });
-initCoverPreview();
+/* EVENTS */
+document.getElementById('h-add-btn').addEventListener('click',()=>{if(document.getElementById('h-form').classList.contains('open')&&!hEditId)hClose();else{hEditId=null;hOpen();}});
+document.getElementById('h-cancel').addEventListener('click',hClose);
+document.getElementById('h-save').addEventListener('click',hSave);
+document.getElementById('h-title').addEventListener('keydown',e=>{if(e.key==='Enter')hSave();});
+document.getElementById('h-clear-cover').addEventListener('click',()=>clearCover('h-cover','h-cover-prev'));
+document.getElementById('c-add-btn').addEventListener('click',()=>{if(document.getElementById('c-form').classList.contains('open')&&!cEditId)cClose();else{cEditId=null;cOpen();}});
+document.getElementById('c-cancel').addEventListener('click',cClose);
+document.getElementById('c-save').addEventListener('click',cSave);
+document.getElementById('c-title').addEventListener('keydown',e=>{if(e.key==='Enter')cSave();});
+document.getElementById('c-clear-cover').addEventListener('click',()=>clearCover('c-cover','c-cover-prev'));
+document.querySelectorAll('#c-stars .star-btn').forEach(b=>b.addEventListener('click',()=>setStar(+b.dataset.v)));
+
+initPreview('h-cover','h-cover-prev');
+initPreview('c-cover','c-cover-prev');
+
+loadAll();
 </script>
 </body>
 </html>
