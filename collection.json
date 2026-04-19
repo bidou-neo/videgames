@@ -109,5 +109,16 @@
     "stars": 2,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/81qsCUo5w0L.jpg"
+  },
+  {
+    "id": 1776613771409,
+    "title": "Call of Duty: Modern Warfare II",
+    "consoles": [
+      "Xbox Series X"
+    ],
+    "status": "Terminé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/81oXVO6u3xL.jpg"
   }
 ]
