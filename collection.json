@@ -153,5 +153,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://static.fnac-static.com/multimedia/Images/FR/NR/8a/e3/9b/10216330/1540-1/tsp20260403100932/Aain-s-Creed-Odyey-Xbox-One.jpg"
+  },
+  {
+    "id": 1776613970328,
+    "title": "Riders Republic",
+    "consoles": [
+      "Xbox Series X"
+    ],
+    "status": "Terminé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/612TNAm9NiL._AC_UF1000,1000_QL80_.jpg"
   }
 ]
