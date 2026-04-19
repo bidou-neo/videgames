@@ -98,5 +98,16 @@
     "stars": 5,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/810oWgJuLRL.jpg"
+  },
+  {
+    "id": 1776611104741,
+    "title": "Bravely default 2",
+    "consoles": [
+      "Switch"
+    ],
+    "status": "En cours",
+    "stars": 2,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/81qsCUo5w0L.jpg"
   }
 ]
