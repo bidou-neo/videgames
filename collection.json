@@ -53,5 +53,17 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/61WIJe1XgTL.jpg"
+  },
+  {
+    "id": 1776610918814,
+    "title": "Halo infinite - Steelbook edition",
+    "consoles": [
+      "Xbox Series X",
+      "Xbox One"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://static.fnac-static.com/multimedia/Images/CC/7C/AB/14/21673932-1505-3756-1.jpg"
   }
 ]
