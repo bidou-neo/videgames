@@ -76,5 +76,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://static.fnac-static.com/multimedia/Images/FR/MDM/9d/19/6c/23861661/3756-1/tsp20250312091631/Life-is-Strange-Double-Exposure-Xbox-Series-X.jpg"
+  },
+  {
+    "id": 1776611010189,
+    "title": "Titan Quest",
+    "consoles": [
+      "Switch"
+    ],
+    "status": "En cours",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/611P4suOeWL._AC_UF1000,1000_QL80_.jpg"
   }
 ]
