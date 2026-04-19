@@ -131,5 +131,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://static.fnac-static.com/multimedia/Images/FR/NR/63/f1/df/14676323/1507-1/tsp20260219092528/Hogwarts-Legacy-L-Heritage-de-Poudlard-Xbox-Serie-X.jpg"
+  },
+  {
+    "id": 1776613898680,
+    "title": "Assassin's Creed - Origins",
+    "consoles": [
+      "Xbox One"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/81YAotFclVL._AC_UF1000,1000_QL80_.jpg"
   }
 ]
