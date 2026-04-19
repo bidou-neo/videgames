@@ -442,7 +442,26 @@ function hCard(g){
   </div>`;
 }
 
-function hToggle(id){const g=hGames.find(x=>x.id===id);if(!g)return;g.found=!g.found;if(!g.found)g.foundPrice=null;saveHunt().then(()=>renderHunt());}
+function hToggle(id){
+  const g=hGames.find(x=>x.id===id);if(!g)return;
+  const waFound=g.found;
+  g.found=!g.found;
+  if(!g.found){
+    g.foundPrice=null;
+    // Remove from collection if it was added automatically
+    const idx=cGames.findIndex(x=>x.fromHunt===id);
+    if(idx!==-1){cGames.splice(idx,1);saveColl();}
+  } else {
+    // Auto-add to collection if not already there
+    const alreadyIn=cGames.some(x=>x.fromHunt===id||x.title.toLowerCase()===g.title.toLowerCase());
+    if(!alreadyIn){
+      const newEntry={id:Date.now(),fromHunt:id,title:g.title,consoles:g.consoles||[],status:'Pas commencé',stars:0,review:'',cover:g.cover||null};
+      cGames.push(newEntry);
+      saveColl().then(()=>renderColl());
+    }
+  }
+  saveHunt().then(()=>renderHunt());
+}
 function hPrice(id,val){const g=hGames.find(x=>x.id===id);if(g){g.foundPrice=parseFloat(val)||null;saveHunt().then(()=>renderHunt());}}
 function hDel(id){if(!confirm('Supprimer ?'))return;hGames=hGames.filter(x=>x.id!==id);saveHunt().then(()=>renderHunt());}
 function hOpen(){document.getElementById('h-form').classList.add('open');setTimeout(()=>document.getElementById('h-title').focus(),60);}
