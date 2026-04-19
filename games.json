@@ -80,7 +80,7 @@
     "price": 35,
     "priority": "haute",
     "note": "Action/aventure tendu, atmosphérique — pas horrifique",
-    "found": true,
+    "found": false,
     "foundPrice": null,
     "cover": null
   },
