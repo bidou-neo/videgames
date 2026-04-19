@@ -316,9 +316,9 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
           <input class="chip-check platform-chip" type="checkbox" id="cc-other" value="Autre"><label class="chip-label" for="cc-other">Autre</label>
         </div></div>
         <div class="field full"><label>Statut</label><div class="status-chips">
-          <input class="status-radio" type="radio" name="c-status" id="cs-1" value="Pas commencé"><label class="status-label" for="cs-1">Pas commencé</label>
+          <input class="status-radio" type="radio" name="c-status" id="cs-1" value="Pas commencé" checked><label class="status-label" for="cs-1">Pas commencé</label>
           <input class="status-radio" type="radio" name="c-status" id="cs-2" value="En cours"><label class="status-label" for="cs-2">En cours</label>
-          <input class="status-radio" type="radio" name="c-status" id="cs-3" value="Terminé" checked><label class="status-label" for="cs-3">Terminé</label>
+          <input class="status-radio" type="radio" name="c-status" id="cs-3" value="Terminé"><label class="status-label" for="cs-3">Terminé</label>
           <input class="status-radio" type="radio" name="c-status" id="cs-4" value="Collection"><label class="status-label" for="cs-4">Collection</label>
         </div></div>
         <div class="field full"><label>Note</label><div class="stars-input" id="c-stars">
@@ -519,7 +519,7 @@ function cCard(g){
 function setStar(n){cStars=n;document.querySelectorAll('#c-stars .star-btn').forEach(b=>{b.classList.toggle('on',+b.dataset.v<=n);});}
 function cDel(id){if(!confirm('Supprimer ?'))return;cGames=cGames.filter(x=>x.id!==id);saveColl().then(()=>renderColl());}
 function cOpen(){document.getElementById('c-form').classList.add('open');setTimeout(()=>document.getElementById('c-title').focus(),60);}
-function cClose(){document.getElementById('c-form').classList.remove('open');cEditId=null;cStars=0;['c-title','c-cover','c-review','c-ean'].forEach(i=>document.getElementById(i).value='');document.getElementById('c-scan-status').textContent='';document.getElementById('cs-3').checked=true;resetChips('c-consoles');clearCover('c-cover','c-cover-prev');setStar(0);}
+function cClose(){document.getElementById('c-form').classList.remove('open');cEditId=null;cStars=0;['c-title','c-cover','c-review','c-ean'].forEach(i=>document.getElementById(i).value='');document.getElementById('c-scan-status').textContent='';document.getElementById('cs-1').checked=true;resetChips('c-consoles');clearCover('c-cover','c-cover-prev');setStar(0);}
 function cEdit(id){const g=cGames.find(x=>x.id===id);if(!g)return;cEditId=id;document.getElementById('c-title').value=g.title;document.getElementById('c-review').value=g.review||'';setChips('c-consoles',g.consoles||[]);const r=document.querySelector(`input[name="c-status"][value="${g.status}"]`);if(r)r.checked=true;setStar(g.stars||0);const p=document.getElementById('c-cover-prev');document.getElementById('c-cover').value=g.cover||'';p.src=g.cover||'';p.style.opacity=g.cover?'1':'0.2';cOpen();}
 function cSave(){const t=document.getElementById('c-title').value.trim();if(!t)return;const sr=document.querySelector('input[name="c-status"]:checked');const g={id:cEditId||Date.now(),title:t,consoles:chips('c-consoles'),status:sr?sr.value:'Terminé',stars:cStars,review:document.getElementById('c-review').value.trim(),cover:document.getElementById('c-cover').value.trim()||null};if(cEditId){const i=cGames.findIndex(x=>x.id===cEditId);if(i!==-1)cGames[i]=g;}else cGames.push(g);saveColl().then(()=>{cClose();renderColl();});}
 
