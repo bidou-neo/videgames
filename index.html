@@ -575,6 +575,8 @@ document.getElementById('c-ean').addEventListener('input', function() {
   clearTimeout(eanDebounce);
   if (ean.length < 8) return;
   eanDebounce = setTimeout(async () => {
+    // Open form if not already open
+    if (!document.getElementById('c-form').classList.contains('open')) cOpen();
     const status = document.getElementById('c-scan-status');
     status.textContent = 'Recherche...';
     try {
