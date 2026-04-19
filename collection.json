@@ -9,5 +9,18 @@
     "stars": 1,
     "review": "",
     "cover": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSa22_5b41fLuQW7i0kEw2i_enNEHnUOWpXegGahWp8oiCrq-W9m_CK7oYU3Xj1bdlKijRg71fb9nAa3n5xNtd7AjJIVv5RQL3zjJkfCUzpM3msu6nYc3P3wA&usqp=CAc"
+  },
+  {
+    "id": 1776610404852,
+    "fromHunt": 15,
+    "title": "Cyberpunk 2077",
+    "consoles": [
+      "PS5",
+      "Xbox Series X"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": null
   }
 ]
