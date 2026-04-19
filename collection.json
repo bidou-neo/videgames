@@ -34,15 +34,13 @@
   },
   {
     "id": 1776610625863,
-    "fromHunt": 3,
     "title": "Tales of Arise",
     "consoles": [
-      "PS5",
-      "Xbox Series X"
+      "PS5"
     ],
     "status": "Pas commencé",
     "stars": 0,
     "review": "",
-    "cover": null
+    "cover": "https://m.media-amazon.com/images/I/51AoCkVRdKL._AC_UF894,1000_QL80_.jpg"
   }
 ]
