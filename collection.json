@@ -241,5 +241,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/81R3OvUDHmL._AC_UF894,1000_QL80_.jpg"
+  },
+  {
+    "id": 1776781519122,
+    "title": "Bugs Bunny",
+    "consoles": [
+      "Game Boy"
+    ],
+    "status": "Collection",
+    "stars": 0,
+    "review": "",
+    "cover": "https://videogamegalaxy.com/wp-content/uploads/2024/02/Mickey-1-EURO-Bugs-Bunny-ESP-1-scaled.jpg"
   }
 ]
