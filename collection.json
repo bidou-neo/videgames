@@ -230,5 +230,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://static.fnac-static.com/multimedia/Images/FR/MDM/c6/97/2d/19765190/3756-1/tsp20251121193652/Super-Mario-RPG-Nintendo-Switch.jpg"
+  },
+  {
+    "id": 1776780927392,
+    "title": "Lego Horizon Adventures",
+    "consoles": [
+      "Switch"
+    ],
+    "status": "En cours",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/81R3OvUDHmL._AC_UF894,1000_QL80_.jpg"
   }
 ]
