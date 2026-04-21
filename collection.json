@@ -252,5 +252,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://videogamegalaxy.com/wp-content/uploads/2024/02/Mickey-1-EURO-Bugs-Bunny-ESP-1-scaled.jpg"
+  },
+  {
+    "id": 1776781581472,
+    "title": "DR Mario",
+    "consoles": [
+      "Game Boy"
+    ],
+    "status": "Collection",
+    "stars": 0,
+    "review": "",
+    "cover": "https://www.gamecash.fr/thumbnail-400-450/dr-mario-e59466.jpg"
   }
 ]
