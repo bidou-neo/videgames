@@ -208,5 +208,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/71fD-eZTR7L._AC_UF1000,1000_QL80_.jpg"
+  },
+  {
+    "id": 1776780807296,
+    "title": "Final Fantasy VIII Remastered",
+    "consoles": [
+      "Switch"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/71mQ+MiW9+L._AC_UF1000,1000_QL80_.jpg"
   }
 ]
