@@ -296,5 +296,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://www.gamecash.fr/thumbnail-600/international-superstar-soccer-64-e31423.jpg"
+  },
+  {
+    "id": 1776781737852,
+    "title": "Super soccer",
+    "consoles": [
+      "SNES"
+    ],
+    "status": "Collection",
+    "stars": 0,
+    "review": "",
+    "cover": "https://image.jeuxvideo.com/images/sn/s/u/susosn0f.jpg"
   }
 ]
