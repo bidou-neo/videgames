@@ -318,5 +318,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://www.gamecash.fr/thumbnail-400-450/street-fighter-ii-turbo-e50972.jpg"
+  },
+  {
+    "id": 1776781812659,
+    "title": "Super Mario World",
+    "consoles": [
+      "SNES"
+    ],
+    "status": "Collection",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/91lHAWlswwL.jpg"
   }
 ]
