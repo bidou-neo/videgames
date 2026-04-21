@@ -51,24 +51,6 @@
     "cover": null
   },
   {
-    "id": 4,
-    "title": "Eiyuden Chronicle: Hundred Heroes",
-    "consoles": [
-      "Switch",
-      "PS5",
-      "Xbox Series X"
-    ],
-    "genres": [
-      "JRPG"
-    ],
-    "price": 25,
-    "priority": "moyenne",
-    "note": "Successeur spirituel de Suikoden, 100 persos",
-    "found": false,
-    "foundPrice": null,
-    "cover": null
-  },
-  {
     "id": 5,
     "title": "Metroid Dread",
     "consoles": [
