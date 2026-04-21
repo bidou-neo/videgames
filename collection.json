@@ -219,5 +219,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/71mQ+MiW9+L._AC_UF1000,1000_QL80_.jpg"
+  },
+  {
+    "id": 1776780862010,
+    "title": "Super Mario RPG",
+    "consoles": [
+      "Switch"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://static.fnac-static.com/multimedia/Images/FR/MDM/c6/97/2d/19765190/3756-1/tsp20251121193652/Super-Mario-RPG-Nintendo-Switch.jpg"
   }
 ]
