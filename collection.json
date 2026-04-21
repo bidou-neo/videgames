@@ -307,5 +307,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://image.jeuxvideo.com/images/sn/s/u/susosn0f.jpg"
+  },
+  {
+    "id": 1776781763338,
+    "title": "Street Fighter II Turbo",
+    "consoles": [
+      "SNES"
+    ],
+    "status": "Collection",
+    "stars": 0,
+    "review": "",
+    "cover": "https://www.gamecash.fr/thumbnail-400-450/street-fighter-ii-turbo-e50972.jpg"
   }
 ]
