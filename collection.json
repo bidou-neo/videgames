@@ -186,5 +186,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/61-6VThu1iL.jpg"
+  },
+  {
+    "id": 1776773317384,
+    "title": "Xenoblade Chronicles 3",
+    "consoles": [
+      "Switch"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/71AkDXSCRaL._AC_UF1000,1000_QL80_.jpg"
   }
 ]
