@@ -197,5 +197,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/71AkDXSCRaL._AC_UF1000,1000_QL80_.jpg"
+  },
+  {
+    "id": 1776780755978,
+    "title": "Live A Live",
+    "consoles": [
+      "Switch"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/71fD-eZTR7L._AC_UF1000,1000_QL80_.jpg"
   }
 ]
