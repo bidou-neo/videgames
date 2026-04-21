@@ -263,5 +263,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://www.gamecash.fr/thumbnail-400-450/dr-mario-e59466.jpg"
+  },
+  {
+    "id": 1776781615931,
+    "title": "Kirby's Dream Land",
+    "consoles": [
+      "Game Boy"
+    ],
+    "status": "Collection",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/61BlWIBmHCL.jpg"
   }
 ]
