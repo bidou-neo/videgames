@@ -340,5 +340,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/71wlJ09bP4L.jpg"
+  },
+  {
+    "id": 1776869530421,
+    "title": "final fantasy XVI steelbook",
+    "consoles": [
+      "PS5"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/81b-xYJXUfL.jpg"
   }
 ]
