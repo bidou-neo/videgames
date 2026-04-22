@@ -395,5 +395,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/81HVmJL5W3L.jpg"
+  },
+  {
+    "id": 1776869703070,
+    "title": "Trials Rising - Edition Gold",
+    "consoles": [
+      "PS4"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/711YzzFAb7L._AC_UF1000,1000_QL80_.jpg"
   }
 ]
