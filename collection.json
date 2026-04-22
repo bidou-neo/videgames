@@ -351,5 +351,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/81b-xYJXUfL.jpg"
+  },
+  {
+    "id": 1776869587022,
+    "title": "Gran Turismo Sport Steelbook",
+    "consoles": [
+      "PS4"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://static.fnac-static.com/multimedia/Images/FR/NR/51/0f/89/8982353/1540-1/tsp20250116174641/Gran-Turismo-Sport-Edition-Speciale-PS4.jpg"
   }
 ]
