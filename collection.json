@@ -406,5 +406,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/711YzzFAb7L._AC_UF1000,1000_QL80_.jpg"
+  },
+  {
+    "id": 1776869730945,
+    "title": "FC 24",
+    "consoles": [
+      "PS5"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/718Ps5lcasL.jpg"
   }
 ]
