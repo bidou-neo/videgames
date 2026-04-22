@@ -439,5 +439,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/61hSuJRkylL._AC_UF894,1000_QL80_.jpg"
+  },
+  {
+    "id": 1776870197976,
+    "title": "Life is Strange 2",
+    "consoles": [
+      "PS4"
+    ],
+    "status": "En cours",
+    "stars": 3,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/71Usg6hl7HL.jpg"
   }
 ]
