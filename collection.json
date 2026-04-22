@@ -373,5 +373,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/717iaEJ-h3L._AC_UF1000,1000_QL80_.jpg"
+  },
+  {
+    "id": 1776869647940,
+    "title": "Borderlands 3",
+    "consoles": [
+      "PS4"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/71mgb0MhmlL.jpg"
   }
 ]
