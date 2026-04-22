@@ -329,5 +329,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/91lHAWlswwL.jpg"
+  },
+  {
+    "id": 1776869458012,
+    "title": "Forza Motorsport 6",
+    "consoles": [
+      "Xbox One"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/71wlJ09bP4L.jpg"
   }
 ]
