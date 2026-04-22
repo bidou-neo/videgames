@@ -472,5 +472,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/81c9J6sUsyL._AC_UF894,1000_QL80_.jpg"
+  },
+  {
+    "id": 1776870379406,
+    "title": "Hades",
+    "consoles": [
+      "PS5"
+    ],
+    "status": "En cours",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/817NY5XTMKL.jpg"
   }
 ]
