@@ -483,5 +483,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/817NY5XTMKL.jpg"
+  },
+  {
+    "id": 1776870432951,
+    "title": "Call of Duty Modern Warfare 3",
+    "consoles": [
+      "PS5"
+    ],
+    "status": "En cours",
+    "stars": 0,
+    "review": "Demat",
+    "cover": "https://m.media-amazon.com/images/I/81VjkKT0hCL.jpg"
   }
 ]
