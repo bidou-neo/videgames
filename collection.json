@@ -421,7 +421,9 @@
   {
     "id": 1776869784399,
     "title": "Horizon Forbidden West",
-    "consoles": [],
+    "consoles": [
+      "PS4"
+    ],
     "status": "Pas commencé",
     "stars": 0,
     "review": "",
