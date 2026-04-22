@@ -461,5 +461,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/91o6fkdo-1L._AC_UF894,1000_QL80_.jpg"
+  },
+  {
+    "id": 1776870324500,
+    "title": "Life is Strange : True Colors",
+    "consoles": [
+      "Xbox Series X"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/81c9J6sUsyL._AC_UF894,1000_QL80_.jpg"
   }
 ]
