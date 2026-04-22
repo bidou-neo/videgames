@@ -426,5 +426,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://m.media-amazon.com/images/I/71m2noY1NfL._AC_UF894,1000_QL80_.jpg"
+  },
+  {
+    "id": 1776869824966,
+    "title": "Final Fantasy VII remake",
+    "consoles": [
+      "PS4"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/61hSuJRkylL._AC_UF894,1000_QL80_.jpg"
   }
 ]
