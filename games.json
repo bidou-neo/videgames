@@ -4443,22 +4443,6 @@
     "foundPrice": null
   },
   {
-    "id": 1778517127244,
-    "title": "Cyberpunk 2077 - Édition Collector",
-    "consoles": [
-      "PC"
-    ],
-    "genres": [
-      "RPG occidental"
-    ],
-    "price": 150,
-    "priority": "basse",
-    "note": "Statue Johnny Silverhand",
-    "cover": null,
-    "found": false,
-    "foundPrice": null
-  },
-  {
     "id": 1778517127245,
     "title": "StarCraft (big box)",
     "consoles": [
