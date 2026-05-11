@@ -4347,22 +4347,6 @@
     "foundPrice": null
   },
   {
-    "id": 1778517127238,
-    "title": "Splatoon 3",
-    "consoles": [
-      "Switch"
-    ],
-    "genres": [
-      "FPS / TPS"
-    ],
-    "price": 35,
-    "priority": "basse",
-    "note": "Multi coloré",
-    "cover": null,
-    "found": false,
-    "foundPrice": null
-  },
-  {
     "id": 1778517127239,
     "title": "Baldur's Gate II (big box)",
     "consoles": [
