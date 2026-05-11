@@ -527,5 +527,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://static.fnac-static.com/multimedia/Images/FR/NR/c5/5b/9b/10181573/1540-1/tsp20260314180855/Gotham-Knights-Xbox-Series-X.jpg"
+  },
+  {
+    "id": 1778514643111,
+    "title": "Kingdom Hearts 3",
+    "consoles": [
+      "Xbox One"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://m.media-amazon.com/images/I/81R3yULx-gL.jpg"
   }
 ]
