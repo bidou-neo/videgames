@@ -4311,7 +4311,7 @@
     "priority": "moyenne",
     "note": "RPG culte big box collector",
     "cover": null,
-    "found": false,
+    "found": true,
     "foundPrice": null
   },
   {
@@ -4327,7 +4327,7 @@
     "priority": "moyenne",
     "note": "Culte hack'n slash",
     "cover": null,
-    "found": false,
+    "found": true,
     "foundPrice": null
   },
   {
