@@ -4315,22 +4315,6 @@
     "foundPrice": null
   },
   {
-    "id": 1778517127236,
-    "title": "Mario Kart 8 Deluxe",
-    "consoles": [
-      "Switch"
-    ],
-    "genres": [
-      "Sport / Course"
-    ],
-    "price": 40,
-    "priority": "basse",
-    "note": "Référence Switch",
-    "cover": null,
-    "found": false,
-    "foundPrice": null
-  },
-  {
     "id": 1778517127237,
     "title": "Super Smash Bros. Ultimate",
     "consoles": [
