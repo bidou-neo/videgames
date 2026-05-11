@@ -4315,22 +4315,6 @@
     "foundPrice": null
   },
   {
-    "id": 1778517127237,
-    "title": "Super Smash Bros. Ultimate",
-    "consoles": [
-      "Switch"
-    ],
-    "genres": [
-      "Action / Aventure"
-    ],
-    "price": 45,
-    "priority": "basse",
-    "note": "Roster monstrueux",
-    "cover": null,
-    "found": false,
-    "foundPrice": null
-  },
-  {
     "id": 1778517127239,
     "title": "Baldur's Gate II (big box)",
     "consoles": [
