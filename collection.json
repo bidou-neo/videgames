@@ -516,5 +516,16 @@
     "stars": 0,
     "review": "",
     "cover": "https://fr.shopping.rakuten.com/pictures/0196f26f-8744-7830-8481-95b8a5c104d5_L_NOPAD.jpg"
+  },
+  {
+    "id": 1778514606591,
+    "title": "Gotham Knights",
+    "consoles": [
+      "Xbox Series X"
+    ],
+    "status": "Pas commencé",
+    "stars": 0,
+    "review": "",
+    "cover": "https://static.fnac-static.com/multimedia/Images/FR/NR/c5/5b/9b/10181573/1540-1/tsp20260314180855/Gotham-Knights-Xbox-Series-X.jpg"
   }
 ]
