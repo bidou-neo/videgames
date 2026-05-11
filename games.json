@@ -4345,21 +4345,5 @@
     "cover": null,
     "found": false,
     "foundPrice": null
-  },
-  {
-    "id": 1778517127246,
-    "title": "Baldur's Gate 3 - Édition Deluxe",
-    "consoles": [
-      "PC"
-    ],
-    "genres": [
-      "RPG occidental"
-    ],
-    "price": 80,
-    "priority": "haute",
-    "note": "GOTY 2023",
-    "cover": null,
-    "found": false,
-    "foundPrice": null
   }
 ]
