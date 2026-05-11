@@ -4331,22 +4331,6 @@
     "foundPrice": null
   },
   {
-    "id": 1778517127243,
-    "title": "Disco Elysium - Édition Collector",
-    "consoles": [
-      "PC"
-    ],
-    "genres": [
-      "RPG occidental"
-    ],
-    "price": 60,
-    "priority": "haute",
-    "note": "Narratif ultime, TON style",
-    "cover": null,
-    "found": false,
-    "foundPrice": null
-  },
-  {
     "id": 1778517127245,
     "title": "StarCraft (big box)",
     "consoles": [
