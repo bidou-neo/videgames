@@ -1588,22 +1588,6 @@
     "foundPrice": null
   },
   {
-    "id": 1778517127066,
-    "title": "Pokémon X / Y",
-    "consoles": [
-      "3DS"
-    ],
-    "genres": [
-      "JRPG"
-    ],
-    "price": 25,
-    "priority": "basse",
-    "note": "Première gen 3D",
-    "cover": null,
-    "found": false,
-    "foundPrice": null
-  },
-  {
     "id": 1778517127067,
     "title": "Bravely Default",
     "consoles": [
