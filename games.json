@@ -4331,22 +4331,6 @@
     "foundPrice": null
   },
   {
-    "id": 1778517127242,
-    "title": "The Witcher 3: Wild Hunt - Édition Collector",
-    "consoles": [
-      "PC"
-    ],
-    "genres": [
-      "RPG occidental"
-    ],
-    "price": 200,
-    "priority": "moyenne",
-    "note": "Collector statue",
-    "cover": null,
-    "found": false,
-    "foundPrice": null
-  },
-  {
     "id": 1778517127243,
     "title": "Disco Elysium - Édition Collector",
     "consoles": [
