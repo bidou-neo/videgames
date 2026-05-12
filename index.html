@@ -46,6 +46,9 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
 .search-input{background:var(--bg2);border:1px solid var(--border);border-radius:99px;color:var(--text);font-family:'Crimson Pro',serif;font-size:0.9rem;padding:6px 16px;outline:none;transition:border-color 0.15s;flex:1;}
 .search-input:focus{border-color:var(--border-hover);}
 .search-input::placeholder{color:var(--text-dim);font-style:italic;}
+.sort-select{background:var(--bg2);border:1px solid var(--border);border-radius:99px;color:var(--text-muted);font-family:'Crimson Pro',serif;font-size:0.82rem;padding:6px 12px;outline:none;cursor:pointer;transition:all 0.15s;}
+.sort-select:hover,.sort-select:focus{border-color:var(--border-hover);color:var(--text);}
+.sort-select option{background:var(--bg3);color:var(--text);}
 .add-btn{font-family:'Cinzel',serif;font-size:0.75rem;font-weight:600;letter-spacing:0.07em;padding:7px 16px;border:1px solid var(--gold);border-radius:4px;background:var(--gold-dim);color:var(--gold-light);cursor:pointer;transition:all 0.15s;white-space:nowrap;}
 .add-btn:hover{background:rgba(201,168,76,0.28);}
 .filter-row{display:flex;gap:0.4rem;flex-wrap:wrap;align-items:center;}
@@ -55,6 +58,7 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
 .filter-btn.f-active-status{border-color:var(--text-muted);color:var(--text);background:rgba(255,255,255,0.05);}
 .filter-btn.f-active-console{border-color:var(--border-hover);color:var(--text);background:rgba(255,255,255,0.05);}
 .filter-btn.f-active-genre{border-color:var(--gold);color:var(--gold-light);background:var(--gold-dim);}
+.filter-btn.f-active-kind{border-color:var(--text-muted);color:var(--text);background:rgba(255,255,255,0.05);}
 
 .form-panel{background:var(--bg2);border:1px solid var(--border-hover);border-radius:8px;padding:1.25rem;margin-bottom:1.25rem;display:none;}
 .form-panel.open{display:block;animation:fadeIn 0.2s ease;}
@@ -76,7 +80,7 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
 .chip-check[value="PS5"]:checked+.chip-label,.chip-check[value="PS4"]:checked+.chip-label,.chip-check[value="PS3"]:checked+.chip-label,.chip-check[value="PS2"]:checked+.chip-label,.chip-check[value="PS1"]:checked+.chip-label{color:#6b9fff;border-color:rgba(0,48,135,0.7);background:rgba(0,48,135,0.18);}
 .chip-check[value="Xbox Series X"]:checked+.chip-label,.chip-check[value="Xbox One"]:checked+.chip-label,.chip-check[value="Xbox 360"]:checked+.chip-label,.chip-check[value="Xbox"]:checked+.chip-label{color:#6bdf6b;border-color:rgba(16,124,16,0.6);background:rgba(16,124,16,0.12);}
 .chip-check[value="Master System"]:checked+.chip-label,.chip-check[value="Mega Drive"]:checked+.chip-label,.chip-check[value="Saturn"]:checked+.chip-label,.chip-check[value="Dreamcast"]:checked+.chip-label{color:#ff9f43;border-color:rgba(255,159,67,0.5);background:rgba(255,159,67,0.1);}
-.chip-check[value="NES"]:checked+.chip-label,.chip-check[value="SNES"]:checked+.chip-label,.chip-check[value="N64"]:checked+.chip-label,.chip-check[value="GameCube"]:checked+.chip-label,.chip-check[value="Wii"]:checked+.chip-label,.chip-check[value="Wii U"]:checked+.chip-label,.chip-check[value="Game Boy"]:checked+.chip-label,.chip-check[value="GBA"]:checked+.chip-label,.chip-check[value="DS"]:checked+.chip-label,.chip-check[value="3DS"]:checked+.chip-label{color:#ff6b6b;border-color:rgba(228,0,15,0.6);background:rgba(228,0,15,0.12);}
+.chip-check[value="NES"]:checked+.chip-label,.chip-check[value="SNES"]:checked+.chip-label,.chip-check[value="N64"]:checked+.chip-label,.chip-check[value="GameCube"]:checked+.chip-label,.chip-check[value="Wii"]:checked+.chip-label,.chip-check[value="Wii U"]:checked+.chip-label,.chip-check[value="Game Boy"]:checked+.chip-label,.chip-check[value="GBC"]:checked+.chip-label,.chip-check[value="GBA"]:checked+.chip-label,.chip-check[value="DS"]:checked+.chip-label,.chip-check[value="3DS"]:checked+.chip-label{color:#ff6b6b;border-color:rgba(228,0,15,0.6);background:rgba(228,0,15,0.12);}
 .chip-check[value="PC"]:checked+.chip-label{color:#a0a0b0;border-color:rgba(160,160,176,0.5);background:rgba(160,160,176,0.1);}
 .chip-check.genre-chip:checked+.chip-label,.chip-check.platform-chip:checked+.chip-label{color:var(--gold-light);border-color:rgba(201,168,76,0.6);background:rgba(201,168,76,0.12);}
 
@@ -147,6 +151,18 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
 .divider{font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.1em;color:var(--text-dim);text-align:center;margin:1rem 0 0.75rem;display:flex;align-items:center;gap:1rem;}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
 
+/* Kind icon (console/manette/accessoire) */
+.kind-icon{display:inline-block;font-size:0.95rem;margin-right:4px;opacity:0.85;line-height:1;vertical-align:-1px;}
+
+/* Badges état matériel */
+.b-etat-neuf{color:#3da668;border-color:rgba(46,125,82,0.5);background:rgba(46,125,82,0.15);}
+.b-etat-tbe{color:#6bdf6b;border-color:rgba(107,223,107,0.4);background:rgba(107,223,107,0.1);}
+.b-etat-be{color:var(--gold-light);border-color:rgba(201,168,76,0.4);background:var(--gold-dim);}
+.b-etat-correct{color:#e8945a;border-color:rgba(232,148,90,0.35);background:rgba(232,148,90,0.1);}
+.b-etat-mauvais{color:#c0392b;border-color:rgba(192,57,43,0.4);background:rgba(192,57,43,0.12);}
+.b-boite{color:#6b9fff;border-color:rgba(107,159,255,0.4);background:rgba(107,159,255,0.1);}
+.b-kind{color:var(--text-muted);border-color:var(--border);background:rgba(255,255,255,0.04);}
+
 @media(max-width:520px){.form-grid{grid-template-columns:1fr;}.form-grid .full{grid-column:1;}.stats-bar{gap:1rem;}.cover-row{flex-direction:column;}}
 </style>
 </head>
@@ -173,6 +189,13 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
     <div class="toolbar">
       <div class="toolbar-top">
         <input class="search-input" id="h-search" type="search" placeholder="Rechercher..." />
+        <select class="sort-select" id="h-sort">
+          <option value="alpha-asc">A → Z</option>
+          <option value="alpha-desc">Z → A</option>
+          <option value="priority">Priorité</option>
+          <option value="price-asc">Prix ↑</option>
+          <option value="price-desc">Prix ↓</option>
+        </select>
         <button class="add-btn" id="h-add-btn">+ Ajouter</button>
       </div>
       <div class="filter-row">
@@ -181,20 +204,13 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
         <button class="filter-btn" data-section="h" data-type="status" data-val="trouvés">Trouvés</button>
       </div>
       <div class="filter-row">
-        <button class="filter-btn" data-section="h" data-type="console" data-val="Switch">Switch</button>
-        <button class="filter-btn" data-section="h" data-type="console" data-val="PS5">PS5</button>
-        <button class="filter-btn" data-section="h" data-type="console" data-val="Xbox Series X">Xbox</button>
+        <button class="filter-btn f-active-kind" data-section="h" data-type="kind" data-val="tous">Tous</button>
+        <button class="filter-btn" data-section="h" data-type="kind" data-val="game">🎯 Jeux</button>
+        <button class="filter-btn" data-section="h" data-type="kind" data-val="console">🕹️ Consoles</button>
+        <button class="filter-btn" data-section="h" data-type="kind" data-val="controller">🎮 Manettes</button>
+        <button class="filter-btn" data-section="h" data-type="kind" data-val="accessory">🔌 Accessoires</button>
       </div>
-      <div class="filter-row">
-        <button class="filter-btn" data-section="h" data-type="genre" data-val="JRPG">JRPG</button>
-        <button class="filter-btn" data-section="h" data-type="genre" data-val="RPG occidental">RPG occ.</button>
-        <button class="filter-btn" data-section="h" data-type="genre" data-val="Action / Aventure">Action</button>
-        <button class="filter-btn" data-section="h" data-type="genre" data-val="FPS / TPS">FPS/TPS</button>
-        <button class="filter-btn" data-section="h" data-type="genre" data-val="Plateforme">Plateforme</button>
-        <button class="filter-btn" data-section="h" data-type="genre" data-val="Sport / Course">Sport</button>
-        <button class="filter-btn" data-section="h" data-type="genre" data-val="Stratégie / Tactique">Stratégie</button>
-        <button class="filter-btn" data-section="h" data-type="genre" data-val="Simulation">Simulation</button>
-      </div>
+      <div class="filter-row" id="h-console-filters"></div>
     </div>
     <div class="form-panel" id="h-form">
       <div class="cover-section"><div class="cover-row">
@@ -206,13 +222,39 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
         </div>
       </div></div>
       <div class="form-grid">
+        <div class="field full"><label>Type d'objet</label><div class="status-chips" id="h-kind-chips">
+          <input class="status-radio" type="radio" name="h-kind" id="hk-game" value="game" checked><label class="status-label" for="hk-game">🎯 Jeu</label>
+          <input class="status-radio" type="radio" name="h-kind" id="hk-console" value="console"><label class="status-label" for="hk-console">🕹️ Console</label>
+          <input class="status-radio" type="radio" name="h-kind" id="hk-controller" value="controller"><label class="status-label" for="hk-controller">🎮 Manette</label>
+          <input class="status-radio" type="radio" name="h-kind" id="hk-accessory" value="accessory"><label class="status-label" for="hk-accessory">🔌 Accessoire</label>
+        </div></div>
         <div class="field full"><label>Titre</label><input id="h-title" type="text" placeholder="ex: Dragon Quest XI S" autocomplete="off" /></div>
         <div class="field full"><label>Consoles</label><div class="chip-group" id="h-consoles">
           <input class="chip-check" type="checkbox" id="hc-sw" value="Switch"><label class="chip-label" for="hc-sw">Switch</label>
           <input class="chip-check" type="checkbox" id="hc-ps5" value="PS5"><label class="chip-label" for="hc-ps5">PS5</label>
+          <input class="chip-check" type="checkbox" id="hc-ps4" value="PS4"><label class="chip-label" for="hc-ps4">PS4</label>
+          <input class="chip-check" type="checkbox" id="hc-ps3" value="PS3"><label class="chip-label" for="hc-ps3">PS3</label>
+          <input class="chip-check" type="checkbox" id="hc-ps2" value="PS2"><label class="chip-label" for="hc-ps2">PS2</label>
+          <input class="chip-check" type="checkbox" id="hc-ps1" value="PS1"><label class="chip-label" for="hc-ps1">PS1</label>
           <input class="chip-check" type="checkbox" id="hc-xsx" value="Xbox Series X"><label class="chip-label" for="hc-xsx">Xbox Series X</label>
+          <input class="chip-check" type="checkbox" id="hc-xone" value="Xbox One"><label class="chip-label" for="hc-xone">Xbox One</label>
+          <input class="chip-check" type="checkbox" id="hc-x360" value="Xbox 360"><label class="chip-label" for="hc-x360">Xbox 360</label>
+          <input class="chip-check" type="checkbox" id="hc-xbox" value="Xbox"><label class="chip-label" for="hc-xbox">Xbox</label>
+          <input class="chip-check" type="checkbox" id="hc-nes" value="NES"><label class="chip-label" for="hc-nes">NES</label>
+          <input class="chip-check" type="checkbox" id="hc-snes" value="SNES"><label class="chip-label" for="hc-snes">SNES</label>
+          <input class="chip-check" type="checkbox" id="hc-n64" value="N64"><label class="chip-label" for="hc-n64">N64</label>
+          <input class="chip-check" type="checkbox" id="hc-gc" value="GameCube"><label class="chip-label" for="hc-gc">GameCube</label>
+          <input class="chip-check" type="checkbox" id="hc-wii" value="Wii"><label class="chip-label" for="hc-wii">Wii</label>
+          <input class="chip-check" type="checkbox" id="hc-wiiu" value="Wii U"><label class="chip-label" for="hc-wiiu">Wii U</label>
+          <input class="chip-check" type="checkbox" id="hc-gb" value="Game Boy"><label class="chip-label" for="hc-gb">Game Boy</label>
+          <input class="chip-check" type="checkbox" id="hc-gbc" value="GBC"><label class="chip-label" for="hc-gbc">GBC</label>
+          <input class="chip-check" type="checkbox" id="hc-gba" value="GBA"><label class="chip-label" for="hc-gba">GBA</label>
+          <input class="chip-check" type="checkbox" id="hc-ds" value="DS"><label class="chip-label" for="hc-ds">DS</label>
+          <input class="chip-check" type="checkbox" id="hc-3ds" value="3DS"><label class="chip-label" for="hc-3ds">3DS</label>
+          <input class="chip-check" type="checkbox" id="hc-md" value="Mega Drive"><label class="chip-label" for="hc-md">Mega Drive</label>
+          <input class="chip-check" type="checkbox" id="hc-pc" value="PC"><label class="chip-label" for="hc-pc">PC</label>
         </div></div>
-        <div class="field full"><label>Genres</label><div class="chip-group" id="h-genres">
+        <div class="field full" id="h-genres-block"><label>Genres</label><div class="chip-group" id="h-genres">
           <input class="chip-check genre-chip" type="checkbox" id="hg-1" value="JRPG"><label class="chip-label" for="hg-1">JRPG</label>
           <input class="chip-check genre-chip" type="checkbox" id="hg-2" value="RPG occidental"><label class="chip-label" for="hg-2">RPG occidental</label>
           <input class="chip-check genre-chip" type="checkbox" id="hg-3" value="Action / Aventure"><label class="chip-label" for="hg-3">Action / Aventure</label>
@@ -244,6 +286,13 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
     <div class="toolbar">
       <div class="toolbar-top">
         <input class="search-input" id="c-search" type="search" placeholder="Rechercher..." />
+        <select class="sort-select" id="c-sort">
+          <option value="alpha-asc">A → Z</option>
+          <option value="alpha-desc">Z → A</option>
+          <option value="stars-desc">Note ↓</option>
+          <option value="stars-asc">Note ↑</option>
+          <option value="status">Statut</option>
+        </select>
         <button class="add-btn" id="c-add-btn">+ Ajouter</button>
       </div>
       <div class="filter-row">
@@ -254,18 +303,13 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
         <button class="filter-btn" data-section="c" data-type="status" data-val="Collection">Collection</button>
       </div>
       <div class="filter-row">
-        <button class="filter-btn" data-section="c" data-type="console" data-val="Switch">Switch</button>
-        <button class="filter-btn" data-section="c" data-type="console" data-val="PS5">PS5</button>
-        <button class="filter-btn" data-section="c" data-type="console" data-val="PS4">PS4</button>
-        <button class="filter-btn" data-section="c" data-type="console" data-val="PS3">PS3</button>
-        <button class="filter-btn" data-section="c" data-type="console" data-val="Xbox Series X">Xbox SX</button>
-        <button class="filter-btn" data-section="c" data-type="console" data-val="Xbox One">Xbox One</button>
-        <div class="filter-sep"></div>
-        <button class="filter-btn" data-section="c" data-type="console" data-val="NES">NES</button>
-        <button class="filter-btn" data-section="c" data-type="console" data-val="SNES">SNES</button>
-        <button class="filter-btn" data-section="c" data-type="console" data-val="Mega Drive">Mega Drive</button>
-        <button class="filter-btn" data-section="c" data-type="console" data-val="PC">PC</button>
+        <button class="filter-btn f-active-kind" data-section="c" data-type="kind" data-val="tous">Tous</button>
+        <button class="filter-btn" data-section="c" data-type="kind" data-val="game">🎯 Jeux</button>
+        <button class="filter-btn" data-section="c" data-type="kind" data-val="console">🕹️ Consoles</button>
+        <button class="filter-btn" data-section="c" data-type="kind" data-val="controller">🎮 Manettes</button>
+        <button class="filter-btn" data-section="c" data-type="kind" data-val="accessory">🔌 Accessoires</button>
       </div>
+      <div class="filter-row" id="c-console-filters"></div>
     </div>
     <div class="form-panel" id="c-form">
       <div style="margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border)">
@@ -286,6 +330,12 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
         </div>
       </div></div>
       <div class="form-grid">
+        <div class="field full"><label>Type d'objet</label><div class="status-chips" id="c-kind-chips">
+          <input class="status-radio" type="radio" name="c-kind" id="ck-game" value="game" checked><label class="status-label" for="ck-game">🎯 Jeu</label>
+          <input class="status-radio" type="radio" name="c-kind" id="ck-console" value="console"><label class="status-label" for="ck-console">🕹️ Console</label>
+          <input class="status-radio" type="radio" name="c-kind" id="ck-controller" value="controller"><label class="status-label" for="ck-controller">🎮 Manette</label>
+          <input class="status-radio" type="radio" name="c-kind" id="ck-accessory" value="accessory"><label class="status-label" for="ck-accessory">🔌 Accessoire</label>
+        </div></div>
         <div class="field full"><label>Titre</label><input id="c-title" type="text" placeholder="ex: Red Dead Redemption 2" autocomplete="off" /></div>
         <div class="field full"><label>Console</label><div class="chip-group" id="c-consoles">
           <input class="chip-check platform-chip" type="checkbox" id="cc-sw" value="Switch"><label class="chip-label" for="cc-sw">Switch</label>
@@ -296,6 +346,7 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
           <input class="chip-check platform-chip" type="checkbox" id="cc-wii" value="Wii"><label class="chip-label" for="cc-wii">Wii</label>
           <input class="chip-check platform-chip" type="checkbox" id="cc-wiiu" value="Wii U"><label class="chip-label" for="cc-wiiu">Wii U</label>
           <input class="chip-check platform-chip" type="checkbox" id="cc-gb" value="Game Boy"><label class="chip-label" for="cc-gb">Game Boy</label>
+          <input class="chip-check platform-chip" type="checkbox" id="cc-gbc" value="GBC"><label class="chip-label" for="cc-gbc">GBC</label>
           <input class="chip-check platform-chip" type="checkbox" id="cc-gba" value="GBA"><label class="chip-label" for="cc-gba">GBA</label>
           <input class="chip-check platform-chip" type="checkbox" id="cc-ds" value="DS"><label class="chip-label" for="cc-ds">DS</label>
           <input class="chip-check platform-chip" type="checkbox" id="cc-3ds" value="3DS"><label class="chip-label" for="cc-3ds">3DS</label>
@@ -315,13 +366,25 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
           <input class="chip-check platform-chip" type="checkbox" id="cc-pc" value="PC"><label class="chip-label" for="cc-pc">PC</label>
           <input class="chip-check platform-chip" type="checkbox" id="cc-other" value="Autre"><label class="chip-label" for="cc-other">Autre</label>
         </div></div>
-        <div class="field full"><label>Statut</label><div class="status-chips">
+        <div class="field full" id="c-status-block"><label>Statut</label><div class="status-chips">
           <input class="status-radio" type="radio" name="c-status" id="cs-1" value="Pas commencé" checked><label class="status-label" for="cs-1">Pas commencé</label>
           <input class="status-radio" type="radio" name="c-status" id="cs-2" value="En cours"><label class="status-label" for="cs-2">En cours</label>
           <input class="status-radio" type="radio" name="c-status" id="cs-3" value="Terminé"><label class="status-label" for="cs-3">Terminé</label>
           <input class="status-radio" type="radio" name="c-status" id="cs-4" value="Collection"><label class="status-label" for="cs-4">Collection</label>
         </div></div>
-        <div class="field full"><label>Note</label><div class="stars-input" id="c-stars">
+        <div class="field full" id="c-etat-block" style="display:none"><label>État</label><div class="status-chips">
+          <input class="status-radio" type="radio" name="c-etat" id="ce-1" value="Neuf"><label class="status-label" for="ce-1">Neuf</label>
+          <input class="status-radio" type="radio" name="c-etat" id="ce-2" value="TBE"><label class="status-label" for="ce-2">Très bon état</label>
+          <input class="status-radio" type="radio" name="c-etat" id="ce-3" value="BE" checked><label class="status-label" for="ce-3">Bon état</label>
+          <input class="status-radio" type="radio" name="c-etat" id="ce-4" value="Correct"><label class="status-label" for="ce-4">Correct</label>
+          <input class="status-radio" type="radio" name="c-etat" id="ce-5" value="Mauvais"><label class="status-label" for="ce-5">Mauvais</label>
+        </div></div>
+        <div class="field full" id="c-boite-block" style="display:none"><label>Avec boîte / emballage</label><div class="status-chips">
+          <input class="status-radio" type="radio" name="c-boite" id="cb-1" value="oui"><label class="status-label" for="cb-1">Oui</label>
+          <input class="status-radio" type="radio" name="c-boite" id="cb-2" value="non" checked><label class="status-label" for="cb-2">Non</label>
+        </div></div>
+        <div class="field full" id="c-price-block" style="display:none"><label>Prix payé (€)</label><input id="c-price" type="number" placeholder="50" min="0" /></div>
+        <div class="field full" id="c-stars-block"><label>Note</label><div class="stars-input" id="c-stars">
           <button type="button" class="star-btn" data-v="1">★</button>
           <button type="button" class="star-btn" data-v="2">★</button>
           <button type="button" class="star-btn" data-v="3">★</button>
@@ -343,11 +406,23 @@ const HUNT_API='https://videogames-api-rho.vercel.app/api/games';
 const COLL_API='https://videogames-api-rho.vercel.app/api/collection';
 const LOOKUP_API='https://videogames-api-rho.vercel.app/api/lookup';
 
-const CBADGE={'Switch':'b-switch','PS5':'b-ps','PS4':'b-ps','PS3':'b-ps','PS2':'b-ps','PS1':'b-ps','Xbox Series X':'b-xbox','Xbox One':'b-xbox','Xbox 360':'b-xbox','Xbox':'b-xbox','Master System':'b-sega','Mega Drive':'b-sega','Saturn':'b-sega','Dreamcast':'b-sega','NES':'b-ninretro','SNES':'b-ninretro','N64':'b-ninretro','GameCube':'b-ninretro','Wii':'b-ninretro','Wii U':'b-ninretro','Game Boy':'b-ninretro','GBA':'b-ninretro','DS':'b-ninretro','3DS':'b-ninretro','PC':'b-pc','Autre':'b-other'};
+const CBADGE={'Switch':'b-switch','PS5':'b-ps','PS4':'b-ps','PS3':'b-ps','PS2':'b-ps','PS1':'b-ps','Xbox Series X':'b-xbox','Xbox One':'b-xbox','Xbox 360':'b-xbox','Xbox':'b-xbox','Master System':'b-sega','Mega Drive':'b-sega','Saturn':'b-sega','Dreamcast':'b-sega','NES':'b-ninretro','SNES':'b-ninretro','N64':'b-ninretro','GameCube':'b-ninretro','Wii':'b-ninretro','Wii U':'b-ninretro','Game Boy':'b-ninretro','GBC':'b-ninretro','GBA':'b-ninretro','DS':'b-ninretro','3DS':'b-ninretro','PC':'b-pc','Autre':'b-other'};
 const SBADGE={'Terminé':'b-termine','En cours':'b-encours','Pas commencé':'b-pascom','Collection':'b-collec'};
+const KIND_ICON={'game':'','console':'🕹️','controller':'🎮','accessory':'🔌'};
+const KIND_LABEL={'game':'Jeu','console':'Console','controller':'Manette','accessory':'Accessoire'};
+const ETAT_BADGE={'Neuf':'b-etat-neuf','TBE':'b-etat-tbe','BE':'b-etat-be','Correct':'b-etat-correct','Mauvais':'b-etat-mauvais'};
+const ETAT_LABEL={'Neuf':'Neuf','TBE':'Très bon état','BE':'Bon état','Correct':'Correct','Mauvais':'Mauvais'};
+// Helper: retourne le kind d'une entrée (défaut "game" pour rétrocompat)
+function getKind(g){return g.kind||'game';}
 
-let hGames=[],hSha=null,hFilter={status:'tous',console:null,genre:null,search:''};
-let cGames=[],cSha=null,cFilter={status:'tous',console:null,search:''};
+// Ordre logique pour l'affichage des consoles dans les filtres (chronologique/famille)
+const CONSOLE_ORDER=['Switch','PS5','PS4','PS3','PS2','PS1','Xbox Series X','Xbox One','Xbox 360','Xbox','NES','SNES','N64','GameCube','Wii','Wii U','Game Boy','GBC','GBA','DS','3DS','Master System','Mega Drive','Saturn','Dreamcast','PC','Autre'];
+
+// Libellés courts pour les boutons filtres (gain de place mobile)
+const CONSOLE_SHORT={'Xbox Series X':'Xbox SX','Mega Drive':'Mega Drive','Master System':'M. System','GameCube':'GC','Game Boy':'GB'};
+
+let hGames=[],hSha=null,hFilter={status:'tous',kind:'tous',console:null,genre:null,search:''},hSort='alpha-asc';
+let cGames=[],cSha=null,cFilter={status:'tous',kind:'tous',console:null,search:''},cSort='alpha-asc';
 let hEditId=null,cEditId=null,cStars=0;
 
 function sync(msg,dur){const e=document.getElementById('sync-status');e.textContent=msg;e.style.display='block';if(dur)setTimeout(()=>e.style.display='none',dur);}
@@ -402,15 +477,59 @@ function initPreview(inId,prevId){
 }
 function clearCover(inId,prevId){document.getElementById(inId).value='';const p=document.getElementById(prevId);p.src='';p.style.opacity='0.2';}
 
+// Génère dynamiquement la liste des boutons filtres console pour une section
+// Les filtres console sont basés sur l'union (jeux + matériel) des deux sections (chasse + collection)
+function buildConsoleFilters(section,games,filterRef){
+  const container=document.getElementById(section+'-console-filters');
+  if(!container)return;
+  // Collecter toutes les consoles présentes dans hGames + cGames (fusion globale)
+  const present=new Set();
+  hGames.forEach(g=>(g.consoles||[]).forEach(c=>present.add(c)));
+  cGames.forEach(g=>(g.consoles||[]).forEach(c=>present.add(c)));
+  // Trier selon l'ordre défini, puis ajouter les inconnus à la fin
+  const ordered=CONSOLE_ORDER.filter(c=>present.has(c));
+  const extras=[...present].filter(c=>!CONSOLE_ORDER.includes(c)).sort();
+  const all=[...ordered,...extras];
+  // Si le filtre actif n'est plus présent, le réinitialiser
+  if(filterRef.console && !present.has(filterRef.console))filterRef.console=null;
+  container.innerHTML=all.map(c=>{
+    const lbl=CONSOLE_SHORT[c]||c;
+    const act=filterRef.console===c?' f-active-console':'';
+    return `<button class="filter-btn${act}" data-section="${section}" data-type="console" data-val="${esc(c)}">${esc(lbl)}</button>`;
+  }).join('');
+  // Rattacher les listeners
+  container.querySelectorAll('.filter-btn').forEach(btn=>btn.addEventListener('click',()=>onFilterClick(btn)));
+}
+
 /* HUNT RENDER */
 function renderHunt(){
+  // Regénérer les filtres console à chaque rendu (au cas où la liste change)
+  buildConsoleFilters('h',hGames,hFilter);
+
   let list=[...hGames];
   if(hFilter.status==='trouver')list=list.filter(g=>!g.found);
   else if(hFilter.status==='trouvés')list=list.filter(g=>g.found);
+  if(hFilter.kind&&hFilter.kind!=='tous')list=list.filter(g=>getKind(g)===hFilter.kind);
   if(hFilter.console)list=list.filter(g=>(g.consoles||[]).includes(hFilter.console));
   if(hFilter.genre)list=list.filter(g=>(g.genres||[]).includes(hFilter.genre));
   if(hFilter.search){const q=hFilter.search.toLowerCase();list=list.filter(g=>g.title.toLowerCase().includes(q)||(g.note||'').toLowerCase().includes(q));}
-  list.sort((a,b)=>{if(a.found!==b.found)return a.found?1:-1;return({haute:0,moyenne:1,basse:2}[a.priority]||1)-({haute:0,moyenne:1,basse:2}[b.priority]||1);});
+
+  // Tri principal selon hSort, avec les trouvés toujours en bas
+  const prioVal={haute:0,moyenne:1,basse:2};
+  list.sort((a,b)=>{
+    if(a.found!==b.found)return a.found?1:-1;
+    switch(hSort){
+      case 'alpha-asc':return a.title.localeCompare(b.title,'fr');
+      case 'alpha-desc':return b.title.localeCompare(a.title,'fr');
+      case 'priority':{
+        const d=(prioVal[a.priority]??1)-(prioVal[b.priority]??1);
+        return d!==0?d:a.title.localeCompare(b.title,'fr');
+      }
+      case 'price-asc':return (a.price??Infinity)-(b.price??Infinity);
+      case 'price-desc':return (b.price??-Infinity)-(a.price??-Infinity);
+      default:return 0;
+    }
+  });
 
   const tot=hGames.filter(g=>!g.found).length,fnd=hGames.filter(g=>g.found).length;
   const bud=hGames.filter(g=>!g.found&&g.price).reduce((s,g)=>s+g.price,0);
@@ -434,6 +553,8 @@ function renderHunt(){
 }
 
 function hCard(g){
+  const kind=getKind(g);
+  const kindIcon=KIND_ICON[kind]?`<span class="kind-icon" title="${KIND_LABEL[kind]}">${KIND_ICON[kind]}</span>`:'';
   const prioTag=g.priority==='haute'?'<span class="badge b-prio">Priorité</span>':'';
   const priceTag=g.price?`<span class="badge b-price">max ${g.price}€</span>`:'';
   const genreText=(g.genres||[]).join(' · ');
@@ -442,7 +563,7 @@ function hCard(g){
     <div class="card-cover">${coverImg(g)}</div>
     <div class="check-col"><button class="check-btn" data-id="${g.id}">${g.found?'✓':''}</button></div>
     <div class="card-content">
-      <div class="game-title">${esc(g.title)}</div>
+      <div class="game-title">${kindIcon}${esc(g.title)}</div>
       <div class="meta">${(g.consoles||[]).map(cbadge).join('')}${priceTag}${prioTag}</div>
       ${genreText?`<div class="meta"><span class="badge b-genre">${esc(genreText)}</span></div>`:''}
       ${g.note?`<div class="game-note">${esc(g.note)}</div>`:''}
@@ -462,7 +583,11 @@ async function hToggle(id){
   } else {
     const alreadyIn=cGames.some(x=>x.fromHunt===id||x.title.toLowerCase()===g.title.toLowerCase());
     if(!alreadyIn){
-      const newEntry={id:Date.now(),fromHunt:id,title:g.title,consoles:g.consoles||[],status:'Pas commencé',stars:0,review:'',cover:g.cover||null};
+      // On reporte le kind du hunt dans la collection. Pour les non-jeux, statut par défaut "Collection"
+      const kind=getKind(g);
+      const defaultStatus=kind==='game'?'Pas commencé':'Collection';
+      const newEntry={id:Date.now(),fromHunt:id,kind:kind,title:g.title,consoles:g.consoles||[],status:defaultStatus,stars:0,review:'',cover:g.cover||null};
+      if(kind!=='game'){newEntry.etat='BE';newEntry.boite='non';newEntry.price=g.foundPrice||null;}
       cGames.push(newEntry);
       await saveColl();
       renderColl();
@@ -474,20 +599,49 @@ async function hToggle(id){
 function hPrice(id,val){const g=hGames.find(x=>x.id===id);if(g){g.foundPrice=parseFloat(val)||null;saveHunt().then(()=>renderHunt());}}
 function hDel(id){if(!confirm('Supprimer ?'))return;hGames=hGames.filter(x=>x.id!==id);saveHunt().then(()=>renderHunt());}
 function hOpen(){document.getElementById('h-form').classList.add('open');setTimeout(()=>document.getElementById('h-title').focus(),60);}
-function hClose(){document.getElementById('h-form').classList.remove('open');hEditId=null;['h-title','h-price','h-note','h-cover'].forEach(i=>document.getElementById(i).value='');document.getElementById('h-priority').value='moyenne';resetChips('h-consoles');resetChips('h-genres');clearCover('h-cover','h-cover-prev');}
-function hEdit(id){const g=hGames.find(x=>x.id===id);if(!g)return;hEditId=id;document.getElementById('h-title').value=g.title;document.getElementById('h-price').value=g.price||'';document.getElementById('h-priority').value=g.priority;document.getElementById('h-note').value=g.note||'';setChips('h-consoles',g.consoles||[]);setChips('h-genres',g.genres||[]);const p=document.getElementById('h-cover-prev');document.getElementById('h-cover').value=g.cover||'';p.src=g.cover||'';p.style.opacity=g.cover?'1':'0.2';hOpen();}
-function hSave(){const t=document.getElementById('h-title').value.trim();if(!t)return;const c=chips('h-consoles');if(!c.length){alert('Sélectionne au moins une console.');return;}const g={id:hEditId||Date.now(),title:t,consoles:c,genres:chips('h-genres'),price:parseFloat(document.getElementById('h-price').value)||null,priority:document.getElementById('h-priority').value,note:document.getElementById('h-note').value.trim(),cover:document.getElementById('h-cover').value.trim()||null,found:false,foundPrice:null};if(hEditId){const i=hGames.findIndex(x=>x.id===hEditId);if(i!==-1){g.found=hGames[i].found;g.foundPrice=hGames[i].foundPrice;hGames[i]=g;}}else hGames.push(g);saveHunt().then(()=>{hClose();renderHunt();});}
+
+// Adapte l'affichage du formulaire Chasse selon le kind sélectionné
+function applyHuntFormKind(){
+  const kindRadio=document.querySelector('input[name="h-kind"]:checked');
+  const kind=kindRadio?kindRadio.value:'game';
+  // Le bloc Genres n'a de sens que pour les jeux
+  document.getElementById('h-genres-block').style.display=kind==='game'?'':'none';
+  // Adapte le placeholder du titre
+  const titleInput=document.getElementById('h-title');
+  const placeholders={'game':'ex: Dragon Quest XI S','console':'ex: Game Boy Color violette transparente','controller':'ex: DualSense Edge','accessory':'ex: Pokéwalker, GameCube Memory Card 251...'};
+  titleInput.placeholder=placeholders[kind]||placeholders.game;
+}
+
+function hClose(){document.getElementById('h-form').classList.remove('open');hEditId=null;['h-title','h-price','h-note','h-cover'].forEach(i=>document.getElementById(i).value='');document.getElementById('h-priority').value='moyenne';document.getElementById('hk-game').checked=true;resetChips('h-consoles');resetChips('h-genres');clearCover('h-cover','h-cover-prev');applyHuntFormKind();}
+function hEdit(id){const g=hGames.find(x=>x.id===id);if(!g)return;hEditId=id;document.getElementById('h-title').value=g.title;document.getElementById('h-price').value=g.price||'';document.getElementById('h-priority').value=g.priority;document.getElementById('h-note').value=g.note||'';setChips('h-consoles',g.consoles||[]);setChips('h-genres',g.genres||[]);const kind=getKind(g);const kr=document.querySelector(`input[name="h-kind"][value="${kind}"]`);if(kr)kr.checked=true;applyHuntFormKind();const p=document.getElementById('h-cover-prev');document.getElementById('h-cover').value=g.cover||'';p.src=g.cover||'';p.style.opacity=g.cover?'1':'0.2';hOpen();}
+function hSave(){const t=document.getElementById('h-title').value.trim();if(!t)return;const c=chips('h-consoles');if(!c.length){alert('Sélectionne au moins une console.');return;}const kr=document.querySelector('input[name="h-kind"]:checked');const kind=kr?kr.value:'game';const g={id:hEditId||Date.now(),kind:kind,title:t,consoles:c,genres:kind==='game'?chips('h-genres'):[],price:parseFloat(document.getElementById('h-price').value)||null,priority:document.getElementById('h-priority').value,note:document.getElementById('h-note').value.trim(),cover:document.getElementById('h-cover').value.trim()||null,found:false,foundPrice:null};if(hEditId){const i=hGames.findIndex(x=>x.id===hEditId);if(i!==-1){g.found=hGames[i].found;g.foundPrice=hGames[i].foundPrice;hGames[i]=g;}}else hGames.push(g);saveHunt().then(()=>{hClose();renderHunt();});}
 
 /* COLLECTION RENDER */
 function renderColl(){
+  buildConsoleFilters('c',cGames,cFilter);
+
   let list=[...cGames];
+  if(cFilter.kind&&cFilter.kind!=='tous')list=list.filter(g=>getKind(g)===cFilter.kind);
   if(cFilter.status!=='tous')list=list.filter(g=>g.status===cFilter.status);
   if(cFilter.console)list=list.filter(g=>(g.consoles||[]).includes(cFilter.console));
   if(cFilter.search){const q=cFilter.search.toLowerCase();list=list.filter(g=>g.title.toLowerCase().includes(q)||(g.review||'').toLowerCase().includes(q));}
-  list.sort((a,b)=>a.title.localeCompare(b.title,'fr'));
 
-  const tot=cGames.length,ter=cGames.filter(g=>g.status==='Terminé').length,enc=cGames.filter(g=>g.status==='En cours').length;
-  const noted=cGames.filter(g=>g.stars>0);
+  const statusVal={'En cours':0,'Pas commencé':1,'Terminé':2,'Collection':3};
+  list.sort((a,b)=>{
+    switch(cSort){
+      case 'alpha-asc':return a.title.localeCompare(b.title,'fr');
+      case 'alpha-desc':return b.title.localeCompare(a.title,'fr');
+      case 'stars-desc':{const d=(b.stars||0)-(a.stars||0);return d!==0?d:a.title.localeCompare(b.title,'fr');}
+      case 'stars-asc':{const d=(a.stars||0)-(b.stars||0);return d!==0?d:a.title.localeCompare(b.title,'fr');}
+      case 'status':{const d=(statusVal[a.status]??99)-(statusVal[b.status]??99);return d!==0?d:a.title.localeCompare(b.title,'fr');}
+      default:return 0;
+    }
+  });
+
+  // Stats : ne compter que les jeux pour Terminé/En cours/Note moy (les accessoires n'ont pas de statut Terminé)
+  const gamesOnly=cGames.filter(g=>getKind(g)==='game');
+  const tot=cGames.length,ter=gamesOnly.filter(g=>g.status==='Terminé').length,enc=gamesOnly.filter(g=>g.status==='En cours').length;
+  const noted=gamesOnly.filter(g=>g.stars>0);
   const avg=noted.length?(Math.round(noted.reduce((s,g)=>s+g.stars,0)/noted.length*10)/10).toFixed(1):'-';
   document.getElementById('c-total').textContent=tot;
   document.getElementById('c-termines').textContent=ter;
@@ -502,13 +656,23 @@ function renderColl(){
 }
 
 function cCard(g){
-  const sb=g.status?`<span class="badge ${SBADGE[g.status]||''}">${esc(g.status)}</span>`:'';
-  const stars=g.stars?`<span class="stars-disp">${'★'.repeat(g.stars)}${'☆'.repeat(5-g.stars)}</span>`:'';
+  const kind=getKind(g);
+  const kindIcon=KIND_ICON[kind]?`<span class="kind-icon" title="${KIND_LABEL[kind]}">${KIND_ICON[kind]}</span>`:'';
+  // Pour les jeux : badge statut. Pour le matériel : badge état + boîte
+  let mainBadges='';
+  if(kind==='game'){
+    mainBadges=g.status?`<span class="badge ${SBADGE[g.status]||''}">${esc(g.status)}</span>`:'';
+  } else {
+    if(g.etat)mainBadges+=`<span class="badge ${ETAT_BADGE[g.etat]||'b-other'}">${esc(ETAT_LABEL[g.etat]||g.etat)}</span>`;
+    if(g.boite==='oui')mainBadges+=`<span class="badge b-boite">Avec boîte</span>`;
+    if(g.price)mainBadges+=`<span class="badge b-paid">${g.price}€</span>`;
+  }
+  const stars=(kind==='game'&&g.stars)?`<span class="stars-disp">${'★'.repeat(g.stars)}${'☆'.repeat(5-g.stars)}</span>`:'';
   return`<div class="game-card ${g.status==='Collection'?'dimmed':''}">
     <div class="card-cover">${coverImg(g)}</div>
     <div class="card-content" style="padding-left:0.8rem">
-      <div class="game-title">${esc(g.title)}</div>
-      <div class="meta">${(g.consoles||[]).map(cbadge).join('')}${sb}</div>
+      <div class="game-title">${kindIcon}${esc(g.title)}</div>
+      <div class="meta">${(g.consoles||[]).map(cbadge).join('')}${mainBadges}</div>
       ${stars?`<div class="meta">${stars}</div>`:''}
       ${g.review?`<div class="game-note">${esc(g.review)}</div>`:''}
     </div>
@@ -519,27 +683,113 @@ function cCard(g){
 function setStar(n){cStars=n;document.querySelectorAll('#c-stars .star-btn').forEach(b=>{b.classList.toggle('on',+b.dataset.v<=n);});}
 function cDel(id){if(!confirm('Supprimer ?'))return;cGames=cGames.filter(x=>x.id!==id);saveColl().then(()=>renderColl());}
 function cOpen(){document.getElementById('c-form').classList.add('open');setTimeout(()=>document.getElementById('c-title').focus(),60);}
-function cClose(){document.getElementById('c-form').classList.remove('open');cEditId=null;cStars=0;['c-title','c-cover','c-review','c-ean'].forEach(i=>document.getElementById(i).value='');document.getElementById('c-scan-status').textContent='';document.getElementById('cs-1').checked=true;resetChips('c-consoles');clearCover('c-cover','c-cover-prev');setStar(0);}
-function cEdit(id){const g=cGames.find(x=>x.id===id);if(!g)return;cEditId=id;document.getElementById('c-title').value=g.title;document.getElementById('c-review').value=g.review||'';setChips('c-consoles',g.consoles||[]);const r=document.querySelector(`input[name="c-status"][value="${g.status}"]`);if(r)r.checked=true;setStar(g.stars||0);const p=document.getElementById('c-cover-prev');document.getElementById('c-cover').value=g.cover||'';p.src=g.cover||'';p.style.opacity=g.cover?'1':'0.2';cOpen();}
-function cSave(){const t=document.getElementById('c-title').value.trim();if(!t)return;const sr=document.querySelector('input[name="c-status"]:checked');const g={id:cEditId||Date.now(),title:t,consoles:chips('c-consoles'),status:sr?sr.value:'Terminé',stars:cStars,review:document.getElementById('c-review').value.trim(),cover:document.getElementById('c-cover').value.trim()||null};if(cEditId){const i=cGames.findIndex(x=>x.id===cEditId);if(i!==-1)cGames[i]=g;}else cGames.push(g);saveColl().then(()=>{cClose();renderColl();});}
+
+// Adapte l'affichage du formulaire Collection selon le kind sélectionné
+function applyCollFormKind(){
+  const kindRadio=document.querySelector('input[name="c-kind"]:checked');
+  const kind=kindRadio?kindRadio.value:'game';
+  const isGame=kind==='game';
+  // Jeu : Statut + Étoiles. Matériel : État + Boîte + Prix
+  document.getElementById('c-status-block').style.display=isGame?'':'none';
+  document.getElementById('c-stars-block').style.display=isGame?'':'none';
+  document.getElementById('c-etat-block').style.display=isGame?'none':'';
+  document.getElementById('c-boite-block').style.display=isGame?'none':'';
+  document.getElementById('c-price-block').style.display=isGame?'none':'';
+  // EAN lookup uniquement pour les jeux (les bases EAN couvrent rarement le matériel)
+  const eanField=document.getElementById('c-ean');
+  if(eanField){const wrapper=eanField.closest('.field');if(wrapper&&wrapper.parentElement)wrapper.parentElement.style.display=isGame?'':'none';}
+  // Adapter le placeholder titre
+  const titleInput=document.getElementById('c-title');
+  const placeholders={'game':'ex: Red Dead Redemption 2','console':'ex: Game Boy Color violette transparente','controller':'ex: DualSense Edge','accessory':'ex: Pokéwalker, GameCube Memory Card 251...'};
+  titleInput.placeholder=placeholders[kind]||placeholders.game;
+}
+
+function cClose(){
+  document.getElementById('c-form').classList.remove('open');
+  cEditId=null;cStars=0;
+  ['c-title','c-cover','c-review','c-ean','c-price'].forEach(i=>{const e=document.getElementById(i);if(e)e.value='';});
+  document.getElementById('c-scan-status').textContent='';
+  document.getElementById('cs-1').checked=true;
+  document.getElementById('ce-3').checked=true; // BE par défaut
+  document.getElementById('cb-2').checked=true; // sans boîte par défaut
+  document.getElementById('ck-game').checked=true;
+  resetChips('c-consoles');clearCover('c-cover','c-cover-prev');setStar(0);
+  applyCollFormKind();
+}
+
+function cEdit(id){
+  const g=cGames.find(x=>x.id===id);if(!g)return;
+  cEditId=id;
+  document.getElementById('c-title').value=g.title;
+  document.getElementById('c-review').value=g.review||'';
+  setChips('c-consoles',g.consoles||[]);
+  // Kind
+  const kind=getKind(g);
+  const kr=document.querySelector(`input[name="c-kind"][value="${kind}"]`);
+  if(kr)kr.checked=true;
+  applyCollFormKind();
+  if(kind==='game'){
+    const r=document.querySelector(`input[name="c-status"][value="${g.status}"]`);
+    if(r)r.checked=true;
+    setStar(g.stars||0);
+  } else {
+    // Matériel : restaurer état, boîte, prix
+    const er=document.querySelector(`input[name="c-etat"][value="${g.etat||'BE'}"]`);
+    if(er)er.checked=true;
+    const br=document.querySelector(`input[name="c-boite"][value="${g.boite||'non'}"]`);
+    if(br)br.checked=true;
+    document.getElementById('c-price').value=g.price||'';
+  }
+  const p=document.getElementById('c-cover-prev');
+  document.getElementById('c-cover').value=g.cover||'';
+  p.src=g.cover||'';p.style.opacity=g.cover?'1':'0.2';
+  cOpen();
+}
+
+function cSave(){
+  const t=document.getElementById('c-title').value.trim();
+  if(!t)return;
+  const kr=document.querySelector('input[name="c-kind"]:checked');
+  const kind=kr?kr.value:'game';
+  const g={id:cEditId||Date.now(),kind:kind,title:t,consoles:chips('c-consoles'),cover:document.getElementById('c-cover').value.trim()||null,review:document.getElementById('c-review').value.trim()};
+  if(kind==='game'){
+    const sr=document.querySelector('input[name="c-status"]:checked');
+    g.status=sr?sr.value:'Pas commencé';
+    g.stars=cStars;
+  } else {
+    g.status='Collection'; // les non-jeux sont dans la collection
+    g.stars=0;
+    const er=document.querySelector('input[name="c-etat"]:checked');
+    g.etat=er?er.value:'BE';
+    const br=document.querySelector('input[name="c-boite"]:checked');
+    g.boite=br?br.value:'non';
+    g.price=parseFloat(document.getElementById('c-price').value)||null;
+  }
+  if(cEditId){const i=cGames.findIndex(x=>x.id===cEditId);if(i!==-1){if(cGames[i].fromHunt)g.fromHunt=cGames[i].fromHunt;cGames[i]=g;}}
+  else cGames.push(g);
+  saveColl().then(()=>{cClose();renderColl();});
+}
 
 /* FILTERS */
-document.querySelectorAll('.filter-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const sec=btn.dataset.section,type=btn.dataset.type,val=btn.dataset.val;
-    const cls=type==='status'?'f-active-status':type==='console'?'f-active-console':'f-active-genre';
-    if(sec==='h'){
-      if(type==='status'){hFilter.status=val;document.querySelectorAll('[data-section="h"][data-type="status"]').forEach(b=>b.classList.remove('f-active-status'));btn.classList.add('f-active-status');}
-      else if(type==='console'){if(hFilter.console===val){hFilter.console=null;btn.classList.remove('f-active-console');}else{hFilter.console=val;document.querySelectorAll('[data-section="h"][data-type="console"]').forEach(b=>b.classList.remove('f-active-console'));btn.classList.add('f-active-console');}}
-      else{if(hFilter.genre===val){hFilter.genre=null;btn.classList.remove('f-active-genre');}else{hFilter.genre=val;document.querySelectorAll('[data-section="h"][data-type="genre"]').forEach(b=>b.classList.remove('f-active-genre'));btn.classList.add('f-active-genre');}}
-      renderHunt();
-    } else {
-      if(type==='status'){cFilter.status=val;document.querySelectorAll('[data-section="c"][data-type="status"]').forEach(b=>b.classList.remove('f-active-status'));btn.classList.add('f-active-status');}
-      else{if(cFilter.console===val){cFilter.console=null;btn.classList.remove('f-active-console');}else{cFilter.console=val;document.querySelectorAll('[data-section="c"][data-type="console"]').forEach(b=>b.classList.remove('f-active-console'));btn.classList.add('f-active-console');}}
-      renderColl();
-    }
-  });
-});
+// Handler unique pour tous les boutons filtres (statiques + dynamiques)
+function onFilterClick(btn){
+  const sec=btn.dataset.section,type=btn.dataset.type,val=btn.dataset.val;
+  if(sec==='h'){
+    if(type==='status'){hFilter.status=val;document.querySelectorAll('[data-section="h"][data-type="status"]').forEach(b=>b.classList.remove('f-active-status'));btn.classList.add('f-active-status');}
+    else if(type==='kind'){hFilter.kind=val;document.querySelectorAll('[data-section="h"][data-type="kind"]').forEach(b=>b.classList.remove('f-active-kind'));btn.classList.add('f-active-kind');}
+    else if(type==='console'){if(hFilter.console===val){hFilter.console=null;btn.classList.remove('f-active-console');}else{hFilter.console=val;document.querySelectorAll('[data-section="h"][data-type="console"]').forEach(b=>b.classList.remove('f-active-console'));btn.classList.add('f-active-console');}}
+    else{if(hFilter.genre===val){hFilter.genre=null;btn.classList.remove('f-active-genre');}else{hFilter.genre=val;document.querySelectorAll('[data-section="h"][data-type="genre"]').forEach(b=>b.classList.remove('f-active-genre'));btn.classList.add('f-active-genre');}}
+    renderHunt();
+  } else {
+    if(type==='status'){cFilter.status=val;document.querySelectorAll('[data-section="c"][data-type="status"]').forEach(b=>b.classList.remove('f-active-status'));btn.classList.add('f-active-status');}
+    else if(type==='kind'){cFilter.kind=val;document.querySelectorAll('[data-section="c"][data-type="kind"]').forEach(b=>b.classList.remove('f-active-kind'));btn.classList.add('f-active-kind');}
+    else{if(cFilter.console===val){cFilter.console=null;btn.classList.remove('f-active-console');}else{cFilter.console=val;document.querySelectorAll('[data-section="c"][data-type="console"]').forEach(b=>b.classList.remove('f-active-console'));btn.classList.add('f-active-console');}}
+    renderColl();
+  }
+}
+
+// Listeners statiques (status + kind, les consoles sont attachées dynamiquement)
+document.querySelectorAll('.filter-btn[data-type="status"], .filter-btn[data-type="kind"]').forEach(btn=>btn.addEventListener('click',()=>onFilterClick(btn)));
 
 /* TAB */
 document.querySelectorAll('.tab-btn').forEach(b=>{
@@ -555,6 +805,10 @@ document.querySelectorAll('.tab-btn').forEach(b=>{
 document.getElementById('h-search').addEventListener('input',e=>{hFilter.search=e.target.value.trim();renderHunt();});
 document.getElementById('c-search').addEventListener('input',e=>{cFilter.search=e.target.value.trim();renderColl();});
 
+/* SORT */
+document.getElementById('h-sort').addEventListener('change',e=>{hSort=e.target.value;renderHunt();});
+document.getElementById('c-sort').addEventListener('change',e=>{cSort=e.target.value;renderColl();});
+
 /* EVENTS */
 document.getElementById('h-add-btn').addEventListener('click',()=>{if(document.getElementById('h-form').classList.contains('open')&&!hEditId)hClose();else{hEditId=null;hOpen();}});
 document.getElementById('h-cancel').addEventListener('click',hClose);
@@ -568,6 +822,10 @@ document.getElementById('c-title').addEventListener('keydown',e=>{if(e.key==='En
 document.getElementById('c-clear-cover').addEventListener('click',()=>clearCover('c-cover','c-cover-prev'));
 document.querySelectorAll('#c-stars .star-btn').forEach(b=>b.addEventListener('click',()=>setStar(+b.dataset.v)));
 
+// Listeners radios kind (Chasse + Collection) pour adapter dynamiquement les formulaires
+document.querySelectorAll('input[name="h-kind"]').forEach(r=>r.addEventListener('change',applyHuntFormKind));
+document.querySelectorAll('input[name="c-kind"]').forEach(r=>r.addEventListener('change',applyCollFormKind));
+
 // EAN lookup
 let eanDebounce;
 document.getElementById('c-ean').addEventListener('input', function() {
@@ -575,7 +833,6 @@ document.getElementById('c-ean').addEventListener('input', function() {
   clearTimeout(eanDebounce);
   if (ean.length < 8) return;
   eanDebounce = setTimeout(async () => {
-    // Open form if not already open
     if (!document.getElementById('c-form').classList.contains('open')) cOpen();
     const status = document.getElementById('c-scan-status');
     status.textContent = 'Recherche...';
