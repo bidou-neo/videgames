@@ -550,5 +550,18 @@
     "stars": 0,
     "review": "",
     "cover": null
+  },
+  {
+    "id": 1778586345308,
+    "kind": "console",
+    "title": "Nintendo Classic Mini",
+    "consoles": [],
+    "cover": null,
+    "review": "",
+    "status": "Collection",
+    "stars": 0,
+    "etat": "BE",
+    "boite": "oui",
+    "price": 50
   }
 ]
