@@ -540,18 +540,6 @@
     "cover": "https://m.media-amazon.com/images/I/81R3yULx-gL.jpg"
   },
   {
-    "id": 1778517383215,
-    "fromHunt": 1778517127239,
-    "title": "Baldur's Gate II (big box)",
-    "consoles": [
-      "PC"
-    ],
-    "status": "Pas commencé",
-    "stars": 0,
-    "review": "",
-    "cover": null
-  },
-  {
     "id": 1778586345308,
     "kind": "console",
     "title": "Nintendo Classic Mini",
