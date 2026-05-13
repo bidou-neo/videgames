@@ -542,9 +542,11 @@
   {
     "id": 1778586345308,
     "kind": "console",
-    "title": "Nintendo Classic Mini",
-    "consoles": [],
-    "cover": null,
+    "title": "Nintendo NES Classic Mini",
+    "consoles": [
+      "NES"
+    ],
+    "cover": "https://www.nintendo.com/fr-fr/games/oms/nes-classic-mini/images/nes-classic-edition-box.png",
     "review": "",
     "status": "Collection",
     "stars": 0,
