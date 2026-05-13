@@ -563,5 +563,20 @@
     "etat": "BE",
     "boite": "oui",
     "price": 50
+  },
+  {
+    "id": 1778650584733,
+    "kind": "console",
+    "title": "Xbox Series X",
+    "consoles": [
+      "Xbox Series X"
+    ],
+    "cover": null,
+    "review": "",
+    "status": "Collection",
+    "stars": 0,
+    "etat": "TBE",
+    "boite": "oui",
+    "price": 380
   }
 ]
