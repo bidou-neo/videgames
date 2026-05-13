@@ -598,5 +598,20 @@
     "etat": "BE",
     "boite": "oui",
     "price": 70
+  },
+  {
+    "id": 1778651921433,
+    "kind": "console",
+    "title": "Xbox One Project Scorpio edition",
+    "consoles": [
+      "Xbox One"
+    ],
+    "cover": "https://www.reference-gaming.com/assets/media/product/34929/console-xbox-one-x-edition-scorpio-project-59a678a693337.jpg?format=product-cover-large&k=1504082080",
+    "review": "",
+    "status": "Collection",
+    "stars": 0,
+    "etat": "BE",
+    "boite": "non",
+    "price": null
   }
 ]
