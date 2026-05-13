@@ -111,8 +111,8 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
 .game-list{display:flex;flex-direction:column;gap:0.55rem;}
 .game-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden;display:flex;align-items:stretch;transition:border-color 0.15s,opacity 0.2s;animation:fadeIn 0.25s ease;}
 .game-card:hover{border-color:var(--border-hover);}
-.game-card.found,.game-card.dimmed{opacity:0.42;}
-.game-card.found:hover,.game-card.dimmed:hover{opacity:0.7;}
+.game-card.found{opacity:0.42;}
+.game-card.found:hover{opacity:0.7;}
 .card-cover{width:62px;min-height:88px;flex-shrink:0;background:var(--bg3);display:flex;align-items:center;justify-content:center;overflow:hidden;}
 .card-cover img{width:100%;height:100%;object-fit:cover;display:block;}
 .placeholder-icon{opacity:0.2;}
@@ -697,7 +697,7 @@ function cCard(g){
     if(g.price)mainBadges+=`<span class="badge b-paid">${g.price}€</span>`;
   }
   const stars=(kind==='game'&&g.stars)?`<span class="stars-disp">${'★'.repeat(g.stars)}${'☆'.repeat(5-g.stars)}</span>`:'';
-  return`<div class="game-card ${g.status==='Collection'?'dimmed':''}">
+  return`<div class="game-card">
     <div class="card-cover">${coverImg(g)}</div>
     <div class="card-content" style="padding-left:0.8rem">
       <div class="game-title">${kindIcon}${esc(g.title)}</div>
