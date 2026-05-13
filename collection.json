@@ -593,5 +593,20 @@
     "etat": "TBE",
     "boite": "oui",
     "price": null
+  },
+  {
+    "id": 1778650829218,
+    "kind": "console",
+    "title": "Playstation 1 mini",
+    "consoles": [
+      "PS1"
+    ],
+    "cover": null,
+    "review": "",
+    "status": "Collection",
+    "stars": 0,
+    "etat": "BE",
+    "boite": "oui",
+    "price": 70
   }
 ]
