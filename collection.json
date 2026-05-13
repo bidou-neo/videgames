@@ -578,5 +578,20 @@
     "etat": "TBE",
     "boite": "oui",
     "price": 380
+  },
+  {
+    "id": 1778650776538,
+    "kind": "console",
+    "title": "Playstation 5",
+    "consoles": [
+      "PS5"
+    ],
+    "cover": null,
+    "review": "",
+    "status": "Collection",
+    "stars": 0,
+    "etat": "TBE",
+    "boite": "oui",
+    "price": null
   }
 ]
