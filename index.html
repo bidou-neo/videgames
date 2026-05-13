@@ -102,6 +102,8 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);}
 .field select option{background:var(--bg3);}
 .form-actions{display:flex;gap:0.75rem;justify-content:flex-end;margin-top:1rem;}
+.form-error{display:none;background:rgba(192,57,43,0.15);border:1px solid rgba(192,57,43,0.5);color:#ff8a7a;padding:8px 12px;border-radius:4px;margin-top:0.75rem;font-size:0.88rem;}
+.form-error.visible{display:block;animation:fadeIn 0.2s ease;}
 .btn-save{font-family:'Cinzel',serif;font-size:0.75rem;font-weight:600;letter-spacing:0.06em;padding:8px 20px;border:none;border-radius:4px;background:var(--gold);color:var(--bg);cursor:pointer;}
 .btn-save:hover{background:var(--gold-light);}
 .btn-cancel{font-family:'Crimson Pro',serif;font-size:1rem;padding:8px 14px;border:1px solid var(--border);border-radius:4px;background:transparent;color:var(--text-muted);cursor:pointer;}
@@ -268,6 +270,7 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
         <div class="field"><label>Priorité</label><select id="h-priority"><option value="haute">Haute</option><option value="moyenne" selected>Moyenne</option><option value="basse">Basse</option></select></div>
         <div class="field full"><label>Note</label><input id="h-note" type="text" placeholder="ex: Recommandé, successeur de Suikoden..." /></div>
       </div>
+      <div class="form-error" id="h-error"></div>
       <div class="form-actions"><button class="btn-cancel" id="h-cancel">Annuler</button><button class="btn-save" id="h-save">Enregistrer</button></div>
     </div>
     <div class="game-list" id="h-list"></div>
@@ -393,6 +396,7 @@ body{font-family:'Crimson Pro',Georgia,serif;background:var(--bg);color:var(--te
         </div></div>
         <div class="field full"><label>Avis</label><textarea id="c-review" rows="2" placeholder="Quelques mots..."></textarea></div>
       </div>
+      <div class="form-error" id="c-error"></div>
       <div class="form-actions"><button class="btn-cancel" id="c-cancel">Annuler</button><button class="btn-save" id="c-save">Enregistrer</button></div>
     </div>
     <div class="game-list" id="c-list"></div>
@@ -612,9 +616,34 @@ function applyHuntFormKind(){
   titleInput.placeholder=placeholders[kind]||placeholders.game;
 }
 
-function hClose(){document.getElementById('h-form').classList.remove('open');hEditId=null;['h-title','h-price','h-note','h-cover'].forEach(i=>document.getElementById(i).value='');document.getElementById('h-priority').value='moyenne';document.getElementById('hk-game').checked=true;resetChips('h-consoles');resetChips('h-genres');clearCover('h-cover','h-cover-prev');applyHuntFormKind();}
+function hClose(){document.getElementById('h-form').classList.remove('open');hEditId=null;clearError('h');['h-title','h-price','h-note','h-cover'].forEach(i=>document.getElementById(i).value='');document.getElementById('h-priority').value='moyenne';document.getElementById('hk-game').checked=true;resetChips('h-consoles');resetChips('h-genres');clearCover('h-cover','h-cover-prev');applyHuntFormKind();}
 function hEdit(id){const g=hGames.find(x=>x.id===id);if(!g)return;hEditId=id;document.getElementById('h-title').value=g.title;document.getElementById('h-price').value=g.price||'';document.getElementById('h-priority').value=g.priority;document.getElementById('h-note').value=g.note||'';setChips('h-consoles',g.consoles||[]);setChips('h-genres',g.genres||[]);const kind=getKind(g);const kr=document.querySelector(`input[name="h-kind"][value="${kind}"]`);if(kr)kr.checked=true;applyHuntFormKind();const p=document.getElementById('h-cover-prev');document.getElementById('h-cover').value=g.cover||'';p.src=g.cover||'';p.style.opacity=g.cover?'1':'0.2';hOpen();}
-function hSave(){const t=document.getElementById('h-title').value.trim();if(!t)return;const c=chips('h-consoles');if(!c.length){alert('Sélectionne au moins une console.');return;}const kr=document.querySelector('input[name="h-kind"]:checked');const kind=kr?kr.value:'game';const g={id:hEditId||Date.now(),kind:kind,title:t,consoles:c,genres:kind==='game'?chips('h-genres'):[],price:parseFloat(document.getElementById('h-price').value)||null,priority:document.getElementById('h-priority').value,note:document.getElementById('h-note').value.trim(),cover:document.getElementById('h-cover').value.trim()||null,found:false,foundPrice:null};if(hEditId){const i=hGames.findIndex(x=>x.id===hEditId);if(i!==-1){g.found=hGames[i].found;g.foundPrice=hGames[i].foundPrice;hGames[i]=g;}}else hGames.push(g);saveHunt().then(()=>{hClose();renderHunt();});}
+// Helpers pour afficher/effacer une erreur de validation inline
+function showError(section, message){
+  const el = document.getElementById(section + '-error');
+  if (!el) return;
+  el.textContent = message;
+  el.classList.add('visible');
+  // Scroll dans le form pour rendre l'erreur visible si elle est loin
+  el.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+}
+function clearError(section){
+  const el = document.getElementById(section + '-error');
+  if (el) el.classList.remove('visible');
+}
+
+function hSave(){
+  clearError('h');
+  const t=document.getElementById('h-title').value.trim();
+  if(!t){showError('h', 'Le titre est obligatoire.');document.getElementById('h-title').focus();return;}
+  const c=chips('h-consoles');
+  if(!c.length){showError('h', 'Sélectionne au moins une console (cocher dans la liste Consoles).');return;}
+  const kr=document.querySelector('input[name="h-kind"]:checked');
+  const kind=kr?kr.value:'game';
+  const g={id:hEditId||Date.now(),kind:kind,title:t,consoles:c,genres:kind==='game'?chips('h-genres'):[],price:parseFloat(document.getElementById('h-price').value)||null,priority:document.getElementById('h-priority').value,note:document.getElementById('h-note').value.trim(),cover:document.getElementById('h-cover').value.trim()||null,found:false,foundPrice:null};
+  if(hEditId){const i=hGames.findIndex(x=>x.id===hEditId);if(i!==-1){g.found=hGames[i].found;g.foundPrice=hGames[i].foundPrice;hGames[i]=g;}}else hGames.push(g);
+  saveHunt().then(()=>{hClose();renderHunt();}).catch(err=>{showError('h', 'Erreur sauvegarde : ' + (err.message||err));});
+}
 
 /* COLLECTION RENDER */
 function renderColl(){
@@ -707,6 +736,7 @@ function applyCollFormKind(){
 function cClose(){
   document.getElementById('c-form').classList.remove('open');
   cEditId=null;cStars=0;
+  clearError('c');
   ['c-title','c-cover','c-review','c-ean','c-price'].forEach(i=>{const e=document.getElementById(i);if(e)e.value='';});
   document.getElementById('c-scan-status').textContent='';
   document.getElementById('cs-1').checked=true;
@@ -747,11 +777,14 @@ function cEdit(id){
 }
 
 function cSave(){
+  clearError('c');
   const t=document.getElementById('c-title').value.trim();
-  if(!t)return;
+  if(!t){showError('c', 'Le titre est obligatoire.');document.getElementById('c-title').focus();return;}
+  const consoles=chips('c-consoles');
+  if(!consoles.length){showError('c', 'Sélectionne au moins une console.');return;}
   const kr=document.querySelector('input[name="c-kind"]:checked');
   const kind=kr?kr.value:'game';
-  const g={id:cEditId||Date.now(),kind:kind,title:t,consoles:chips('c-consoles'),cover:document.getElementById('c-cover').value.trim()||null,review:document.getElementById('c-review').value.trim()};
+  const g={id:cEditId||Date.now(),kind:kind,title:t,consoles:consoles,cover:document.getElementById('c-cover').value.trim()||null,review:document.getElementById('c-review').value.trim()};
   if(kind==='game'){
     const sr=document.querySelector('input[name="c-status"]:checked');
     g.status=sr?sr.value:'Pas commencé';
@@ -767,7 +800,7 @@ function cSave(){
   }
   if(cEditId){const i=cGames.findIndex(x=>x.id===cEditId);if(i!==-1){if(cGames[i].fromHunt)g.fromHunt=cGames[i].fromHunt;cGames[i]=g;}}
   else cGames.push(g);
-  saveColl().then(()=>{cClose();renderColl();});
+  saveColl().then(()=>{cClose();renderColl();}).catch(err=>{showError('c', 'Erreur sauvegarde : ' + (err.message||err));});
 }
 
 /* FILTERS */
