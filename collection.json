@@ -613,5 +613,20 @@
     "etat": "BE",
     "boite": "non",
     "price": null
+  },
+  {
+    "id": 1779546458217,
+    "kind": "console",
+    "title": "CPC 6128",
+    "consoles": [
+      "Autre"
+    ],
+    "cover": "https://upload.wikimedia.org/wikipedia/commons/4/45/Amstrad_CPC_6128.jpg",
+    "review": "",
+    "status": "Collection",
+    "stars": 0,
+    "etat": "BE",
+    "boite": "non",
+    "price": 210
   }
 ]
