@@ -832,5 +832,17 @@
     "review": "",
     "status": "Pas commencé",
     "stars": 0
+  },
+  {
+    "id": 1783195427656,
+    "kind": "game",
+    "title": "Life is Strange : Reunion",
+    "consoles": [
+      "PS5"
+    ],
+    "cover": "https://m.media-amazon.com/images/I/81Mkg8B3tuL._AC_UF894,1000_QL80_.jpg",
+    "review": "",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
