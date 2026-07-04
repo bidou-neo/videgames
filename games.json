@@ -3543,22 +3543,6 @@
     "foundPrice": null
   },
   {
-    "id": 1778517127190,
-    "title": "Elden Ring: Shadow of the Erdtree",
-    "consoles": [
-      "PS5"
-    ],
-    "genres": [
-      "RPG occidental"
-    ],
-    "price": 30,
-    "priority": "moyenne",
-    "note": "DLC majeur",
-    "cover": null,
-    "found": false,
-    "foundPrice": null
-  },
-  {
     "id": 1778517127191,
     "title": "Lies of P",
     "consoles": [
