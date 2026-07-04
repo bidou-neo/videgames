@@ -688,5 +688,17 @@
     "review": "",
     "status": "Pas commencé",
     "stars": 0
+  },
+  {
+    "id": 1783193884712,
+    "kind": "game",
+    "title": "Fable 3",
+    "consoles": [
+      "Xbox 360"
+    ],
+    "cover": "https://store-images.s-microsoft.com/image/apps.53940.68952782261614407.207517f2-cff8-4d40-84e1-b44139d6e70b.daab750c-4d12-472d-8b34-49dea1349935",
+    "review": "",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
