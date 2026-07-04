@@ -820,5 +820,17 @@
     "review": "",
     "status": "Pas commencé",
     "stars": 0
+  },
+  {
+    "id": 1783195082048,
+    "kind": "game",
+    "title": "Final Fantasy XIII-2",
+    "consoles": [
+      "PS3"
+    ],
+    "cover": "https://m.media-amazon.com/images/I/61zM7n8m3qS.jpg",
+    "review": "",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
