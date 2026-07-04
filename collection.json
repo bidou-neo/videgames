@@ -640,5 +640,17 @@
     "review": "",
     "status": "Pas commencé",
     "stars": 0
+  },
+  {
+    "id": 1783193545924,
+    "kind": "game",
+    "title": "Mafia 3",
+    "consoles": [
+      "Xbox One"
+    ],
+    "cover": "https://m.media-amazon.com/images/I/915pO+QZK3L._AC_UF894,1000_QL80_.jpg",
+    "review": "",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
