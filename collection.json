@@ -928,5 +928,17 @@
     "review": "",
     "status": "Pas commencé",
     "stars": 0
+  },
+  {
+    "id": 1783197275854,
+    "kind": "game",
+    "title": "Battlefield 5",
+    "consoles": [
+      "Xbox One"
+    ],
+    "cover": "https://m.media-amazon.com/images/I/71vqXbS+-RL.jpg",
+    "review": "",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
