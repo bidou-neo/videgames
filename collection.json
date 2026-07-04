@@ -892,5 +892,17 @@
     "review": "",
     "status": "Pas commencé",
     "stars": 0
+  },
+  {
+    "id": 1783196795233,
+    "kind": "game",
+    "title": "Tales Of Vesperia",
+    "consoles": [
+      "Xbox 360"
+    ],
+    "cover": "https://image.jeuxvideo.com/images/jaquettes/00020470/jaquette-tales-of-vesperia-xbox-360-cover-avant-g.jpg",
+    "review": "",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
