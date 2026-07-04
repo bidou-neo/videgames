@@ -772,5 +772,17 @@
     "review": "",
     "status": "Pas commencé",
     "stars": 0
+  },
+  {
+    "id": 1783194635604,
+    "kind": "game",
+    "title": "Call Of Duty - Modern Warfare 2",
+    "consoles": [
+      "Xbox 360"
+    ],
+    "cover": "https://m.media-amazon.com/images/I/81QhvJMFDjS._AC_UF350,350_QL50_.jpg",
+    "review": "Steel book",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
