@@ -760,5 +760,17 @@
     "review": "",
     "status": "Pas commencé",
     "stars": 0
+  },
+  {
+    "id": 1783194407209,
+    "kind": "game",
+    "title": "Crisis Core Final Fantasy VII Reunion",
+    "consoles": [
+      "Xbox Series X"
+    ],
+    "cover": "https://m.media-amazon.com/images/I/610bYpyAihL._AC_UF1000,1000_QL80_.jpg",
+    "review": "",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
