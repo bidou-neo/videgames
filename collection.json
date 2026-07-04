@@ -868,5 +868,17 @@
     "review": "",
     "status": "Pas commencé",
     "stars": 0
+  },
+  {
+    "id": 1783196621132,
+    "kind": "game",
+    "title": "Final Fantasy XII",
+    "consoles": [
+      "PS2"
+    ],
+    "cover": "https://www.gamecash.fr/thumbnail-600/final-fantasy-xii-e8478.jpg",
+    "review": "",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
