@@ -940,5 +940,17 @@
     "review": "",
     "status": "Pas commencé",
     "stars": 0
+  },
+  {
+    "id": 1783197310199,
+    "kind": "game",
+    "title": "Battlefield 1",
+    "consoles": [
+      "Xbox One"
+    ],
+    "cover": "https://m.media-amazon.com/images/I/81vfrQAC98L.jpg",
+    "review": "",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
