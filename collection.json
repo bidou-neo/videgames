@@ -664,5 +664,17 @@
     "review": "",
     "status": "Pas commencé",
     "stars": 0
+  },
+  {
+    "id": 1783193736719,
+    "kind": "game",
+    "title": "Titanfall 2",
+    "consoles": [
+      "Xbox One"
+    ],
+    "cover": "https://m.media-amazon.com/images/I/71IugbBtw+L.jpg",
+    "review": "",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
