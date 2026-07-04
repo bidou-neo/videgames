@@ -3527,22 +3527,6 @@
     "foundPrice": null
   },
   {
-    "id": 1778517127189,
-    "title": "Elden Ring",
-    "consoles": [
-      "PS5"
-    ],
-    "genres": [
-      "RPG occidental"
-    ],
-    "price": 35,
-    "priority": "haute",
-    "note": "GOTY 2022",
-    "cover": null,
-    "found": false,
-    "foundPrice": null
-  },
-  {
     "id": 1778517127191,
     "title": "Lies of P",
     "consoles": [
