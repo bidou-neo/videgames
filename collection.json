@@ -796,5 +796,17 @@
     "review": "",
     "status": "Pas commencé",
     "stars": 0
+  },
+  {
+    "id": 1783194914814,
+    "kind": "game",
+    "title": "Battlefield 4",
+    "consoles": [
+      "PS4"
+    ],
+    "cover": "https://m.media-amazon.com/images/I/81jw3NSZQaL.jpg",
+    "review": "",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
