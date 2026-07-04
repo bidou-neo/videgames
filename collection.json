@@ -880,5 +880,17 @@
     "review": "",
     "status": "Pas commencé",
     "stars": 0
+  },
+  {
+    "id": 1783196686128,
+    "kind": "game",
+    "title": "Mafia 2",
+    "consoles": [
+      "Xbox 360"
+    ],
+    "cover": "https://m.media-amazon.com/images/I/81meuVgi34L.jpg",
+    "review": "",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
