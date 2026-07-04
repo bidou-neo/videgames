@@ -700,5 +700,17 @@
     "review": "",
     "status": "Pas commencé",
     "stars": 0
+  },
+  {
+    "id": 1783194082186,
+    "kind": "game",
+    "title": "Fable Anniversary",
+    "consoles": [
+      "Xbox 360"
+    ],
+    "cover": "https://store-images.s-microsoft.com/image/apps.1230.66175927222580475.7f09fde8-a46b-4c45-8584-a5e3090f8190.710043e4-29a9-4a9e-b032-03c4d8b85b47",
+    "review": "",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
