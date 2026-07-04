@@ -676,5 +676,17 @@
     "review": "",
     "status": "Pas commencé",
     "stars": 0
+  },
+  {
+    "id": 1783193814655,
+    "kind": "game",
+    "title": "Final Fantasy Type 0",
+    "consoles": [
+      "Xbox One"
+    ],
+    "cover": "https://m.media-amazon.com/images/I/81EEx9DuQHL.jpg",
+    "review": "",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
