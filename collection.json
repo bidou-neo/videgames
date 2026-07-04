@@ -628,5 +628,17 @@
     "etat": "BE",
     "boite": "non",
     "price": 210
+  },
+  {
+    "id": 1783193481876,
+    "kind": "game",
+    "title": "Red Dead Redemption 2",
+    "consoles": [
+      "Xbox One"
+    ],
+    "cover": "https://m.media-amazon.com/images/I/517AaV5u1BL._AC_UF894,1000_QL80_.jpg",
+    "review": "",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
