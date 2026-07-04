@@ -736,5 +736,17 @@
     "review": "",
     "status": "Pas commencé",
     "stars": 0
+  },
+  {
+    "id": 1783194224307,
+    "kind": "game",
+    "title": "Metaphor : ReFantazio",
+    "consoles": [
+      "Xbox Series X"
+    ],
+    "cover": "https://m.media-amazon.com/images/I/814SKd3SqnL._AC_UF1000,1000_QL80_.jpg",
+    "review": "",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
