@@ -904,5 +904,17 @@
     "review": "",
     "status": "Pas commencé",
     "stars": 0
+  },
+  {
+    "id": 1783196904898,
+    "kind": "game",
+    "title": "The Witcher 3 : Wild Hunt - Game Of The Year Edition",
+    "consoles": [
+      "Xbox One"
+    ],
+    "cover": "https://m.media-amazon.com/images/I/71SkmXQH4uL.jpg",
+    "review": "",
+    "status": "Pas commencé",
+    "stars": 0
   }
 ]
